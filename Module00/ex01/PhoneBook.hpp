@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:16:22 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/11 08:59:00 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/14 13:48:14 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ class PhoneBook
 public:
 	PhoneBook( void );
 	~PhoneBook( void );
-	void AddContact(void);
+	bool AddContact(void);
 
 private:
-	Contact contact[8];
+	Contact m_contact[8];
+	int	ReceiveInput(const std::string& ref, std::string& input);
 
 };
 
