@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:06:57 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/07 22:37:21 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/14 08:18:36 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ enum e_choice
 
 e_choice resolveChoice(std::string input)
 {
-	if (input == "ADD") return e_choice::ADD;
-	else if (input == "SEARCH") return e_choice::SEARCH;
-	else if (input == "EXIT") return e_choice::EXIT;
-	else return e_choice::INVALID;
+	if (input == "ADD") return ADD;
+	else if (input == "SEARCH") return SEARCH;
+	else if (input == "EXIT") return EXIT;
+	else return INVALID;
 }
 
 int	main(void)
@@ -38,12 +38,20 @@ int	main(void)
 	std::cout << "SEARCH: display a specific contact" << std::endl;
 	std::cout << "EXIT: exit the program" << std::endl;
 	std::cout << "Please enter a keyword: ";
-	std::cin >> input;
+	std::getline(std::cin, input);
 
 	switch (resolveChoice(input))
 	{
-		case e_choice::ADD:
-			std::cout << "ADD was entered" << std::endl;
+		case ADD:
+			phonebook.AddContact();
+			break;
+
+		case SEARCH:
+			std::cout << "SEARCH was entered" << std::endl;
+			break;
+
+		case EXIT:
+			std::cout << "EXIT was entered" << std::endl;
 			break;
 
 		default:
