@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/15 12:17:36 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/15 17:26:01 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int		PhoneBook::ReceiveInput(const std::string& ref, std::string& input)
 		{
 			std::cin.clear();
 			std::clearerr(stdin);
-			std::cout << "EOF received. Aborting." << std::endl;
 			return (-1);
 		}
 		if (input.empty() || input.find_first_not_of(" \t\n\v\f\r") == std::string::npos)
@@ -78,11 +77,22 @@ std::string&	PhoneBook::Truncate(std::string& str, size_t width)
 bool	PhoneBook::SearchContact(void)
 {
 	std::string temp[3];
+
+	std::cout << "|Index    |";
+	std::cout << "First Name|";
+	std::cout << "Last Name |";
+	std::cout << "Nickname  |" << std::endl;
+	for (int i = 0; i < 4; i++)
+		std::cout << "|" << std::setw(10) << std::setfill('-');
+	std::cout << "|" << std::endl;
 	for (int i = 0; i < m_filled_contacts; i++)
 	{
 		m_contact[i].GetFirstName(temp[0]);
 		m_contact[i].GetLastName(temp[1]);
 		m_contact[i].GetNickName(temp[2]);
+
+		std::cout << "|";
+		std::cout << std::setw(9) << i << "|";
 		std::cout << std::setw(10) << Truncate(temp[0], 10) << "|";
 		std::cout << std::setw(10) << Truncate(temp[1], 10) << "|";
 		std::cout << std::setw(10) << Truncate(temp[2], 10) << "|" << std::endl;

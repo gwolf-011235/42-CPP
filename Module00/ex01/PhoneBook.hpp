@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:16:22 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/15 12:02:53 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/15 16:59:31 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <iostream>
 # include <iomanip>
 # include "Contact.hpp"
+# include "colors.hpp"
 
 # define NUM_CONTACTS 8
 
