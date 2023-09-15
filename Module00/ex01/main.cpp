@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:06:57 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/14 18:59:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/15 12:25:47 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	printOptions(void)
 	std::cout << std::endl << "Please enter a keyword: ";
 }
 
+#define CLEAR_SCREEN "\033[2J\033[1;1H";
+
 int	main(void)
 {
 	PhoneBook 	phonebook;
@@ -44,11 +46,12 @@ int	main(void)
 	bool		loop;
 
 	loop = true;
-	std::cout << "Very cool phonebook program!" << std::endl << std::endl;
+	std::cout << CLEAR_SCREEN
+	std::cout << "My awesome phonebook program!" << std::endl << std::endl;
 	do
 	{
 		printOptions();
-	
+
 		if (!getline(std::cin, input))
 		{
 			std::cout << "EOF received - Aborting." << std::endl;
@@ -59,10 +62,12 @@ int	main(void)
 		{
 			case ADD:
 				phonebook.AddContact();
+				std::cout << CLEAR_SCREEN
+				std::cout << "Contact was added!\n" << std::endl;
 				break;
 
 			case SEARCH:
-				std::cout << "SEARCH was entered" << std::endl;
+				phonebook.SearchContact();
 				break;
 
 			case EXIT:
