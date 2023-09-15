@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:16:22 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/15 16:59:31 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/15 18:19:21 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ private:
 	int		m_filled_contacts;
 
 	int				ReceiveInput(const std::string& ref, std::string& input);
-	std::string&	Truncate(std::string& str, size_t width);
+	std::string		Truncate(std::string str, size_t width);
+	void			PrintContactTable(void);
 
 };
 

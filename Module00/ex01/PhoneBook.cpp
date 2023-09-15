@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/15 17:26:01 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/15 18:22:56 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	PhoneBook::AddContact(void)
 	return (false);
 }
 
-std::string&	PhoneBook::Truncate(std::string& str, size_t width)
+std::string	PhoneBook::Truncate(std::string str, size_t width)
 {
 	if (str.length() > width)
 	{
@@ -74,28 +74,41 @@ std::string&	PhoneBook::Truncate(std::string& str, size_t width)
 	}
 	return (str);
 }
-bool	PhoneBook::SearchContact(void)
-{
-	std::string temp[3];
 
-	std::cout << "|Index    |";
+void	PhoneBook::PrintContactTable(void)
+{
+	std::cout << "|";
+	std::cout << "Index     |";
 	std::cout << "First Name|";
 	std::cout << "Last Name |";
 	std::cout << "Nickname  |" << std::endl;
 	for (int i = 0; i < 4; i++)
-		std::cout << "|" << std::setw(10) << std::setfill('-');
-	std::cout << "|" << std::endl;
+		std::cout << "|" << std::setw(11) << std::setfill('-');
+	std::cout << "|" << std::setfill(' ') << RESET << std::endl;
 	for (int i = 0; i < m_filled_contacts; i++)
 	{
-		m_contact[i].GetFirstName(temp[0]);
-		m_contact[i].GetLastName(temp[1]);
-		m_contact[i].GetNickName(temp[2]);
-
-		std::cout << "|";
-		std::cout << std::setw(9) << i << "|";
-		std::cout << std::setw(10) << Truncate(temp[0], 10) << "|";
-		std::cout << std::setw(10) << Truncate(temp[1], 10) << "|";
-		std::cout << std::setw(10) << Truncate(temp[2], 10) << "|" << std::endl;
+		std::string temp;
+		if (i % 2)
+			temp = B_WHITE;
+		else
+			temp = B_CYAN;
+		std::cout << "|" << BLACK;
+		std::cout << temp << std::setw(10) << i << "|";
+		std::cout << temp << std::setw(10) << Truncate(m_contact[i].GetFirstName(), 10) << "|";
+		std::cout << temp << std::setw(10) << Truncate(m_contact[i].GetLastName(), 10) << "|";
+		std::cout << temp << std::setw(10) << Truncate(m_contact[i].GetNickName(), 10) << RESET << "|" << std::endl;
 	}
+	std::cout << RESET << std::endl;
+}
+
+bool	PhoneBook::SearchContact(void)
+{
+	std::string	input;
+
+	if (m_filled_contacts == 0)
+		return true;
+	PrintContactTable();
+	std::cout << "Please enter the index of a contact: ";
+	std::getline(std::cin, input);
 	return (false);
 }
