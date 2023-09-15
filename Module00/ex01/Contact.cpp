@@ -30,27 +30,27 @@ void	Contact::SetInfo(std::string& first_name, std::string& last_name, std::stri
 	m_darkest_secret = darkest_secret;
 }
 
-void	Contact::GetFirstName(std::string& first_name)
+std::string	Contact::GetFirstName(void)
 {
-	first_name = m_first_name;
+	return m_first_name;
 }
 
-void	Contact::GetLastName(std::string& last_name)
+std::string	Contact::GetLastName(void)
 {
-	last_name = m_last_name;
+	return m_last_name;
 }
 
-void	Contact::GetNickName(std::string& nick_name)
+std::string	Contact::GetNickName(void)
 {
-	nick_name = m_nick_name;
+	return m_nick_name;
 }
 
-void	Contact::GetPhonenumber(std::string& phonenumber)
+std::string	Contact::GetPhonenumber(void)
 {
-	phonenumber = m_phone_number;
+	return m_phone_number;
 }
 
-void	Contact::GetDarkestSecret(std::string& darkest_secret)
+std::string	Contact::GetDarkestSecret(void)
 {
-	darkest_secret = m_darkest_secret;
+	return m_darkest_secret;
 }
