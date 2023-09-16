@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:25:58 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/15 17:51:40 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/16 19:00:33 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ public:
 	std::string	GetNickName(void);
 	std::string	GetPhonenumber(void);
 	std::string	GetDarkestSecret(void);
+	void		PrintInfo(void);
 };
 
 #endif

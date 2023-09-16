@@ -54,3 +54,12 @@ std::string	Contact::GetDarkestSecret(void)
 {
 	return m_darkest_secret;
 }
+
+void	Contact::PrintInfo(void)
+{
+	std::cout << "First name: " << m_first_name << "\n";
+	std::cout << "Last name: " << m_last_name << "\n";
+	std::cout << "Nickname: " << m_nick_name << "\n";
+	std::cout << "Phonenumber: " << m_phone_number << "\n";
+	std::cout << "Darkest secret: " << m_darkest_secret << std::endl;
+}
