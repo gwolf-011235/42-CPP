@@ -6,12 +6,13 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/16 09:29:43 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/16 18:52:00 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 #include <cstdio>
+#include <sstream>
 
 PhoneBook::PhoneBook(void)
 {
@@ -103,7 +104,7 @@ bool	PhoneBook::IsValidNumber(const std::string& number)
 {
 	for(int i = 0; i < (int)number.length(); i++)
 	{
-		if (number[i] >= '9' || number[i] <= '0')
+		if (number[i] > '9' || number[i] < '0')
 			return false;
 	}
 	return true;
@@ -113,7 +114,7 @@ int		PhoneBook::ReceiveInput(const std::string& ref, std::string& input, bool nu
 {
 	while (true)
 	{
-		std::cout << "Please enter " << ref << ": ";
+		std::cout << "Please enter " << ref << " or Ctrl+D to abort: ";
 		if (!std::getline(std::cin, input))
 		{
 			std::cin.clear();
@@ -140,7 +141,7 @@ bool	PhoneBook::AddContact(void)
 		return (true);
 	if (ReceiveInput("nick name", input[2]))
 		return (true);
-	if (ReceiveInput("phone number", input[3]))
+	if (ReceiveInput("phone number", input[3], true))
 		return (true);
 	if (ReceiveInput("darkest secret", input[4]))
 		return (true);
@@ -195,7 +196,30 @@ bool	PhoneBook::SearchContact(void)
 	std::string	input;
 
 	PrintContactTable();
-	std::cout << "Please enter the index of a contact: ";
-	std::getline(std::cin, input);
+	do {
+		if (ReceiveInput("the index of the contact you want to see", input, true))
+			return true;
+	} while (CheckIndex(input));
 	return (false);
+}
+
+bool	PhoneBook::CheckIndex(std::string& input)
+{
+	int index;
+	std::stringstream ss(input);
+
+	// Check if the conversion was successful and it's within bounds
+	if (!(ss >> index) || index < 0 || index >= m_filled_contacts)
+	{
+		if (m_filled_contacts == 1)
+			std::cout << "Invalid input. Please enter 0.\n";
+		else
+			std::cout << "Invalid input. Please enter a number between 0 and " << m_filled_contacts << ".\n";
+		return true;
+	}
+	else
+	{
+		std::cout << "You selected contact #" << index << ": " << std::endl;
+	}
+	return false;
 }

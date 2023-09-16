@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:16:22 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/16 09:29:33 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/16 18:47:50 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ private:
 	bool			IsValidNumber(const std::string& number);
 	std::string		Truncate(std::string str, size_t width);
 	void			PrintContactTable(void);
+	bool		CheckIndex(std::string& input);
 
 };
 
