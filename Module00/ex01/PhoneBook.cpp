@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/16 09:01:46 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/16 09:09:00 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	PhoneBook::Loop(void)
 
 	loop = true;
 	std::cout << CLEAR_SCREEN
-	std::cout << BOLD << BLUE << "My awesome phonebook program!\n\n" << RESET;
+	std::cout << BOLD << BLUE << "My awesome phonebook!\n\n" << RESET;
 	do
 	{
 		PrintOptions();
@@ -58,12 +58,17 @@ void	PhoneBook::Loop(void)
 			case SEARCH:
 				std::cout << CLEAR_SCREEN
 				std::cout << YELLOW "SEARCH" RESET " was selected.\n\n";
+				if (m_filled_contacts == 0)
+				{
+					std::cout << RED "No contacts saved yet.\n\n" RESET;
+					break;
+				}
 				ret = SearchContact();
 				std::cout << CLEAR_SCREEN
 				if (ret)
-					std::cout << RED "No contacts saved yet." RESET << std::endl << std::endl;
+					std::cout << RED "EOF received. No contact searched.\n\n" RESET;
 				else
-					std::cout << GREEN "Contact was searched!" RESET << std::endl << std::endl;
+					std::cout << GREEN "Contact was searched!\n\n" RESET;
 				break;
 
 			case EXIT:
@@ -83,7 +88,7 @@ void	PhoneBook::PrintOptions(void)
 	std::cout << YELLOW "ADD" RESET ": save a new contact\n";
 	std::cout << YELLOW "SEARCH" RESET ": display a specific contact\n";
 	std::cout << YELLOW "EXIT" RESET ": exit the program\n";
-	std::cout << "\n\nPlease enter a " YELLOW "keyword: " RESET;
+	std::cout << "\n\nPlease enter a " YELLOW "keyword" RESET ": ";
 }
 
 PhoneBook::e_choice PhoneBook::ResolveChoice(std::string input)
@@ -177,8 +182,6 @@ bool	PhoneBook::SearchContact(void)
 {
 	std::string	input;
 
-	if (m_filled_contacts == 0)
-		return true;
 	PrintContactTable();
 	std::cout << "Please enter the index of a contact: ";
 	std::getline(std::cin, input);
