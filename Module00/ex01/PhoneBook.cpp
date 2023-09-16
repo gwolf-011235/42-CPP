@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/16 19:53:23 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/16 20:16:55 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,23 @@ void	PhoneBook::Loop(void)
 	bool		ret;
 
 	loop = true;
-	std::cout << CLEAR_SCREEN
+	std::cout << CLEAR_SCREEN;
 	std::cout << BOLD << BLUE << "My awesome phonebook!\n\n" << RESET;
 	do
 	{
 		PrintOptions();
-
 		if (!getline(std::cin, input))
 		{
-			std::cout << RED "EOF received - Aborting.\n" RESET;
+			std::cout << RED "EOF received - Aborting." RESET << std::endl;
 			break;
 		}
-		std::cout << CLEAR_SCREEN
+		std::cout << CLEAR_SCREEN;
 		switch (ResolveChoice(input))
 		{
 			case ADD:
 				std::cout << YELLOW "ADD" RESET " was selected. Press Ctrl+D to abort.\n\n";
 				ret = AddContact();
-				std::cout << CLEAR_SCREEN
+				std::cout << CLEAR_SCREEN;
 				if (ret)
 					std::cout << RED "EOF received. No contact added.\n\n" RESET;
 				else
@@ -62,7 +61,7 @@ void	PhoneBook::Loop(void)
 				}
 				std::cout << YELLOW "SEARCH" RESET " was selected. Press Ctrl+D to abort.\n\n";
 				ret = SearchContact();
-				std::cout << CLEAR_SCREEN
+				std::cout << CLEAR_SCREEN;
 				if (ret)
 					std::cout << RED "EOF received. No contact searched.\n\n" RESET;
 				else
@@ -108,7 +107,7 @@ bool	PhoneBook::IsValidNumber(const std::string& number)
 	return true;
 }
 
-int		PhoneBook::ReceiveInput(const std::string& ref, std::string& input, bool numcheck = false)
+bool	PhoneBook::ReceiveInput(const std::string& ref, std::string& input, bool numcheck = false)
 {
 	while (true)
 	{
@@ -117,14 +116,14 @@ int		PhoneBook::ReceiveInput(const std::string& ref, std::string& input, bool nu
 		{
 			std::cin.clear();
 			std::clearerr(stdin);
-			return (-1);
+			return true;
 		}
 		if (input.empty() || input.find_first_not_of(" \t\n\v\f\r") == std::string::npos)
 			std::cout << "Should not be empty!" << std::endl;
 		else if (numcheck && !IsValidNumber(input))
 			std::cout << "Only numbers are allowed!" << std::endl;
 		else
-			return (0);
+			return false;
 	}
 }
 
@@ -176,7 +175,7 @@ void	PhoneBook::PrintContactTable(void)
 	for (int i = 0; i < m_filled_contacts; i++)
 	{
 		std::string temp;
-		if (i % 2)
+		if (i % 2 == 0)
 			temp = B_WHITE;
 		else
 			temp = B_CYAN;
@@ -227,7 +226,7 @@ bool	PhoneBook::ConvertToIndex(std::string& input, int& index)
 	}
 	else
 	{
-		std::cout << "You selected contact #" << index << ": " << std::endl;
+		std::cout << "You selected index " << index << ": " << std::endl;
 	}
 	return false;
 }
