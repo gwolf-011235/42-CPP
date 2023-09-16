@@ -6,7 +6,7 @@
 
 /* General*/
 #define RESET "\033[0m"
-#define CLEAR_SCREEN "\033[2J\033[1;1H";
+#define CLEAR_SCREEN "\033[2J\033[1;1H"
 
 /* Effects */
 #define BOLD "\033[1m"
