@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/16 18:52:00 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/16 19:53:23 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 PhoneBook::PhoneBook(void)
 {
 	m_filled_contacts = 0;
-	Loop();
 }
 
 PhoneBook::~PhoneBook(void)
@@ -42,12 +41,11 @@ void	PhoneBook::Loop(void)
 			std::cout << RED "EOF received - Aborting.\n" RESET;
 			break;
 		}
-
+		std::cout << CLEAR_SCREEN
 		switch (ResolveChoice(input))
 		{
 			case ADD:
-				std::cout << CLEAR_SCREEN
-				std::cout << YELLOW "ADD" RESET " was selected: Enter a new contact.\n\n";
+				std::cout << YELLOW "ADD" RESET " was selected. Press Ctrl+D to abort.\n\n";
 				ret = AddContact();
 				std::cout << CLEAR_SCREEN
 				if (ret)
@@ -57,13 +55,12 @@ void	PhoneBook::Loop(void)
 				break;
 
 			case SEARCH:
-				std::cout << CLEAR_SCREEN
-				std::cout << YELLOW "SEARCH" RESET " was selected.\n\n";
 				if (m_filled_contacts == 0)
 				{
 					std::cout << RED "No contacts saved yet.\n\n" RESET;
 					break;
 				}
+				std::cout << YELLOW "SEARCH" RESET " was selected. Press Ctrl+D to abort.\n\n";
 				ret = SearchContact();
 				std::cout << CLEAR_SCREEN
 				if (ret)
@@ -73,12 +70,13 @@ void	PhoneBook::Loop(void)
 				break;
 
 			case EXIT:
-				std::cout << "EXIT was entered - goodbye" << std::endl;
+				std::cout << YELLOW "EXIT" RESET " was selected.\n\n";
+				std::cout << GREEN "Goodbye" RESET " 👋\n" << std::endl;
 				loop = false;
 				break;
 
 			default:
-				std::cout << "\"" << input << "\": Not recognised" << std::endl << std::endl;
+				std::cout << RED "\"" << input << "\": Not recognised\n\n" RESET;
 				break;
 		}
 	} while (loop);
@@ -114,7 +112,7 @@ int		PhoneBook::ReceiveInput(const std::string& ref, std::string& input, bool nu
 {
 	while (true)
 	{
-		std::cout << "Please enter " << ref << " or Ctrl+D to abort: ";
+		std::cout << "Please enter " << ref << ": ";
 		if (!std::getline(std::cin, input))
 		{
 			std::cin.clear();
@@ -194,21 +192,31 @@ void	PhoneBook::PrintContactTable(void)
 bool	PhoneBook::SearchContact(void)
 {
 	std::string	input;
+	int index;
 
 	PrintContactTable();
 	do {
 		if (ReceiveInput("the index of the contact you want to see", input, true))
 			return true;
-	} while (CheckIndex(input));
+	} while (ConvertToIndex(input, index));
+	m_contact[index].PrintInfo();
+	std::cout << "Press Enter to continue...";
+	while (std::cin.get()!='\n')
+	{
+		if (std::cin.eof())
+		{
+			std::cin.clear();
+			clearerr(stdin);
+			break;
+		}
+	}
 	return (false);
 }
 
-bool	PhoneBook::CheckIndex(std::string& input)
+bool	PhoneBook::ConvertToIndex(std::string& input, int& index)
 {
-	int index;
 	std::stringstream ss(input);
 
-	// Check if the conversion was successful and it's within bounds
 	if (!(ss >> index) || index < 0 || index >= m_filled_contacts)
 	{
 		if (m_filled_contacts == 1)
