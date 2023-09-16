@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/16 09:09:00 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/16 09:29:43 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,17 @@ PhoneBook::e_choice PhoneBook::ResolveChoice(std::string input)
 	else return INVALID;
 }
 
-int		PhoneBook::ReceiveInput(const std::string& ref, std::string& input)
+bool	PhoneBook::IsValidNumber(const std::string& number)
+{
+	for(int i = 0; i < (int)number.length(); i++)
+	{
+		if (number[i] >= '9' || number[i] <= '0')
+			return false;
+	}
+	return true;
+}
+
+int		PhoneBook::ReceiveInput(const std::string& ref, std::string& input, bool numcheck = false)
 {
 	while (true)
 	{
@@ -112,6 +122,8 @@ int		PhoneBook::ReceiveInput(const std::string& ref, std::string& input)
 		}
 		if (input.empty() || input.find_first_not_of(" \t\n\v\f\r") == std::string::npos)
 			std::cout << "Should not be empty!" << std::endl;
+		else if (numcheck && !IsValidNumber(input))
+			std::cout << "Only numbers are allowed!" << std::endl;
 		else
 			return (0);
 	}
