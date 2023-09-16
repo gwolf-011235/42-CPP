@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/15 19:51:26 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/16 09:01:46 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ PhoneBook::PhoneBook(void)
 {
 	m_filled_contacts = 0;
 	Loop();
-	throw std::runtime_error("Oh no");
 }
 
 PhoneBook::~PhoneBook(void)
