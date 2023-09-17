@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 12:01:11 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/17 12:25:29 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/17 12:51:52 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 class Zombie {
 private:
 	std::string	name;
-	void		announce( void );
 	Zombie(void);
 public:
 	~Zombie(void);
 	Zombie(std::string name);
+	void	announce( void );
 };
 
 #endif

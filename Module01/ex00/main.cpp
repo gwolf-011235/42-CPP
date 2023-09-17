@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 12:44:06 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/17 12:47:39 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/17 12:52:21 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int main(void)
 
 	randomChump("Gabriel");
 	ptr = newZombie("Evaluator");
+	ptr->announce();
 	randomChump("Inbetween");
 	delete ptr;
 }
