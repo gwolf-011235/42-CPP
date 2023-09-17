@@ -1,6 +1,10 @@
 // object files
 *.o
 
+// dependency
+*.d
+
 // binary
 megaphone
 phonebook
+account
