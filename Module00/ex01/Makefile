@@ -6,7 +6,7 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2023/09/07 22:33:18 by gwolf            ###   ########.fr        #
+#    Updated: 2023/09/17 09:08:32 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,30 +14,40 @@ NAME := phonebook
 
 CXX := c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
+DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.Td
+COMPILE = $(CXX) $(DEPFLAGS) $(CXXFLAGS) -c
+POSTCOMPILE = @mv -f $(DEP_DIR)/$*.Td $(DEP_DIR)/$*.d && touch $@
 RM := rm -fr
 
-OBJDIR := obj
+OBJ_DIR := obj
+DEP_DIR := $(OBJ_DIR)/dep
 
 SRC = 	main.cpp \
 		PhoneBook.cpp \
 		Contact.cpp
-OBJ = $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
+DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $@
 
-$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+$(OBJ_DIR)/%.o: %.cpp $(DEP_DIR)/%.d | $(DEP_DIR)
+	$(COMPILE) $< -o $@
+	$(POSTCOMPILE)
 
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
+$(DEP_DIR):
+	mkdir -p $(DEP_DIR)
+
+$(DEPFILES):
 
 clean:
-	$(RM) $(OBJDIR)/
+	$(RM) $(OBJ_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+include $(wildcard $(DEPFILES))
