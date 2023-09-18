@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/16 20:16:55 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/18 22:02:42 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	PhoneBook::PrintOptions(void)
 	std::cout << "\n\nPlease enter a " YELLOW "keyword" RESET ": ";
 }
 
-PhoneBook::e_choice PhoneBook::ResolveChoice(std::string input)
+PhoneBook::e_choice PhoneBook::ResolveChoice(const std::string& input)
 {
 	if (input == "ADD") return ADD;
 	else if (input == "SEARCH") return SEARCH;
@@ -212,7 +212,7 @@ bool	PhoneBook::SearchContact(void)
 	return (false);
 }
 
-bool	PhoneBook::ConvertToIndex(std::string& input, int& index)
+bool	PhoneBook::ConvertToIndex(const std::string& input, int& index)
 {
 	std::stringstream ss(input);
 
