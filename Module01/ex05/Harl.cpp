@@ -6,13 +6,13 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 19:27:26 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/17 19:33:51 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/18 21:44:45 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Harl.hpp"
 
-Harl::Harl( void )
+Harl::Harl( void ) : map(construct_map())
 {
 }
 
@@ -43,5 +43,24 @@ void	Harl::error( void )
 
 void	Harl::complain(std::string level)
 {
+	memfunptr p;
+	try {
+		p = map.at(level);
+	}
+	catch (const std::out_of_range& oor) {
+		std::cerr << "Out of range error: " << oor.what() << '\n';
+		std::cerr << "Complain level '" << level << "' not recognized" << '\n';
+		return ;
+	}
+	return (this->*p)();
+}
 
+Harl::memfunptr_map	Harl::construct_map( void )
+{
+	memfunptr_map map;
+	map["debug"] = &Harl::debug;
+	map["info"] = &Harl::info;
+	map["warning"] = &Harl::warning;
+	map["error"] = &Harl::error;
+	return map;
 }
