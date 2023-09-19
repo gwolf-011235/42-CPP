@@ -57,9 +57,9 @@ std::string	Contact::GetDarkestSecret(void)
 
 void	Contact::PrintInfo(void)
 {
-	std::cout << "First name: " << m_first_name << "\n";
-	std::cout << "Last name: " << m_last_name << "\n";
-	std::cout << "Nickname: " << m_nick_name << "\n";
-	std::cout << "Phonenumber: " << m_phone_number << "\n";
-	std::cout << "Darkest secret: " << m_darkest_secret << std::endl;
+	std::cout << std::setw(16) << "First name: " << m_first_name << "\n";
+	std::cout << std::setw(16) << "Last name: " << m_last_name << "\n";
+	std::cout << std::setw(16) << "Nickname: " << m_nick_name << "\n";
+	std::cout << std::setw(16) << "Phonenumber: " << m_phone_number << "\n";
+	std::cout << std::setw(16) << "Darkest secret: " << m_darkest_secret << std::endl;
 }
