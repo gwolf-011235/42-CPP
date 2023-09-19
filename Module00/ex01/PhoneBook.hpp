@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:16:22 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/18 22:02:47 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/19 16:51:03 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ private:
 	std::string	Truncate(std::string str, size_t width);
 	void		PrintContactTable(void);
 	bool		ConvertToIndex(const std::string& input, int& index);
+
 };
 
 #endif

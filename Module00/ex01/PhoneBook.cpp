@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/18 22:02:42 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/19 17:11:14 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,22 @@ bool	PhoneBook::AddContact(void)
 
 std::string	PhoneBook::Truncate(std::string str, size_t width)
 {
-	if (str.length() > width)
+	size_t len = 0;
+	for (size_t i = 0; i < str.length();)
 	{
-		str.resize(width - 1);
-		return (str.append("."));
+		int cplen = 1;
+		if ((str[i] & 0xf8) == 0xf0) cplen = 4;
+		else if ((str[i] & 0xf0) == 0xe0) cplen = 3;
+		else if ((str[i] & 0xe0) == 0xc0) cplen = 2;
+		if ((i + cplen) > str.length()) cplen = 1;
+		i += cplen;
+		len++;
+		if (len == width && str[i])
+		{
+			str[i - cplen] = '.';
+			str.resize(i - cplen + 1);
+			break;
+		}
 	}
 	return (str);
 }
@@ -221,7 +233,7 @@ bool	PhoneBook::ConvertToIndex(const std::string& input, int& index)
 		if (m_filled_contacts == 1)
 			std::cout << "Invalid input. Please enter 0.\n";
 		else
-			std::cout << "Invalid input. Please enter a number between 0 and " << m_filled_contacts << ".\n";
+			std::cout << "Invalid input. Please enter a number between 0 and " << m_filled_contacts - 1 << ".\n";
 		return true;
 	}
 	else
