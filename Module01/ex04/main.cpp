@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 16:48:53 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/17 18:39:38 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/21 14:22:38 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int main(int argc, char **argv)
 	const std::string infile(argv[1]);
 	std::ifstream in(infile.c_str());
 	if (!in.is_open()) {
-		std::cerr << "Failed to open infile" << infile << std::endl;
+		std::cerr << "Failed to open infile " << infile << std::endl;
 		return -1;
 	}
 	const std::string outfile(infile + ".replace");
 	std::ofstream out(outfile.c_str(), std::ios::trunc);
 	if (!out.is_open()) {
-		std::cerr << "Failed to open outfile" << infile << std::endl;
+		std::cerr << "Failed to open outfile " << outfile << std::endl;
 		return -1;
 	}
 
