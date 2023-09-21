@@ -6,7 +6,7 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2023/09/17 13:47:42 by gwolf            ###   ########.fr        #
+#    Updated: 2023/09/21 13:51:11 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC = 	main.cpp
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
 
+.PHONY: all
 all: $(NAME)
 
 $(NAME): $(OBJ)
@@ -40,12 +41,15 @@ $(DEP_DIR):
 
 $(DEPFILES):
 
+.PHONY: clean
 clean:
 	$(RM) $(OBJ_DIR)
 
+.PHONY: fclean
 fclean: clean
 	$(RM) $(NAME)
 
+.PHONY: re
 re: fclean all
 
 include $(wildcard $(DEPFILES))
