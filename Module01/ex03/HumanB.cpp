@@ -6,18 +6,16 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 15:17:16 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/17 16:03:50 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/21 14:12:19 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HumanB.hpp"
 
-/*
-HumanA::HumanA(void) : name("Nobody") weapon(NULL)
+HumanB::HumanB(void) : name("Nobody"), weapon(NULL)
 {
-	std::cout << "HumanA Default constructor called\n";
+	std::cout << "HumanB Default constructor called\n";
 }
-*/
 
 HumanB::HumanB(const std::string& new_name) : name(new_name), weapon(0)
 {
