@@ -6,14 +6,14 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2023/09/23 18:20:47 by gwolf            ###   ########.fr        #
+#    Updated: 2023/09/23 18:23:49 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := a.out
 
 CXX := c++
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.Td
 COMPILE = $(CXX) $(DEPFLAGS) $(CXXFLAGS) -c
 POSTCOMPILE = @mv -f $(DEP_DIR)/$*.Td $(DEP_DIR)/$*.d && touch $@
