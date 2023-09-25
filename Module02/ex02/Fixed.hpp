@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:06:34 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/25 18:56:34 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/25 20:13:24 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ public:
 
 	Fixed&	operator++();
 	Fixed	operator++(int);
+
+	static Fixed& min(Fixed& a, Fixed& b);
+	static const Fixed& min(const Fixed& a, const Fixed& b);
+	static Fixed& max(Fixed& a, Fixed& b);
+	static const Fixed& max(const Fixed& a, const Fixed& b);
 
 	int		getRawBits( void ) const;
 	void	setRawBits( int const raw );

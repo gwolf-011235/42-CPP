@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:07:09 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/25 18:56:45 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/25 18:56:45gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ Fixed::Fixed(int const num) : m_value(num << s_fract_bits)
 	std::cout << "Int constructor called: Fixed\n";
 }
 
-Fixed::Fixed(float const num) : m_value(round(num * (1 << s_fract_bits)))
+Fixed::Fixed(float const num) : m_value(roundf(num * (1 << s_fract_bits)))
 {
 	std::cout << "Float constructor called: Fixed\n";
 }
@@ -116,6 +116,30 @@ Fixed	Fixed::operator++(int)
 	tmp.setRawBits(this->getRawBits());
 	operator++();
 	return tmp;
+}
+
+Fixed& Fixed::min(Fixed& a, Fixed& b)
+{
+	std::cout << "normal min method\n";
+	return (a < b ? a : b);
+}
+
+const Fixed& Fixed::min(const Fixed& a, const Fixed& b)
+{
+	std::cout << "const min method\n";
+	return (a < b ? a : b);
+}
+
+Fixed& Fixed::max(Fixed& a, Fixed& b)
+{
+	std::cout << "normal max method\n";
+	return (a > b ? a : b);
+}
+
+const Fixed& Fixed::max(const Fixed& a, const Fixed& b)
+{
+	std::cout << "const max method\n";
+	return (a > b ? a : b);
 }
 
 int		Fixed::getRawBits( void ) const
