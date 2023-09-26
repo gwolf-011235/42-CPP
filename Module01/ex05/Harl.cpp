@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 19:27:26 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/19 01:56:21 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/26 14:15:43 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	Harl::complain(std::string level)
 	return (this->*p)();
 }
 
-Harl::memfunptr_map	Harl::construct_map( void )
+Harl::memfunptr_map	Harl::construct_map( void ) const
 {
 	memfunptr_map map;
 	map["debug"] = &Harl::debug;

@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 19:24:50 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/19 01:56:04 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/26 14:15:37 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef std::map<std::string, memfunptr> memfunptr_map;
 private:
 	const memfunptr_map m_map;
 
-	memfunptr_map construct_map( void );
+	memfunptr_map construct_map( void ) const;
 	void debug( void );
 	void info( void );
 	void warning( void );
