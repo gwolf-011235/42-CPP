@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 15:07:46 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/17 15:16:42 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/26 14:05:12 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ Weapon::Weapon(const std::string& new_type) : type(new_type)
 
 Weapon::~Weapon(void)
 {
-	std::cout << "Weapon Destructor called\n";
+	std::cout << "Weapon destructor called\n";
 }
 
-const std::string&	Weapon::getType(void)
+const std::string&	Weapon::getType(void) const
 {
 	return type;
 }

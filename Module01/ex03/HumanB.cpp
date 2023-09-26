@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 15:17:16 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/21 14:12:19 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/26 14:04:15 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ HumanB::~HumanB(void)
 	std::cout << "HumanB destructor called\n";
 }
 
-void	HumanB::attack(void)
+void	HumanB::attack(void) const
 {
 	if (!weapon) {
 		std::cout << name << " attacks with their fists" << std::endl;
