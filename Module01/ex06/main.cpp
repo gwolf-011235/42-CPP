@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 19:24:42 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/19 02:06:46 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/09/26 14:40:59 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,9 @@ void	print_usage(const char* prog)
 	std::cout << "usage: " << prog << " str_level\n";
 }
 
-void	print_error(const char* prog)
+void	print_normal()
 {
-	std::cerr << "Input not recognized!\n";
-	std::cerr << "Please provide one of the following levels:\n";
-	std::cerr << "debug, warning, info, error\n";
-	print_usage(prog);
+	std::cout << "[ Probably complaining about insignificant problems ]\n";
 }
 
 int main(int argc, char **argv)
@@ -47,7 +44,7 @@ int main(int argc, char **argv)
 
 	std::string input = check_arg(argv[1]);
 	if (input.empty()) {
-		print_error(argv[0]);
+		print_normal();
 		return 1;
 	}
 
@@ -56,7 +53,7 @@ int main(int argc, char **argv)
 	{
 	case 'D':
 		if (input != "DEBUG") {
-			print_error(argv[0]);
+			print_normal();
 			return 1;
 		}
 		harl.set_level(Harl::level_debug);
@@ -64,7 +61,7 @@ int main(int argc, char **argv)
 
 	case 'I':
 		if (input != "INFO") {
-			print_error(argv[0]);
+			print_normal();
 			return 1;
 		}
 		harl.set_level(Harl::level_info);
@@ -72,7 +69,7 @@ int main(int argc, char **argv)
 
 	case 'W':
 		if (input != "WARNING") {
-			print_error(argv[0]);
+			print_normal();
 			return 1;
 		}
 		harl.set_level(Harl::level_warning);
@@ -80,21 +77,19 @@ int main(int argc, char **argv)
 
 	case 'E':
 		if (input != "ERROR") {
-			print_error(argv[0]);
+			print_normal();
 			return 1;
 		}
 		harl.set_level(Harl::level_error);
 		break;
 
 	default:
-		print_error(argv[0]);
+		print_normal();
 		return 1;
 	}
 
-	std::string level[5] = {"debug", "info", "warning", "error", "noexist"};
-	for (int i = 0; i < 5; ++i) {
-		std::cout << "Complain level " << level[i] << ": \n";
+	std::string level[4] = {"debug", "info", "warning", "error"};
+	for (int i = 0; i < 4; ++i) {
 		harl.complain(level[i]);
-		std::cout << '\n';
 	}
 }
