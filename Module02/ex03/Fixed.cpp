@@ -14,29 +14,29 @@
 
 Fixed::Fixed(void) : m_value(0)
 {
-	std::cout << "Default constructor called: Fixed\n";
+	//std::cout << "Default constructor called: Fixed\n";
 }
 
 Fixed::Fixed(const Fixed& ref)
 {
-	std::cout << "Copy constructor called: Fixed\n";
+	//std::cout << "Copy constructor called: Fixed\n";
 	*this = ref;
 }
 
 
 Fixed::Fixed(int const num) : m_value(num << s_fract_bits)
 {
-	std::cout << "Int constructor called: Fixed\n";
+	//std::cout << "Int constructor called: Fixed\n";
 }
 
 Fixed::Fixed(float const num) : m_value(roundf(num * (1 << s_fract_bits)))
 {
-	std::cout << "Float constructor called: Fixed\n";
+	//std::cout << "Float constructor called: Fixed\n";
 }
 
 Fixed::~Fixed(void)
 {
-	std::cout << "Destructor called: Fixed\n";
+	//std::cout << "Destructor called: Fixed\n";
 }
 
 Fixed& Fixed::operator=(const Fixed& ref)
@@ -120,25 +120,25 @@ Fixed	Fixed::operator++(int)
 
 Fixed& Fixed::min(Fixed& a, Fixed& b)
 {
-	std::cout << "normal min method\n";
+	//std::cout << "normal min method\n";
 	return (a < b ? a : b);
 }
 
 const Fixed& Fixed::min(const Fixed& a, const Fixed& b)
 {
-	std::cout << "const min method\n";
+	//std::cout << "const min method\n";
 	return (a < b ? a : b);
 }
 
 Fixed& Fixed::max(Fixed& a, Fixed& b)
 {
-	std::cout << "normal max method\n";
+	//std::cout << "normal max method\n";
 	return (a > b ? a : b);
 }
 
 const Fixed& Fixed::max(const Fixed& a, const Fixed& b)
 {
-	std::cout << "const max method\n";
+	//std::cout << "const max method\n";
 	return (a > b ? a : b);
 }
 
