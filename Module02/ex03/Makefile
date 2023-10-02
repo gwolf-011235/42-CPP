@@ -6,15 +6,16 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2023/10/02 09:21:32 by gwolf            ###   ########.fr        #
+#    Updated: 2023/10/02 11:38:06 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := a.out
 
 CXX := c++
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g -gdwarf-4
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.Td
+LDLIBS := -lglut -lGLU -lGL
 COMPILE = $(CXX) $(DEPFLAGS) $(CXXFLAGS) -c
 POSTCOMPILE = @mv -f $(DEP_DIR)/$*.Td $(DEP_DIR)/$*.d && touch $@
 RM := rm -fr
@@ -26,7 +27,8 @@ SRC = 	main.cpp \
 		Fixed.cpp \
 		Point.cpp \
 		bsp.cpp \
-		input.cpp
+		input.cpp \
+		drawTriangle.cpp
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
 
@@ -34,7 +36,7 @@ DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) $(OBJ) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ) $(LDLIBS) -o $@
 
 $(OBJ_DIR)/%.o: %.cpp $(DEP_DIR)/%.d | $(DEP_DIR)
 	$(COMPILE) $< -o $@
