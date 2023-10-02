@@ -6,7 +6,7 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2023/09/28 16:44:51 by gwolf            ###   ########.fr        #
+#    Updated: 2023/10/02 09:21:32 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ DEP_DIR := $(OBJ_DIR)/dep
 
 SRC = 	main.cpp \
 		Fixed.cpp \
-		Point.cpp
+		Point.cpp \
+		bsp.cpp \
+		input.cpp
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
 
