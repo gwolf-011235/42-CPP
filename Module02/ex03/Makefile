@@ -6,14 +6,14 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2023/10/02 11:38:06 by gwolf            ###   ########.fr        #
+#    Updated: 2023/10/04 10:01:13 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := a.out
 
 CXX := c++
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g -gdwarf-4
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.Td
 LDLIBS := -lglut -lGLU -lGL
 COMPILE = $(CXX) $(DEPFLAGS) $(CXXFLAGS) -c
