@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:07:28 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/04 09:22:32 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/04 12:09:19 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,13 @@ int main( void )
 	std::cout << "* Increment *" << std::endl;
 
 	std::cout << "a is: " << a << std::endl;
-	std::cout << "Pre increment: " << ++a << std::endl;
+	std::cout << "Use pre-increment: " << ++a << std::endl;
 	std::cout << "a is: " << a << std::endl;
-	std::cout << "Post increment: " << a++ << std::endl;
+	std::cout << "Use post-increment: " << a++ << std::endl;
+	std::cout << "b is: " << b << std::endl;
+	std::cout << "Use pre-decrement: " << ++b << std::endl;
+	std::cout << "b is: " << b << std::endl;
+	std::cout << "Use post-decrement: " << b++ << std::endl;
 	std::cout << "----------\n" << std::endl;
 
 
@@ -57,9 +61,11 @@ int main( void )
 	std::cout << "a is: " << a << std::endl;
 	std::cout << "b is: " << b << std::endl;
 	std::cout << "Max between a and b: " << Fixed::max( a, b ) << std::endl;
+	Fixed::max(a,b).setRawBits(111111111);
+	std::cout << "After change: " << Fixed::max( a, b ) << std::endl;
+	std::cout << "b is: " << b << std::endl;
 	std::cout << "c is: " << c << std::endl;
-	std::cout << "d is: " << d << std::endl;
-	std::cout << "Min between c and d: " << Fixed::min( c, d ) << std::endl;
+	std::cout << "Min between b and c: " << Fixed::min( b, c ) << std::endl;
 	std::cout << "----------\n" << std::endl;
 
 	return 0;

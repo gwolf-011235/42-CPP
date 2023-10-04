@@ -118,6 +118,20 @@ Fixed	Fixed::operator++(int)
 	return tmp;
 }
 
+Fixed&	Fixed::operator--()
+{
+	m_value--;
+	return *this;
+}
+
+Fixed	Fixed::operator--(int)
+{
+	Fixed tmp;
+	tmp.setRawBits(this->getRawBits());
+	operator--();
+	return tmp;
+}
+
 Fixed& Fixed::min(Fixed& a, Fixed& b)
 {
 	std::cout << "normal min method\n";

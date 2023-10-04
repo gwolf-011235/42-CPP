@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:06:34 by gwolf             #+#    #+#             */
-/*   Updated: 2023/09/25 20:13:24 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/04 12:03:24 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ public:
 	Fixed(const float);
 
 	Fixed&	operator=(const Fixed& ref);
+
 	bool	operator==(const Fixed& ref) const;
 	bool	operator!=(const Fixed& ref) const;
 	bool	operator<(const Fixed& ref) const;
@@ -44,6 +45,8 @@ public:
 
 	Fixed&	operator++();
 	Fixed	operator++(int);
+	Fixed&	operator--();
+	Fixed	operator--(int);
 
 	static Fixed& min(Fixed& a, Fixed& b);
 	static const Fixed& min(const Fixed& a, const Fixed& b);
