@@ -6,17 +6,14 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:04:56 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/02 11:31:23 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/04 10:14:18 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "GL/glut.h"
 #include "Point.hpp"
 
-extern Point* a;
-extern Point* b;
-extern Point* c;
-extern Point* p;
+extern Point *points[4];
 extern bool inside;
 
 void	display(void)
@@ -25,9 +22,9 @@ void	display(void)
 
 	glBegin(GL_TRIANGLES);
 	glColor3f(0.0, 0.0, 1.0);
-	glVertex2f((*a).get_xf(), (*a).get_yf());
-	glVertex2f((*b).get_xf(), (*b).get_yf());
-	glVertex2f((*c).get_xf(), (*c).get_yf());
+	glVertex2f(points[0]->get_xf(), points[0]->get_yf());
+	glVertex2f(points[1]->get_xf(), points[1]->get_yf());
+	glVertex2f(points[2]->get_xf(), points[2]->get_yf());
 	glEnd();
 
 	glBegin(GL_POINTS);
@@ -35,7 +32,7 @@ void	display(void)
 		glColor3f(0.0, 1.0, 0.0);
 	else
 		glColor3f(1.0, 0.0, 0.0);
-	glVertex2f((*p).get_xf(), (*p).get_yf());
+	glVertex2f(points[3]->get_xf(), points[3]->get_yf());
 	glEnd();
 
 	glFlush();
