@@ -6,7 +6,7 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2023/10/04 10:01:13 by gwolf            ###   ########.fr        #
+#    Updated: 2023/10/04 10:43:43 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,17 +26,30 @@ DEP_DIR := $(OBJ_DIR)/dep
 SRC = 	main.cpp \
 		Fixed.cpp \
 		Point.cpp \
-		bsp.cpp \
-		input.cpp \
-		drawTriangle.cpp
+		bsp.cpp
+
+SRC_B =		main_bonus.cpp \
+			Fixed.cpp \
+			Point.cpp \
+			bsp.cpp \
+			input.cpp \
+			drawTriangle.cpp
+
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
+OBJ_B = $(addprefix $(OBJ_DIR)/, $(SRC_B:.cpp=.o))
 DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
+DEPFILES += $(SRC_B:%.cpp=$(DEP_DIR)/%.d)
 
 .PHONY: all
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) $(OBJ) $(LDLIBS) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $@
+
+.PHONY: bonus
+bonus: $(OBJ_B)
+	$(CXX) $(CXXFLAGS) $(OBJ_B) $(LDLIBS) -o $@
+
 
 $(OBJ_DIR)/%.o: %.cpp $(DEP_DIR)/%.d | $(DEP_DIR)
 	$(COMPILE) $< -o $@
