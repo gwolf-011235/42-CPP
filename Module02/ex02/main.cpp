@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:07:28 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/04 12:09:19 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/06 08:20:15 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int main( void )
 	std::cout << "a is: " << a << std::endl;
 	std::cout << "Use post-increment: " << a++ << std::endl;
 	std::cout << "b is: " << b << std::endl;
-	std::cout << "Use pre-decrement: " << ++b << std::endl;
+	std::cout << "Use pre-decrement: " << --b << std::endl;
 	std::cout << "b is: " << b << std::endl;
-	std::cout << "Use post-decrement: " << b++ << std::endl;
+	std::cout << "Use post-decrement: " << b-- << std::endl;
 	std::cout << "----------\n" << std::endl;
 
 
