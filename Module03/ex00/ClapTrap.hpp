@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:42 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/06 09:00:20 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/06 13:36:41 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ private:
 	int 		m_energy_points;
 	int			m_attack_damage;
 public:
-	ClapTrap(void);
-	ClapTrap(const std::string& name);
+	ClapTrap(const std::string& name = "unkown");
 	ClapTrap(const ClapTrap& ref);
 	~ClapTrap(void);
 	ClapTrap& operator= (const ClapTrap& ref);
@@ -38,5 +37,5 @@ public:
 	int 				getEnergyPoints() const;
 	int					getAttackDamage() const;
 
-	bool	isFit(int hp, int ep, const std::string& name, const std::string& action);
+	bool	isFit(const std::string& action) const;
 };
