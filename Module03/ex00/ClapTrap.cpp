@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:39 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/06 13:43:52 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/08 11:35:19 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,9 @@ bool	ClapTrap::isFit(const std::string& action) const
 		return false;
 	}
 	return true;
+}
+
+void	ClapTrap::printStats() const
+{
+	std::cout << "*\tClapTrap " << m_name << ":\t" << m_hit_points << " hp\t" << m_energy_points << " energy\n";
 }

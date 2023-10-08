@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/06 13:43:28 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/08 11:30:22 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@ int	main(void)
 	ClapTrap d = b;
 
 	a.attack(b.getName());
-	std::cout << "ClapTrap " << a.getName() << " has " << a.getEnergyPoints() << " energy left.\n";
+	a.printStats();
 	a.takeDamage(4);
-	std::cout << "ClapTrap " << a.getName() << " has " << a.getHitPoints() << " hit points left.\n";
+	a.printStats();
 	a.beRepaired(4);
-	std::cout << "ClapTrap " << a.getName() << " has " << a.getHitPoints() << " hit points left.\n";
-	std::cout << "ClapTrap " << a.getName() << " has " << a.getEnergyPoints() << " energy left.\n";
+	a.printStats();
 	a.takeDamage(50);
+	a.printStats();
 	a.attack(b.getName());
+
 	for (int i = 0; i < 10; ++i) {
 		b.beRepaired(10);
+		b.printStats();
 	}
 	b.beRepaired(10);
 }

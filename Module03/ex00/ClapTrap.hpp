@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:42 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/06 13:36:41 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/08 11:27:23 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ public:
 	int					getAttackDamage() const;
 
 	bool	isFit(const std::string& action) const;
+	void	printStats() const;
 };
