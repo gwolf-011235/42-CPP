@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:03:47 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 15:18:19 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 15:52:43 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ const std::string	FragTrap::getType() const
 
 void	FragTrap::highFivesGuys(void)
 {
-	std::cout << getType() << " " << m_name << " is ready for a high five!\n";
+	std::cout << getType() << " " << m_name << " wants to give everybody a high five!\n";
 }
