@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:42 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 15:13:44 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 15:51:38 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ protected:
 	int 		m_energy_points;
 	int			m_attack_damage;
 public:
-	ClapTrap(const std::string& name = "Boi");
+	ClapTrap(const std::string& name = "NormalBoi");
 	ClapTrap(const ClapTrap& ref);
 	~ClapTrap(void);
 	ClapTrap& operator= (const ClapTrap& ref);

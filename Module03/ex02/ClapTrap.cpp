@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:39 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 14:38:38 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 15:51:10 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ ClapTrap::ClapTrap(const ClapTrap& ref)
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& ref)
 {
+	std::cout << "Copy assignment operator called: ClapTrap \n";
 	if (&ref != this) {
 		m_name = ref.getName();
 		m_hit_points = ref.getHitPoints();

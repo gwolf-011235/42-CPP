@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 11:37:03 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 14:30:40 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 15:50:53 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class ScavTrap : public ClapTrap
 private:
 	/* private stuff */
 public:
-	ScavTrap(const std::string& name = "unkown");
+	ScavTrap(const std::string& name = "ScaryBoi");
 	ScavTrap(const ScavTrap& ref);
 	~ScavTrap(void);
 	ScavTrap& operator= (const ScavTrap& ref);

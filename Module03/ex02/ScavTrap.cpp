@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 11:37:28 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 14:32:07 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 15:51:29 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ ScavTrap::ScavTrap(const ScavTrap& ref)
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& ref)
 {
+	std::cout << "Copy assignment operator called: ScavTrap \n";
 	if (&ref != this) {
 		m_name = ref.getName();
 		m_hit_points = ref.getHitPoints();
