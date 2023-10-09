@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:39 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 14:33:00 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 14:38:38 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ClapTrap::attack(const std::string& target)
 {
 	if (!isFit("attack"))
 		return ;
-	std::cout << "ClapTrap " << m_name << " attacks " << target << " causing " << m_attack_damage << " points of damage!\n";
+	std::cout << getType() << " " << m_name << " attacks " << target << " causing " << m_attack_damage << " points of damage!\n";
 	m_energy_points--;
 }
 
@@ -54,7 +54,7 @@ void	ClapTrap::takeDamage(unsigned int amount)
 	if (m_hit_points < 0)
 		m_hit_points = 0;
 	if (!m_hit_points)
-		std::cout << "ClapTrap " << m_name << " is incapacitated!\n";
+		std::cout << getType() << " " << m_name << " is incapacitated!\n";
 }
 
 void	ClapTrap::beRepaired(unsigned int amount)
