@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 11:37:28 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 11:31:36 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 14:32:07 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,25 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& ref)
 ScavTrap::~ScavTrap(void)
 {
 	std::cout << "Destructor called: ScavTrap \n";
+}
+
+const std::string	ScavTrap::getType() const
+{
+	return "ScavTrap";
+}
+
+void	ScavTrap::attack(const std::string& target)
+{
+	if (!isFit("attack"))
+		return ;
+	std::cout << getType() << " " << m_name << " ravages " << target << " causing " << m_attack_damage << " points of damage!\n";
+	m_energy_points--;
+}
+
+void	ScavTrap::guardGate()
+{
+	if (!isFit("gatekeeper mode"))
+		return ;
+	std::cout << getType() << " " << m_name << " is now in gatekeeper mode.\n";
+	m_energy_points--;
 }

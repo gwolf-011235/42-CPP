@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:39 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 11:30:40 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 14:33:00 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ClapTrap::attack(const std::string& target)
 
 void	ClapTrap::takeDamage(unsigned int amount)
 {
-	std::cout << "ClapTrap " << m_name << " takes " << amount << " points of damage!\n";
+	std::cout << getType() << " " << m_name << " takes " << amount << " points of damage!\n";
 	m_hit_points -= amount;
 	if (m_hit_points < 0)
 		m_hit_points = 0;
@@ -61,7 +61,7 @@ void	ClapTrap::beRepaired(unsigned int amount)
 {
 	if (!isFit("repair himself"))
 		return ;
-	std::cout << "ClapTrap " << m_name << " repairs " << amount << " points of damage!\n";
+	std::cout << getType() << " " << m_name << " repairs " << amount << " points of damage!\n";
 	m_hit_points += amount;
 	m_energy_points--;
 }
@@ -86,10 +86,15 @@ int			ClapTrap::getAttackDamage() const
 	return m_attack_damage;
 }
 
+const std::string	ClapTrap::getType() const
+{
+	return "ClapTrap";
+}
+
 bool	ClapTrap::isFit(const std::string& action) const
 {
 	if (!m_hit_points || !m_energy_points) {
-		std::cout << "ClapTrap " << m_name << " can't " << action << ": ";
+		std::cout << getType() << " " << m_name << " can't " << action << ": ";
 		if (!m_hit_points)
 			std::cout << "he dead.\n";
 		else
@@ -101,5 +106,5 @@ bool	ClapTrap::isFit(const std::string& action) const
 
 void	ClapTrap::printStats() const
 {
-	std::cout << "*\tClapTrap " << m_name << ":\t" << m_hit_points << " hp\t" << m_energy_points << " energy\n";
+	std::cout << "*\t" << getType() << " " << m_name << ":\t" << m_hit_points << " hp\t" << m_energy_points << " energy\n";
 }
