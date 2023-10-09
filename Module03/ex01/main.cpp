@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 14:39:38 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 15:47:52 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	main(void)
 	ScavTrap a("Stu");
 	ScavTrap b("Lou");
 	ScavTrap c(a);
-	ScavTrap d = b;
+	ScavTrap d;
+	d = b;
 	a.printStats();
 	std::cout << "---------------\n";
 

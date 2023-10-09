@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/08 11:30:22 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/09 15:48:20 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	main(void)
 	ClapTrap a("Bud");
 	ClapTrap b("Terence");
 	ClapTrap c(a);
-	ClapTrap d = b;
+	ClapTrap d;
+	d = b;
 
 	a.attack(b.getName());
 	a.printStats();
