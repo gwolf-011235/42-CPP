@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:39 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 16:26:01 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/11 11:52:04 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ ClapTrap::ClapTrap(const std::string& name) : m_name(name), m_hit_points(10), m_
 {
 	std::cout << "Default constructor called: ClapTrap \n";
 }
+
+ClapTrap::ClapTrap(const std::string& name, int hp, int ep, int ap) : m_name(name), m_hit_points(hp), m_energy_points(ep), m_attack_damage(ap)
+{
+	std::cout << "Param constructor called: ClapTrap \n";
+}
+
 
 ClapTrap::ClapTrap(const ClapTrap& ref)
 {
@@ -107,5 +113,5 @@ bool	ClapTrap::isFit(const std::string& action) const
 
 void	ClapTrap::printStats() const
 {
-	std::cout << "*\t" << getType() << " " << m_name << ":\t" << m_hit_points << " hp\t" << m_energy_points << " ep\t" << m_hit_points << " ap\n";
+	std::cout << "*\t" << getType() << " " << m_name << ":\t" << m_hit_points << " hp\t" << m_energy_points << " ep\t" << m_attack_damage << " ap\n";
 }

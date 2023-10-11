@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:42 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 15:51:38 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:50:37 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ protected:
 	int			m_attack_damage;
 public:
 	ClapTrap(const std::string& name = "NormalBoi");
+	ClapTrap(const std::string& name, int hp, int ep, int ap);
 	ClapTrap(const ClapTrap& ref);
 	~ClapTrap(void);
 	ClapTrap& operator= (const ClapTrap& ref);
@@ -32,12 +33,12 @@ public:
 	void	takeDamage(unsigned int amount);
 	void	beRepaired(unsigned int amount);
 
-	const std::string&	getName() const;
+	virtual const std::string&	getName() const;
 	int					getHitPoints() const;
 	int 				getEnergyPoints() const;
 	int					getAttackDamage() const;
 	virtual const std::string	getType() const;
 
 	bool	isFit(const std::string& action) const;
-	void	printStats() const;
+	virtual void	printStats() const;
 };

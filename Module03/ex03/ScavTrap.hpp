@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 11:37:03 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 16:08:03 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/11 14:12:15 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 
 class ScavTrap : virtual public ClapTrap
 {
-private:
-	/* private stuff */
+protected:
+	static const int m_HP = 100;
+	static const int m_EP = 50;
+	static const int m_AP = 20;
 public:
 	ScavTrap(const std::string& name = "ScaryBoi");
 	ScavTrap(const ScavTrap& ref);

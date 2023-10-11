@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 16:19:52 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:42:34 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 void	testConstructDestruct(void)
 {
 	std::cout << "Test Default constructor - no param\n";
-	FragTrap a;
+	DiamondTrap a;
 	a.printStats();
 	std::cout << "\n";
 
 	std::cout << "Test Default constructor - with param\n";
-	FragTrap b("Lou");
+	DiamondTrap b("gwolf");
 	b.printStats();
 	std::cout << "\n";
 
 	std::cout << "Test Copy constructor - on second object\n";
-	FragTrap c(b);
+	DiamondTrap c(b);
 	c.printStats();
 	std::cout << "\n";
 
 	std::cout << "Test Copy assignment operator - on second object\n";
-	FragTrap d;
+	DiamondTrap d;
 	d = b;
 	b.printStats();
 	std::cout << "\n";
@@ -43,8 +43,8 @@ void	testConstructDestruct(void)
 
 void	testMethods(void)
 {
-	FragTrap a("Stu");
-	FragTrap b("Lou");
+	DiamondTrap a("gwolf");
+	DiamondTrap b("rruppi");
 
 	a.attack(b.getName());
 	a.printStats();
@@ -56,7 +56,7 @@ void	testMethods(void)
 
 void	testIsDead(int health)
 {
-	FragTrap a("MrDead");
+	DiamondTrap a("MrDead");
 
 	a.takeDamage(health);
 	a.printStats();
@@ -65,7 +65,7 @@ void	testIsDead(int health)
 
 void	testNoEnergy(int energyPoints)
 {
-	FragTrap a("MrEnergy");
+	DiamondTrap a("MrEnergy");
 
 	for (int i = 0; i < energyPoints; ++i) {
 		a.beRepaired(10);
@@ -76,22 +76,22 @@ void	testNoEnergy(int energyPoints)
 
 void	testSpecialMethods(void)
 {
-	FragTrap a("Special");
+	DiamondTrap a("Special");
 
+	a.guardGate();
 	a.highFivesGuys();
+	a.whoAmI();
 }
 
 int	main(void)
 {
-	DiamondTrap a;
-	a.printStats();
-	// testConstructDestruct();
-	// std::cout << "---------------\n";
-	// testMethods();
-	// std::cout << "---------------\n";
-	// testIsDead(100);
-	// std::cout << "---------------\n";
-	// testNoEnergy(100);
-	// std::cout << "---------------\n";
-	// testSpecialMethods();
+	testConstructDestruct();
+	std::cout << "---------------\n";
+	testMethods();
+	std::cout << "---------------\n";
+	testIsDead(100);
+	std::cout << "---------------\n";
+	testNoEnergy(50);
+	std::cout << "---------------\n";
+	testSpecialMethods();
 }

@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:04:08 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 16:07:58 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/11 14:13:08 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 class FragTrap : virtual public ClapTrap
 {
-private:
-	/* private stuff */
+protected:
+	static const int m_HP = 100;
+	static const int m_EP = 100;
+	static const int m_AP = 30;
 public:
 	FragTrap(const std::string& name = "HappyBoi");
 	FragTrap(const FragTrap& ref);
