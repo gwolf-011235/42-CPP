@@ -1,0 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Cat.cpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/13 15:36:11 by gwolf             #+#    #+#             */
+/*   Updated: 2023/10/13 15:46:35 by gwolf            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Cat.hpp"
+
+Cat::Cat(void) : Animal("Cat")
+{
+	std::cout << "Default constructor called: Cat \n";
+}
+
+Cat::Cat(const Cat& ref)
+{
+	std::cout << "Copy constructor called: Cat \n";
+	*this = ref;
+}
+
+Cat& Cat::operator=(const Cat& ref)
+{
+	std::cout << "Copy assignment operator called: Cat \n";
+	if (&ref != this) {
+		m_type = ref.getType();
+	}
+	return *this;
+}
+
+Cat::~Cat(void)
+{
+	std::cout << "Destructor called: Cat \n";
+}
+
+void	Cat::makeSound() const
+{
+	std::cout << "I am " << getType() << " so I will miaunz: MEEEAAAOOW\n";
+}
