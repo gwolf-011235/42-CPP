@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:14:24 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/13 15:49:04 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/14 21:55:23 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Dog::Dog(void) : Animal("Dog")
 	std::cout << "Default constructor called: Dog \n";
 }
 
-Dog::Dog(const Dog& ref)
+Dog::Dog(const Dog& ref) : Animal("Dog")
 {
 	std::cout << "Copy constructor called: Dog \n";
 	*this = ref;
