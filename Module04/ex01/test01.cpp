@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 09:41:08 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 11:21:55 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 18:42:26 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	test01(void)
 {
 	testBrain();
+	std::cout << "--- FINISHED ---\n\n";
+	testDogWithBrain();
 	std::cout << "--- FINISHED ---\n\n";
 	testCatWithBrain();
 	std::cout << "--- FINISHED ---\n\n";
@@ -50,12 +52,34 @@ void	testBrain(void)
 	std::cout << std::endl;
 }
 
+void	testDogWithBrain(void)
+{
+	std::cout << "--- TEST Dog with Brain ---\n\n";
+
+	std::cout << "TEST Default constructor\n";
+	Dog d1;
+	d1.printThoughts();
+	std::cout << std::endl;
+
+	std::cout << "TEST Copy constructor\n";
+	Dog d2(d1);
+	d2.printThoughts();
+	std::cout << std::endl;
+}
+
 void	testCatWithBrain(void)
 {
-	std::cout << "--- TEST BrainCat ---\n\n";
+	std::cout << "--- TEST Cat with Brain ---\n\n";
 
 	std::cout << "TEST Default constructor\n";
 	Cat c1;
+	c1.haveThought("I don't want to be tested!");
+	c1.haveThought("Release me or I shall rain pain upon you!");
+	c1.haveThought("What is this red dot?");
+	c1.haveThought("I shall exterminate you, puny little dot!");
+	c1.haveThought("Heureka! The dot is gone, another proof of my superiority!");
+	c1.haveThought("I shall sleep now.");
+	c1.haveThought("*purr*");
 	c1.printThoughts();
 	std::cout << std::endl;
 
@@ -64,6 +88,7 @@ void	testCatWithBrain(void)
 	c2.printThoughts();
 	std::cout << std::endl;
 }
+
 
 void	testBaseClassPointer(void)
 {
