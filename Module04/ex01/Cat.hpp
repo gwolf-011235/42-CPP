@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:43:59 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 10:58:08 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 18:29:48 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ public:
 	Cat& operator= (const Cat& ref);
 	void	makeSound() const;
 	void	printThoughts() const;
+	void	haveThought(const std::string& idea);
 private:
-	Brain* m_brain;
+	Brain*	m_brain;
+	int		m_cur_index;
 };

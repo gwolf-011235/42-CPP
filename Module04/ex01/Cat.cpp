@@ -6,19 +6,18 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:36:11 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 10:58:08 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 18:33:09 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cat.hpp"
 
-Cat::Cat(void) : Animal("Cat 🐱"), m_brain(new Brain())
+Cat::Cat(void) : Animal("Cat 🐱"), m_brain(new Brain()), m_cur_index(0)
 {
 	std::cout << "Default constructor called: Cat 🐱\n";
-	for (int i = 0; i != 100; ++i) {
-		m_brain->setIdea("That bird outside looks like a tasty treat.", i);
-	}
-	m_brain->setIdea("Special Thought: I kill and eat", 66);
+	haveThought("I am cat.");
+	haveThought("I am great.");
+	haveThought("Praise me!");
 	std::cout << "Address hold by m_brain:\t" << m_brain << "\n";
 }
 
@@ -37,6 +36,7 @@ Cat& Cat::operator=(const Cat& ref)
 		*m_brain = *(ref.m_brain);
 		std::cout << "Address hold by orig:\t" << ref.m_brain << "\n";
 		std::cout << "Address hold by copy:\t" << m_brain << "\n";
+		m_cur_index = ref.m_cur_index;
 	}
 	return *this;
 }
@@ -55,4 +55,11 @@ void	Cat::makeSound() const
 void	Cat::printThoughts() const
 {
 	m_brain->printEverything();
+}
+
+void	Cat::haveThought(const std::string& idea)
+{
+	m_brain->setIdea(idea, m_cur_index);
+	if (++m_cur_index == 100)
+		m_cur_index = 0;
 }
