@@ -6,26 +6,20 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 09:41:08 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 10:22:08 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 11:21:55 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.hpp"
 
-void	testBrainCat(void)
+void	test01(void)
 {
-	std::cout << "--- TEST BrainCat ---\n\n";
-
-	std::cout << "TEST Default constructor\n";
-	Cat c1;
-	c1.printCatThoughts();
-	std::cout << std::endl;
-
-	std::cout << "TEST Copy constructor\n";
-	Cat c2(c1);
-	c2.printCatThoughts();
-	std::cout << std::endl;
-
+	testBrain();
+	std::cout << "--- FINISHED ---\n\n";
+	testCatWithBrain();
+	std::cout << "--- FINISHED ---\n\n";
+	testBaseClassPointer();
+	std::cout << "--- FINISHED ---\n\n";
 }
 
 void	testBrain(void)
@@ -54,5 +48,50 @@ void	testBrain(void)
 	b3 = b1;
 	b2.printEverything();
 	std::cout << std::endl;
+}
 
+void	testCatWithBrain(void)
+{
+	std::cout << "--- TEST BrainCat ---\n\n";
+
+	std::cout << "TEST Default constructor\n";
+	Cat c1;
+	c1.printThoughts();
+	std::cout << std::endl;
+
+	std::cout << "TEST Copy constructor\n";
+	Cat c2(c1);
+	c2.printThoughts();
+	std::cout << std::endl;
+}
+
+void	testBaseClassPointer(void)
+{
+	std::cout << "--- TEST BaseClassPointer ---\n\n";
+
+	std::cout << "TEST Fill array of base class pointer with Cats and Dogs:\n";
+	Animal *array[10];
+	for (int i = 0; i != 10; i += 2) {
+		std::cout << "Array on index: " << i << "\n";
+		array[i] = new Cat();
+		std::cout << "Array on index: " << (i + 1) << "\n";
+		array[i + 1] = new Dog();
+	}
+	std::cout << std::endl;
+
+	std::cout << "TEST Use base class pointers:\n";
+	std::cout << "Use pointer on index 0:\n";
+	array[0]->introduce();
+	array[0]->printThoughts();
+	std::cout << std::endl;
+	std::cout << "Use pointer on index 1:\n";
+	array[1]->introduce();
+	array[1]->printThoughts();
+	std::cout << std::endl;
+
+	std::cout << "TEST Delete array with for loop:\n";
+	for (int i = 0; i != 10; ++i) {
+		delete array[i];
+	}
+	std::cout << std::endl;
 }
