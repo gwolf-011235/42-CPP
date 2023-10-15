@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:43:59 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/13 15:47:07 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 08:11:20 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,5 @@ public:
 	Cat(const Cat& ref);
 	~Cat(void);
 	Cat& operator= (const Cat& ref);
-
 	void	makeSound() const;
-private:
-	/* private stuff */
 };

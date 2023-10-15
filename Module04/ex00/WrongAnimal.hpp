@@ -19,7 +19,6 @@ class WrongAnimal
 {
 public:
 	WrongAnimal(void);
-	WrongAnimal(const std::string& type);
 	WrongAnimal(const WrongAnimal& ref);
 	~WrongAnimal(void);
 	WrongAnimal& operator= (const WrongAnimal& ref);
@@ -27,4 +26,5 @@ public:
 	void	makeSound() const;
 protected:
 	std::string	m_type;
+	WrongAnimal(const std::string& type);
 };

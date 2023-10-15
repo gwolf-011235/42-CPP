@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:13:54 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/13 15:44:32 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 08:11:25 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,5 @@ public:
 	Dog(const Dog& ref);
 	~Dog(void);
 	Dog& operator= (const Dog& ref);
-
 	void	makeSound() const;
 };
