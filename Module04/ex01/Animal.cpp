@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:03:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 08:50:36 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 11:18:05 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,9 @@ void	Animal::introduce() const
 	std::cout << "I am a: " << getType() << "\n";
 	std::cout << "This is my sound: ";
 	makeSound();
-	std::cout << std::endl;
+}
+
+void	Animal::printThoughts() const
+{
+	std::cout << "***\n";
 }
