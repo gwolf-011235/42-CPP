@@ -24,6 +24,7 @@ public:
 	WrongAnimal& operator= (const WrongAnimal& ref);
 	const std::string&	getType() const;
 	void	makeSound() const;
+	void	introduce() const;
 protected:
 	std::string	m_type;
 	WrongAnimal(const std::string& type);

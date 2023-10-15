@@ -51,3 +51,11 @@ void	WrongAnimal::makeSound() const
 {
 	std::cout << "*abstract noise*\n";
 }
+
+void	WrongAnimal::introduce() const
+{
+	std::cout << "I am a: " << getType() << "\n";
+	std::cout << "This is my sound: ";
+	makeSound();
+	std::cout << std::endl;
+}

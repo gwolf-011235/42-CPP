@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:03:43 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 07:56:14 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 08:50:36 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ Animal::Animal(const Animal& ref)
 
 Animal& Animal::operator=(const Animal& ref)
 {
-	std::cout << "Copy assignemnt operator called: Animal 🐾\n";
+	std::cout << "Copy assignment operator called: Animal 🐾\n";
 	if (&ref != this) {
 		m_type = ref.m_type;
 	}
@@ -50,4 +50,12 @@ const std::string&	Animal::getType() const
 void	Animal::makeSound() const
 {
 	std::cout << "*abstract noise*\n";
+}
+
+void	Animal::introduce() const
+{
+	std::cout << "I am a: " << getType() << "\n";
+	std::cout << "This is my sound: ";
+	makeSound();
+	std::cout << std::endl;
 }
