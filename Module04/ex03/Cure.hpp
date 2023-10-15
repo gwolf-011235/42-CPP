@@ -6,19 +6,19 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:31:16 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 21:31:40 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 22:00:40 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#include "AMateria.hpp"
 
-class Cure
+class Cure : public AMateria
 {
 public:
 	Cure(void);
 	Cure(const Cure& ref);
 	~Cure(void);
 	Cure& operator= (const Cure& ref);
-private:
-	/* private stuff */
+	AMateria* clone() const;
+	void use(ICharacter& target);
 };
