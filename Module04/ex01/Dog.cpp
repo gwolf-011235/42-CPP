@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:14:24 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 10:58:01 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 18:22:21 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,15 @@ Dog::Dog(void) : Animal("Dog 🐶"), m_brain(new Brain())
 {
 	std::cout << "Default constructor called: Dog 🐶\n";
 	for (int i = 0; i != 100; ++i) {
-		m_brain->setIdea("Food! Play! Fun!", i);
+		if (i % 4 == 0)
+			m_brain->setIdea("Run around!", i);
+		if (i % 4 == 1)
+			m_brain->setIdea("Hungry!", i);
+		if (i % 4 == 2)
+			m_brain->setIdea("Eat food!", i);
+		if (i % 4 == 3)
+			m_brain->setIdea("I love you!", i);
 	}
-	m_brain->setIdea("Special Thought: I love you!", 12);
 	std::cout << "Address hold by m_brain:\t" << m_brain << "\n";
 }
 
