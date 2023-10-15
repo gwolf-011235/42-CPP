@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 09:14:09 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 09:59:41 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 10:32:00 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 Brain::Brain(void)
 {
-	std::cout << "Default constructor called: Brain \n";
+	std::cout << "Default constructor called: Brain 🧠\n";
 }
 
 Brain::Brain(const Brain& ref)
 {
-	std::cout << "Copy constructor called: Brain \n";
+	std::cout << "Copy constructor called: Brain 🧠\n";
 	*this = ref;
 }
 
 Brain& Brain::operator=(const Brain& ref)
 {
-	std::cout << "Copy assignment operator called: Brain \n";
+	std::cout << "Copy assignment operator called: Brain 🧠\n";
 	if (&ref != this) {
 		for (int i = 0; i != 100; ++i) {
 			this->ideas[i] = ref.ideas[i];
@@ -36,17 +36,19 @@ Brain& Brain::operator=(const Brain& ref)
 
 Brain::~Brain(void)
 {
-	std::cout << "Destructor called: Brain \n";
+	std::cout << "Destructor called: Brain 🧠\n";
 }
 
-void	Brain::setIdea(const std::string& idea, int index)
+void	Brain::setIdea(const std::string& idea, int index, bool print)
 {
 	if (index < 0 || index > 99) {
 		std::cout << "Set idea failed: Out of bounds\n";
 		return ;
 	}
 	ideas[index] = idea;
-	std::cout << "Set idea on index " << index << ": " << ideas[index] << "\n";
+	if (print) {
+		std::cout << "Set idea on index " << index << ": " << ideas[index] << "\n";
+	}
 }
 
 void	Brain::printIdea(int index) const
