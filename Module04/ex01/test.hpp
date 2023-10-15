@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 09:37:00 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 09:41:50 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 10:11:37 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,4 @@ void	testWrongCat(void);
 
 //test01
 void	testBrain(void);
+void	testBrainCat(void);
