@@ -6,12 +6,13 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:09:53 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 21:17:18 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/15 22:05:54 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <iostream>
 #include <string>
 #include "AMateria.hpp"
 
