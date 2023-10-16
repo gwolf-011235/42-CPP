@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:30:48 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 22:04:42 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/16 20:53:15 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ Ice::Ice(const Ice& ref) : AMateria(ref.getType())
 Ice& Ice::operator=(const Ice& ref)
 {
 	std::cout << "Copy assignment operator called: Ice \n";
+	if (&ref != this) {
+		//
+	}
+	return *this;
 }
 
 Ice::~Ice(void)

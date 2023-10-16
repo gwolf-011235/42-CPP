@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:31:29 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 22:04:48 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/16 20:52:21 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ Cure::Cure(const Cure& ref) : AMateria(ref.getType())
 Cure& Cure::operator=(const Cure& ref)
 {
 	std::cout << "Copy assignment operator called: Cure \n";
+	if (&ref != this) {
+		//
+	}
+	return *this;
 }
 
 Cure::~Cure(void)

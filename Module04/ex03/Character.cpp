@@ -6,20 +6,26 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:35 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 22:33:41 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/16 20:52:35 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Character.hpp"
 
-Character::Character(void) : m_name("Alex")
+Character::Character(void) : m_name("New Hero")
 {
 	std::cout << "Default constructor called: Character \n";
+	for (int i = 0; i != 4; ++i) {
+		m_inventory[i] = NULL;
+	}
 }
 
 Character::Character(const std::string& name) : m_name(name)
 {
 	std::cout << "Param constructor called: Character \n";
+	for (int i = 0; i != 4; ++i) {
+		m_inventory[i] = NULL;
+	}
 }
 
 Character::Character(const Character& ref) : m_name(ref.getName())
@@ -36,6 +42,7 @@ Character& Character::operator=(const Character& ref)
 	for (int i = 0; i != 4; ++i) {
 		m_inventory[i] = ref.m_inventory[i];
 	}
+	return *this;
 }
 
 Character::~Character(void)
@@ -51,7 +58,7 @@ std::string const & Character::getName() const
 void Character::equip(AMateria* m)
 {
 	int i = 0;
-	while (m_inventory[i] != nullptr)
+	while (m_inventory[i] != NULL)
 		i++;
 	if (i > 3) {
 		std::cout << "Cannot equip: Inventory full\n";
@@ -67,12 +74,12 @@ void Character::unequip(int idx)
 		std::cout << "Cannot unequip: Not a valid slot\n";
 		return;
 	}
-	if (m_inventory[idx] == nullptr) {
+	if (m_inventory[idx] == NULL) {
 		std::cout << "Cannot unequip: Nothing there\n";
 		return;
 	}
 	std::cout << "Unequipped " << m_inventory[idx]->getType() << " in slot: " << idx << "\n";
-	m_inventory[idx] = nullptr;
+	m_inventory[idx] = NULL;
 }
 
 void Character::use(int idx, ICharacter& target)
@@ -81,7 +88,7 @@ void Character::use(int idx, ICharacter& target)
 		std::cout << "Cannot use: Not a valid slot\n";
 		return;
 	}
-	if (m_inventory[idx] == nullptr) {
+	if (m_inventory[idx] == NULL) {
 		std::cout << "Cannot use: Nothing there\n";
 		return;
 	}

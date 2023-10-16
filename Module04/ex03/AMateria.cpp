@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:08:10 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 21:52:02 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/16 20:40:44 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ std::string const & AMateria::getType() const
 
 void AMateria::use(ICharacter& target)
 {
-	std::cout << "*The materia " << getType() << " was used on " << target.getName() << "*\n";
+	//std::cout << "*The materia " << getType() << " was used on " << target.getName() << "*\n";
+	(void)target;
 }
