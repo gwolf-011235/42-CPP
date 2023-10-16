@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/16 20:52:39 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/16 22:14:06 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "ICharacter.hpp"
 #include "AMateria.hpp"
+#include "Floor.hpp"
 
 class Character : public ICharacter
 {
@@ -30,4 +31,5 @@ public:
 private:
 	const std::string m_name;
 	AMateria* m_inventory[4];
+	static Floor s_floor;
 };

@@ -6,11 +6,13 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:35 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/16 20:52:35 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/16 22:23:29 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Character.hpp"
+
+Floor Character::s_floor;
 
 Character::Character(void) : m_name("New Hero")
 {
@@ -79,6 +81,7 @@ void Character::unequip(int idx)
 		return;
 	}
 	std::cout << "Unequipped " << m_inventory[idx]->getType() << " in slot: " << idx << "\n";
+	s_floor.dropOnFloor(m_inventory[idx]);
 	m_inventory[idx] = NULL;
 }
 
