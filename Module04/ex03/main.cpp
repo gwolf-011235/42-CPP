@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:33:53 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 13:07:02 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 13:59:42 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,24 @@
 #include "Ice.hpp"
 #include "MateriaSource.hpp"
 
+void	testOverfill(void)
+{
+	IMateriaSource* src = new MateriaSource();
+	for (int i = 0; i != 5; ++i) {
+		src->learnMateria(new Ice());
+	}
 
-int	main(void)
+	Floor floor;
+	ICharacter* me = new Character("gwolf", &floor);
+	for (int i = 0; i != 5; ++i) {
+		me->equip(new Cure());
+	}
+	delete me;
+	delete src;
+
+}
+
+void	testFromSubject(void)
 {
 	IMateriaSource* src = new MateriaSource();
 	src->learnMateria(new Ice());
@@ -38,6 +54,11 @@ int	main(void)
 	delete bob;
 	delete me;
 	delete src;
+}
 
+int	main(void)
+{
+	//testFromSubject();
+	testOverfill();
 	return 0;
 }
