@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:33:53 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 13:59:42 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 16:56:46 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	testOverfill(void)
 		src->learnMateria(new Ice());
 	}
 
-	Floor floor;
-	ICharacter* me = new Character("gwolf", &floor);
+	ICharacter* me = new Character("gwolf");
 	for (int i = 0; i != 5; ++i) {
 		me->equip(new Cure());
 	}

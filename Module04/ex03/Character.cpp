@@ -6,13 +6,15 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:35 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 13:55:08 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 16:52:43 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Character.hpp"
 
-Character::Character(void) : m_name("New Hero"), m_current_floor(NULL)
+Floor Character::s_floor;
+
+Character::Character(void) : m_name("New Hero")
 {
 	std::cout << "Default constructor called: Character \n";
 	for (int i = 0; i != INV_SPACE; ++i) {
@@ -20,7 +22,7 @@ Character::Character(void) : m_name("New Hero"), m_current_floor(NULL)
 	}
 }
 
-Character::Character(const std::string& name, Floor* current_floor) : m_name(name), m_current_floor(current_floor)
+Character::Character(const std::string& name) : m_name(name)
 {
 	std::cout << "Param constructor called: Character \n";
 	for (int i = 0; i != INV_SPACE; ++i) {
@@ -28,7 +30,7 @@ Character::Character(const std::string& name, Floor* current_floor) : m_name(nam
 	}
 }
 
-Character::Character(const Character& ref) : m_name(ref.m_name), m_current_floor(ref.m_current_floor)
+Character::Character(const Character& ref) : m_name(ref.m_name)
 {
 	std::cout << "Copy constructor called: Character \n";
 	for (int i = 0; i != INV_SPACE; ++i) {
@@ -72,11 +74,6 @@ std::string const & Character::getName() const
 	return m_name;
 }
 
-Floor* Character::getCurrentFloor() const
-{
-	return m_current_floor;
-}
-
 void Character::equip(AMateria* m)
 {
 	if (m->hasPlace()) {
@@ -92,12 +89,7 @@ void Character::equip(AMateria* m)
 		}
 	}
 	std::cout << "No space left in inventory, the Materia falls on the floor\n";
-	if (m_current_floor == NULL) {
-		std::cout << "But there is no floor! The Materia vanishes\n";
-		delete m;
-		return;
-	}
-	m_current_floor->dropOnFloor(m);
+	s_floor.dropOnFloor(m);
 }
 
 void Character::unequip(int idx)
@@ -111,12 +103,7 @@ void Character::unequip(int idx)
 		return;
 	}
 	std::cout << "Unequipped " << m_inventory[idx]->getType() << " in slot: " << idx << " and dropped on floor\n";
-	if (m_current_floor == NULL) {
-		std::cout << "But there is no floor! The Materia vanishes\n";
-		delete m_inventory[idx];
-	}
-	else
-		m_current_floor->dropOnFloor(m_inventory[idx]);
+	s_floor.dropOnFloor(m_inventory[idx]);
 	m_inventory[idx] = NULL;
 }
 
