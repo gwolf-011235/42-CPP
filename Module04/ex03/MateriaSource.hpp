@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:58 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 12:43:03 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 13:08:15 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 #include <iostream>
 #include "AMateria.hpp"
+#include "IMateriaSource.hpp"
 
 #define MEM_SPACE 4
 
-class MateriaSource
+class MateriaSource : public IMateriaSource
 {
 public:
 	MateriaSource(void);
