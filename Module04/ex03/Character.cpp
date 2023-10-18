@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:35 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 17:05:34 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 17:38:01 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Character::Character(void) : m_name("New Hero")
 
 Character::Character(const std::string& name) : m_name(name)
 {
-	std::cout << "Param constructor called: Character \n";
+	std::cout << "Param constructor called: Character 👤\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
 		m_inventory[i] = NULL;
 	}

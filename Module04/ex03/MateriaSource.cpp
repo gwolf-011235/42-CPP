@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:33:16 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 17:11:45 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 17:23:35 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void MateriaSource::learnMateria(AMateria* m)
 			return;
 		}
 	}
-	std::cout << "No space left in memory, the Materia vanishes\n";
+	std::cout << getName() << " has no space left in memory, the Materia vanishes\n";
 	delete m;
 }
 
