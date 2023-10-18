@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:35 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 17:38:01 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 19:40:30by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ Character::Character(const Character& ref) : m_name(ref.m_name)
 {
 	std::cout << "Copy constructor called: Character 👤\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
+		m_inventory[i] = NULL;
 		if (ref.m_inventory[i] != NULL) {
 			m_inventory[i] = ref.m_inventory[i]->clone();
 			m_inventory[i]->setPlace(CHARACTER, m_name, i);
@@ -102,6 +103,7 @@ void Character::unequip(int idx)
 		std::cout << "Cannot unequip: Nothing there\n";
 		return;
 	}
+	m_inventory[idx]->setPlace(NONE, "", -1);
 	std::cout << getName() << " unequipped " << m_inventory[idx]->getType() << " of slot: " << idx << " and dropped it on the floor\n";
 	s_floor.dropOnFloor(m_inventory[idx]);
 	m_inventory[idx] = NULL;
@@ -120,3 +122,15 @@ void Character::use(int idx, ICharacter& target)
 	m_inventory[idx]->use(target);
 }
 
+void Character::printInventory() const
+{
+	std::cout << getName() << " has in his inventory:\n";
+	for (int i = 0; i != INV_SPACE; ++i) {
+		std::cout << i << ": ";
+		if (m_inventory[i])
+			std::cout << m_inventory[i]->getType();
+		else
+			std::cout << "EMPTY";
+		std::cout << "\n";
+	}
+}

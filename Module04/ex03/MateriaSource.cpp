@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:33:16 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 17:23:35 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 19:35:46 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ MateriaSource::MateriaSource(const MateriaSource& ref)
 {
 	std::cout << "Copy constructor called: MateriaSource 🔁\n";
 	for (int i = 0; i != MEM_SPACE; ++i) {
+		m_memory[i] = NULL;
 		if (ref.m_memory[i] != NULL) {
 			m_memory[i] = ref.m_memory[i]->clone();
 			m_memory[i]->setPlace(MATERIASOURCE, m_name, i);
