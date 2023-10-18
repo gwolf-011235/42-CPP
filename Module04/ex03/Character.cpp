@@ -77,6 +77,8 @@ std::string const & Character::getName() const
 
 void Character::equip(AMateria* m)
 {
+	if (m == NULL)
+		return;
 	if (m->hasPlace()) {
 		m->printPlace();
 		return;
@@ -122,9 +124,9 @@ void Character::use(int idx, ICharacter& target)
 	m_inventory[idx]->use(target);
 }
 
-void Character::printInventory() const
+void Character::printInfo() const
 {
-	std::cout << getName() << " has in his inventory:\n";
+	std::cout << "Name: " << getName() << "\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
 		std::cout << i << ": ";
 		if (m_inventory[i])

@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 08:22:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/09 15:47:22 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 23:30:17 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	testConstructDestruct(void)
 	std::cout << "\n";
 }
 
-void	testMethods(void)
+void	testCharacterMethods(void)
 {
 	FragTrap a("Stu");
 	FragTrap b("Lou");
@@ -86,7 +86,7 @@ int	main(void)
 {
 	testConstructDestruct();
 	std::cout << "---------------\n";
-	testMethods();
+	testCharacterMethods();
 	std::cout << "---------------\n";
 	testIsDead(100);
 	std::cout << "---------------\n";

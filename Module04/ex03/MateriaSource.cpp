@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:33:16 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 19:35:46 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 23:51:45 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ MateriaSource::MateriaSource(const std::string& name) : m_name(name)
 	}
 }
 
-MateriaSource::MateriaSource(const MateriaSource& ref)
+MateriaSource::MateriaSource(const MateriaSource& ref) : m_name(ref.m_name)
 {
 	std::cout << "Copy constructor called: MateriaSource 🔁\n";
 	for (int i = 0; i != MEM_SPACE; ++i) {
@@ -75,6 +75,8 @@ const std::string& MateriaSource::getName() const
 
 void MateriaSource::learnMateria(AMateria* m)
 {
+	if (m == NULL)
+		return;
 	if (m->hasPlace()) {
 		m->printPlace();
 		return;
@@ -103,5 +105,17 @@ AMateria* MateriaSource::createMateria(std::string const & type)
 	}
 	std::cout << "No match found\n";
 	return 0;
+}
 
+void MateriaSource::printInfo() const
+{
+	std::cout << "Name: " << getName() << "\n";
+	for (int i = 0; i != MEM_SPACE; ++i) {
+		std::cout << i << ": ";
+		if (m_memory[i])
+			std::cout << m_memory[i]->getType();
+		else
+			std::cout << "EMPTY";
+		std::cout << "\n";
+	}
 }

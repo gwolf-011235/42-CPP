@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 19:37:29 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 23:10:28 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ public:
 	void unequip(int idx);
 	void use(int idx, ICharacter& target);
 
-	void printInventory() const;
+	void printInfo() const;
 private:
 	const std::string m_name;
 	AMateria* m_inventory[INV_SPACE];
