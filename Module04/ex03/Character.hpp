@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 23:10:28 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 23:57:55 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,21 @@
 class Character : public ICharacter
 {
 public:
+	// Ctor and Dtor
 	Character(void);
 	Character(const std::string& name);
 	Character(const Character& ref);
 	~Character(void);
-
+	// Operators
 	Character& operator= (const Character& ref);
-
+	// Getters
 	std::string const & getName() const;
-
-	void equip(AMateria* m);
-	void unequip(int idx);
-	void use(int idx, ICharacter& target);
-
-	void printInfo() const;
+	// Utility
+	void	equip(AMateria* m);
+	void	unequip(int idx);
+	void	use(int idx, ICharacter& target);
+	// Print
+	void	printInfo() const;
 private:
 	const std::string m_name;
 	AMateria* m_inventory[INV_SPACE];

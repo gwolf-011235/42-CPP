@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 22:00:20 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 12:30:35 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 23:59:05 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,16 @@
 class Floor
 {
 public:
+	// Ctor and Dtor
 	Floor(void);
 	Floor(const std::string& name);
 	Floor(const Floor& ref);
 	~Floor(void);
+	// Operators
 	Floor& operator= (const Floor& ref);
-	const std::string& getName() const;
+	// Getters
+	const std::string&	getName() const;
+	// Utility
 	void	dropOnFloor(AMateria* m);
 private:
 	const std::string m_name;
