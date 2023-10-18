@@ -6,43 +6,55 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:35 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/16 22:23:29 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 12:47:46 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Character.hpp"
 
-Floor Character::s_floor;
-
-Character::Character(void) : m_name("New Hero")
+Character::Character(void) : m_name("New Hero"), m_current_floor(NULL)
 {
 	std::cout << "Default constructor called: Character \n";
-	for (int i = 0; i != 4; ++i) {
+	for (int i = 0; i != INV_SPACE; ++i) {
 		m_inventory[i] = NULL;
 	}
 }
 
-Character::Character(const std::string& name) : m_name(name)
+Character::Character(const std::string& name, Floor* current_floor) : m_name(name), m_current_floor(current_floor)
 {
 	std::cout << "Param constructor called: Character \n";
-	for (int i = 0; i != 4; ++i) {
+	for (int i = 0; i != INV_SPACE; ++i) {
 		m_inventory[i] = NULL;
 	}
 }
 
-Character::Character(const Character& ref) : m_name(ref.getName())
+Character::Character(const Character& ref) : m_name(ref.m_name), m_current_floor(ref.m_current_floor)
 {
 	std::cout << "Copy constructor called: Character \n";
-	for (int i = 0; i != 4; ++i) {
-		m_inventory[i] = ref.m_inventory[i];
+	for (int i = 0; i != INV_SPACE; ++i) {
+		if (ref.m_inventory[i] != NULL) {
+			m_inventory[i] = ref.m_inventory[i]->clone();
+			m_inventory[i]->setPlace(CHARACTER, m_name, i);
+		}
 	}
 }
 
 Character& Character::operator=(const Character& ref)
 {
 	std::cout << "Copy assignment operator called: Character \n";
-	for (int i = 0; i != 4; ++i) {
-		m_inventory[i] = ref.m_inventory[i];
+	if (this == &ref)
+		return *this;
+	AMateria* temp_inventory[INV_SPACE];
+	for (int i = 0; i != INV_SPACE; ++i) {
+		temp_inventory[i] = NULL;
+		if (ref.m_inventory[i] != NULL) {
+			temp_inventory[i] = ref.m_inventory[i]->clone();
+			temp_inventory[i]->setPlace(CHARACTER, m_name, i);
+		}
+	}
+	for (int i = 0; i != INV_SPACE; ++i) {
+		delete m_inventory[i];
+		m_inventory[i] = temp_inventory[i];
 	}
 	return *this;
 }
@@ -50,6 +62,9 @@ Character& Character::operator=(const Character& ref)
 Character::~Character(void)
 {
 	std::cout << "Destructor called: Character \n";
+	for (int i = 0; i != INV_SPACE; ++i) {
+		delete m_inventory[i];
+	}
 }
 
 std::string const & Character::getName() const
@@ -57,17 +72,32 @@ std::string const & Character::getName() const
 	return m_name;
 }
 
+Floor* Character::getCurrentFloor() const
+{
+	return m_current_floor;
+}
+
 void Character::equip(AMateria* m)
 {
-	int i = 0;
-	while (m_inventory[i] != NULL)
-		i++;
-	if (i > 3) {
-		std::cout << "Cannot equip: Inventory full\n";
+	if (m->hasPlace()) {
+		m->printPlace();
 		return;
 	}
-	m_inventory[i] = m;
-	std::cout << "Equipped " << m->getType() << " in slot: " << i << "\n";
+	for (int i = 0; i != INV_SPACE; ++i) {
+		if (m_inventory[i] == NULL) {
+			m_inventory[i] = m;
+			m->setPlace(CHARACTER, m_name, i);
+			std::cout << "Equipped " << m->getType() << " in slot: " << i << "\n";
+			return;
+		}
+	}
+	std::cout << "No space left in inventory, the Materia falls on the floor\n";
+	if (m_current_floor == NULL) {
+		std::cout << "But there is no floor! The Materia vanishes\n";
+		delete m;
+		return;
+	}
+	m_current_floor->dropOnFloor(m);
 }
 
 void Character::unequip(int idx)
@@ -81,7 +111,7 @@ void Character::unequip(int idx)
 		return;
 	}
 	std::cout << "Unequipped " << m_inventory[idx]->getType() << " in slot: " << idx << "\n";
-	s_floor.dropOnFloor(m_inventory[idx]);
+	m_current_floor->dropOnFloor(m_inventory[idx]);
 	m_inventory[idx] = NULL;
 }
 

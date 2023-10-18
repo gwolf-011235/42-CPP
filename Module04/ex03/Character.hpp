@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/16 22:14:06 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 12:35:05 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,23 @@
 #include "AMateria.hpp"
 #include "Floor.hpp"
 
+#define INV_SPACE 4
+
 class Character : public ICharacter
 {
 public:
 	Character(void);
-	Character(const std::string& name);
+	Character(const std::string& name, Floor* current_floor);
 	Character(const Character& ref);
 	~Character(void);
 	Character& operator= (const Character& ref);
 	std::string const & getName() const;
+	Floor* getCurrentFloor() const;
 	void equip(AMateria* m);
 	void unequip(int idx);
 	void use(int idx, ICharacter& target);
 private:
 	const std::string m_name;
-	AMateria* m_inventory[4];
-	static Floor s_floor;
+	AMateria* m_inventory[INV_SPACE];
+	Floor* m_current_floor;
 };

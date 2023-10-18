@@ -6,15 +6,23 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 22:00:38 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/16 22:15:31 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 12:49:54 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Floor.hpp"
 
-Floor::Floor(void)
+Floor::Floor(void): m_name("Floor")
 {
 	std::cout << "Default constructor called: Floor \n";
+	for (int i = 0; i != CAPACITY; ++i) {
+		m_storage[i] = NULL;
+	}
+}
+
+Floor::Floor(const std::string& name): m_name(name)
+{
+	std::cout << "Param constructor called: Floor \n";
 	for (int i = 0; i != CAPACITY; ++i) {
 		m_storage[i] = NULL;
 	}
@@ -23,18 +31,30 @@ Floor::Floor(void)
 Floor::Floor(const Floor& ref)
 {
 	std::cout << "Copy constructor called: Floor \n";
-	*this = ref;
+	for (int i = 0; i != CAPACITY; ++i) {
+		if (ref.m_storage[i] != NULL) {
+			m_storage[i] = ref.m_storage[i]->clone();
+			m_storage[i]->setPlace(FLOOR, m_name, i);
+		}
+	}
 }
 
 Floor& Floor::operator=(const Floor& ref)
 {
 	std::cout << "Copy assignment operator called: Floor \n";
-	if (&ref != this) {
-		for (int i = 0; i != CAPACITY; ++i) {
-			if (ref.m_storage[i]) {
-				m_storage[i] = ref.m_storage[i]->clone();
-			}
+	if (this == &ref)
+		return *this;
+	AMateria* temp_storage[CAPACITY];
+	for (int i = 0; i != CAPACITY; ++i) {
+		temp_storage[i] = NULL;
+		if (ref.m_storage[i] != NULL) {
+			m_storage[i] = ref.m_storage[i]->clone();
+			m_storage[i]->setPlace(FLOOR, m_name, i);
 		}
+	}
+	for (int i = 0; i != CAPACITY; ++i) {
+		delete m_storage[i];
+		m_storage[i] = temp_storage[i];
 	}
 	return *this;
 }
@@ -47,13 +67,25 @@ Floor::~Floor(void)
 	}
 }
 
+const std::string& Floor::getName() const
+{
+	return m_name;
+}
+
 void	Floor::dropOnFloor(AMateria* m)
 {
+	if (m->hasPlace()) {
+		m->printPlace();
+		return;
+	}
 	for (int i = 0; i != CAPACITY; ++i) {
 		if (m_storage[i] == NULL) {
 			m_storage[i] = m;
-			//reflect placement
-			break;
+			m->setPlace(FLOOR, m_name, i);
+			std::cout << "The Materia " << m->getType() << " lies on the floor on tile: " << i << "\n";
+			return;
 		}
 	}
+	std::cout << "No space left on the floor, the Materia shatters\n";
+	delete m;
 }
