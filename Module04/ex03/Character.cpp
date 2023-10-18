@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:35 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 12:47:46 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 13:00:15 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,12 @@ void Character::unequip(int idx)
 		std::cout << "Cannot unequip: Nothing there\n";
 		return;
 	}
-	std::cout << "Unequipped " << m_inventory[idx]->getType() << " in slot: " << idx << "\n";
+	std::cout << "Unequipped " << m_inventory[idx]->getType() << " in slot: " << idx << " and dropped on floor\n";
+	if (m_current_floor == NULL) {
+		std::cout << "But there is no floor! The Materia vanishes\n";
+		delete m_inventory[idx];
+		return;
+	}
 	m_current_floor->dropOnFloor(m_inventory[idx]);
 	m_inventory[idx] = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:21 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 12:35:05 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 13:09:14 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Character : public ICharacter
 {
 public:
 	Character(void);
-	Character(const std::string& name, Floor* current_floor);
+	Character(const std::string& name, Floor* current_floor = NULL);
 	Character(const Character& ref);
 	~Character(void);
 	Character& operator= (const Character& ref);
