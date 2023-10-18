@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:32:35 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 16:52:43 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 17:05:34 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Floor Character::s_floor;
 
 Character::Character(void) : m_name("New Hero")
 {
-	std::cout << "Default constructor called: Character \n";
+	std::cout << "Default constructor called: Character 👤\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
 		m_inventory[i] = NULL;
 	}
@@ -32,7 +32,7 @@ Character::Character(const std::string& name) : m_name(name)
 
 Character::Character(const Character& ref) : m_name(ref.m_name)
 {
-	std::cout << "Copy constructor called: Character \n";
+	std::cout << "Copy constructor called: Character 👤\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
 		if (ref.m_inventory[i] != NULL) {
 			m_inventory[i] = ref.m_inventory[i]->clone();
@@ -43,7 +43,7 @@ Character::Character(const Character& ref) : m_name(ref.m_name)
 
 Character& Character::operator=(const Character& ref)
 {
-	std::cout << "Copy assignment operator called: Character \n";
+	std::cout << "Copy assignment operator called: Character 👤\n";
 	if (this == &ref)
 		return *this;
 	AMateria* temp_inventory[INV_SPACE];
@@ -63,7 +63,7 @@ Character& Character::operator=(const Character& ref)
 
 Character::~Character(void)
 {
-	std::cout << "Destructor called: Character \n";
+	std::cout << "Destructor called: Character 👤\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
 		delete m_inventory[i];
 	}
@@ -84,11 +84,11 @@ void Character::equip(AMateria* m)
 		if (m_inventory[i] == NULL) {
 			m_inventory[i] = m;
 			m->setPlace(CHARACTER, m_name, i);
-			std::cout << "Equipped " << m->getType() << " in slot: " << i << "\n";
+			std::cout << getName() << " equipped " << m->getType() << " in slot: " << i << "\n";
 			return;
 		}
 	}
-	std::cout << "No space left in inventory, the Materia falls on the floor\n";
+	std::cout << getName() << " has no space left in inventory, the Materia falls on the floor\n";
 	s_floor.dropOnFloor(m);
 }
 
@@ -102,7 +102,7 @@ void Character::unequip(int idx)
 		std::cout << "Cannot unequip: Nothing there\n";
 		return;
 	}
-	std::cout << "Unequipped " << m_inventory[idx]->getType() << " in slot: " << idx << " and dropped on floor\n";
+	std::cout << getName() << " unequipped " << m_inventory[idx]->getType() << " of slot: " << idx << " and dropped it on the floor\n";
 	s_floor.dropOnFloor(m_inventory[idx]);
 	m_inventory[idx] = NULL;
 }

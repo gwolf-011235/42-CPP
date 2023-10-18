@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:30:48 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/16 20:53:15 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 17:07:25 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 Ice::Ice(void) : AMateria("ice")
 {
-	std::cout << "Default constructor called: Ice \n";
+	std::cout << "Default constructor called: Ice 🧊\n";
 }
 
 Ice::Ice(const Ice& ref) : AMateria(ref.getType())
 {
-	std::cout << "Copy constructor called: Ice \n";
+	std::cout << "Copy constructor called: Ice 🧊\n";
 }
 
 Ice& Ice::operator=(const Ice& ref)
 {
-	std::cout << "Copy assignment operator called: Ice \n";
+	std::cout << "Copy assignment operator called: Ice 🧊\n";
 	if (&ref != this) {
 		//
 	}
@@ -33,7 +33,7 @@ Ice& Ice::operator=(const Ice& ref)
 
 Ice::~Ice(void)
 {
-	std::cout << "Destructor called: Ice \n";
+	std::cout << "Destructor called: Ice 🧊\n";
 }
 
 AMateria* Ice::clone() const

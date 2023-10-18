@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:33:16 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 16:56:32 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 17:11:45 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 MateriaSource::MateriaSource(void) : m_name("Mako reactor")
 {
-	std::cout << "Default constructor called: MateriaSource \n";
+	std::cout << "Default constructor called: MateriaSource 🔁\n";
 	for (int i = 0; i != MEM_SPACE; ++i) {
 		m_memory[i] = NULL;
 	}
@@ -22,7 +22,7 @@ MateriaSource::MateriaSource(void) : m_name("Mako reactor")
 
 MateriaSource::MateriaSource(const std::string& name) : m_name(name)
 {
-	std::cout << "Param constructor called: MateriaSource \n";
+	std::cout << "Param constructor called: MateriaSource 🔁\n";
 	for (int i = 0; i != MEM_SPACE; ++i) {
 		m_memory[i] = NULL;
 	}
@@ -30,7 +30,7 @@ MateriaSource::MateriaSource(const std::string& name) : m_name(name)
 
 MateriaSource::MateriaSource(const MateriaSource& ref)
 {
-	std::cout << "Copy constructor called: MateriaSource \n";
+	std::cout << "Copy constructor called: MateriaSource 🔁\n";
 	for (int i = 0; i != MEM_SPACE; ++i) {
 		if (ref.m_memory[i] != NULL) {
 			m_memory[i] = ref.m_memory[i]->clone();
@@ -41,7 +41,7 @@ MateriaSource::MateriaSource(const MateriaSource& ref)
 
 MateriaSource& MateriaSource::operator=(const MateriaSource& ref)
 {
-	std::cout << "Copy assignment operator called: MateriaSource \n";
+	std::cout << "Copy assignment operator called: MateriaSource 🔁\n";
 	if (this == &ref)
 		return *this;
 	AMateria* temp_memory[MEM_SPACE];
@@ -61,7 +61,7 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& ref)
 
 MateriaSource::~MateriaSource(void)
 {
-	std::cout << "Destructor called: MateriaSource \n";
+	std::cout << "Destructor called: MateriaSource 🔁\n";
 	for (int i = 0; i != MEM_SPACE; ++i) {
 		delete m_memory[i];
 	}
@@ -82,7 +82,7 @@ void MateriaSource::learnMateria(AMateria* m)
 		if (m_memory[i] == NULL) {
 			m_memory[i] = m;
 			m->setPlace(MATERIASOURCE, m_name, i);
-			std::cout << "Learned " << m->getType() << " in slot: " << i << "\n";
+			std::cout << getName() << " learned " << m->getType() << " in slot: " << i << "\n";
 			return;
 		}
 	}

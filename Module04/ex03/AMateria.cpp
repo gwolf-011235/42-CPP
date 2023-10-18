@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:08:10 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 13:10:16 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/18 17:03:16 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 AMateria::AMateria(std::string const & type) : m_type(type), m_place(NONE), m_place_name("SPACE"), m_idx(-1)
 {
-	std::cout << "Param constructor called: AMateria \n";
+	std::cout << "Param constructor called: AMateria ⚪\n";
 }
 
 AMateria::~AMateria()
 {
-	std::cout << "Destructor called: AMateria \n";
+	std::cout << "Destructor called: AMateria ⚪\n";
 }
 
 std::string const & AMateria::getType() const
@@ -50,15 +50,15 @@ void AMateria::printPlace() const
 {
 	switch (m_place) {
 		case CHARACTER:
-			std::cout << "The materia is in the inventory of " << m_place_name << " in the slot " << m_idx << "\n";
+			std::cout << "The materia " << getType() << " is in the inventory of " << m_place_name << " in slot " << m_idx << "\n";
 			break;
 		case MATERIASOURCE:
-			std::cout << "The materia is in the memory of " << m_place_name << " in the slot " << m_idx << "\n";
+			std::cout << "The materia " << getType() << " is stored in the memory of " << m_place_name << " in slot " << m_idx << "\n";
 			break;
 		case FLOOR:
-			std::cout << "The materia lies on the floor on tile " << m_idx << "\n";
+			std::cout << "The materia " << getType() << " lies on the floor on tile " << m_idx << "\n";
 			break;
 		default:
-			std::cout << "The materia is floating in space!\n";
+			std::cout << "The materia " << getType() << " is floating in space!\n";
 	}
 }
