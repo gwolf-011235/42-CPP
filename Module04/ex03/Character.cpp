@@ -16,7 +16,7 @@ Floor Character::s_floor;
 
 Character::Character(void) : m_name("New Hero")
 {
-	std::cout << "Default constructor called: Character 👤\n";
+	std::clog << "Default constructor called: Character 👤\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
 		m_inventory[i] = NULL;
 	}
@@ -24,7 +24,7 @@ Character::Character(void) : m_name("New Hero")
 
 Character::Character(const std::string& name) : m_name(name)
 {
-	std::cout << "Param constructor called: Character 👤\n";
+	std::clog << "Param constructor called: Character 👤\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
 		m_inventory[i] = NULL;
 	}
@@ -32,7 +32,7 @@ Character::Character(const std::string& name) : m_name(name)
 
 Character::Character(const Character& ref) : m_name(ref.m_name)
 {
-	std::cout << "Copy constructor called: Character 👤\n";
+	std::clog << "Copy constructor called: Character 👤\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
 		m_inventory[i] = NULL;
 		if (ref.m_inventory[i] != NULL) {
@@ -44,7 +44,7 @@ Character::Character(const Character& ref) : m_name(ref.m_name)
 
 Character& Character::operator=(const Character& ref)
 {
-	std::cout << "Copy assignment operator called: Character 👤\n";
+	std::clog << "Copy assignment operator called: Character 👤\n";
 	if (this == &ref)
 		return *this;
 	AMateria* temp_inventory[INV_SPACE];
@@ -64,7 +64,7 @@ Character& Character::operator=(const Character& ref)
 
 Character::~Character(void)
 {
-	std::cout << "Destructor called: Character 👤\n";
+	std::clog << "Destructor called: Character 👤\n";
 	for (int i = 0; i != INV_SPACE; ++i) {
 		delete m_inventory[i];
 	}
@@ -98,11 +98,11 @@ void Character::equip(AMateria* m)
 void Character::unequip(int idx)
 {
 	if (idx < 0 || idx > 3) {
-		std::cout << "Cannot unequip: Not a valid slot\n";
+		std::cout << getName() << " cannot unequip: " << idx << " is not a valid slot\n";
 		return;
 	}
 	if (m_inventory[idx] == NULL) {
-		std::cout << "Cannot unequip: Nothing there\n";
+		std::cout << getName() << " cannot unequip: The slot " << idx << " is empty\n";
 		return;
 	}
 	m_inventory[idx]->setPlace(NONE, "", -1);
@@ -114,11 +114,11 @@ void Character::unequip(int idx)
 void Character::use(int idx, ICharacter& target)
 {
 	if (idx < 0 || idx > 3) {
-		std::cout << "Cannot use: Not a valid slot\n";
+		std::cout << getName() << " cannot use: " << idx << " is not a valid slot\n";
 		return;
 	}
 	if (m_inventory[idx] == NULL) {
-		std::cout << "Cannot use: Nothing there\n";
+		std::cout << getName() << " cannot use: The slot " << idx << " is empty\n";
 		return;
 	}
 	m_inventory[idx]->use(target);

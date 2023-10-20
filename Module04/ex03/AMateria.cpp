@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:08:10 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 17:03:16 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/20 10:41:11 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 AMateria::AMateria(std::string const & type) : m_type(type), m_place(NONE), m_place_name("SPACE"), m_idx(-1)
 {
-	std::cout << "Param constructor called: AMateria ⚪\n";
+	std::clog << "Param constructor called: AMateria ⚪\n";
 }
 
 AMateria::~AMateria()
 {
-	std::cout << "Destructor called: AMateria ⚪\n";
+	std::clog << "Destructor called: AMateria ⚪\n";
 }
 
 std::string const & AMateria::getType() const

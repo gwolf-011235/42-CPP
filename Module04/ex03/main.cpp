@@ -17,8 +17,9 @@
 
 void	testMateriaSourceMethods(void)
 {
+	std::cout << "TEST MateriaSource Methods\n";
 	Character me("Bubblegum");
-	MateriaSource src("Marceline");
+	MateriaSource src("Candy Kingdom");
 	AMateria* array[6];
 	for (int i = 0; i != 6; i += 2) {
 		array[i] = new Ice();
@@ -31,10 +32,12 @@ void	testMateriaSourceMethods(void)
 	me.equip(src.createMateria("ice"));
 	me.equip(src.createMateria("fire"));
 	me.equip(src.createMateria("cure"));
+	std::cout << "FINISH\n\n";
 }
 
 void	testCharacterMethods(void)
 {
+	std::cout << "TEST Character Methods\n";
 	Character me("Iceking");
 	AMateria* array[6];
 	for (int i = 0; i != 6; i += 2) {
@@ -53,6 +56,7 @@ void	testCharacterMethods(void)
 	for (int i = 0; i != 5; ++i) {
 		me.unequip(i);
 	}
+	std::cout << "FINISH\n\n";
 }
 
 void	testMateriaSourceCtor(void)
@@ -82,6 +86,7 @@ void	testMateriaSourceCtor(void)
 	three.printInfo();
 
 	delete src;
+	std::cout << "FINISH\n\n";
 }
 void	testCharacterCtor(void)
 {
@@ -112,6 +117,7 @@ void	testCharacterCtor(void)
 	dog.unequip(1);
 
 	delete me;
+	std::cout << "FINISH\n\n";
 }
 
 void	testOverfill(void)
@@ -144,6 +150,7 @@ void	testOverfill(void)
 
 void	testFromSubject(void)
 {
+	std::cout << "TEST from subject\n";
 	IMateriaSource* src = new MateriaSource();
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
@@ -164,6 +171,7 @@ void	testFromSubject(void)
 	delete bob;
 	delete me;
 	delete src;
+	std::cout << "FINISH\n\n";
 }
 
 int	main(void)
@@ -177,3 +185,7 @@ int	main(void)
 	testOverfill();
 	return 0;
 }
+
+
+
+// Give better messages when materia is already assigned
