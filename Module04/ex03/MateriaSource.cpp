@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:33:16 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/20 10:49:36 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/20 11:04:18 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void MateriaSource::learnMateria(AMateria* m)
 	if (m == NULL)
 		return;
 	if (m->hasPlace()) {
+		std::cout << getName() << " cannot learn the materia, it is already somewhere\n";
 		m->printPlace();
 		return;
 	}
@@ -85,7 +86,7 @@ void MateriaSource::learnMateria(AMateria* m)
 		if (m_memory[i] == NULL) {
 			m_memory[i] = m;
 			m->setPlace(MATERIASOURCE, m_name, i);
-			std::cout << getName() << " learned " << m->getType() << " in slot: " << i << "\n";
+			std::cout << getName() << " learned <" << m->getType() << "> in slot <" << i << ">\n";
 			return;
 		}
 	}
@@ -95,10 +96,10 @@ void MateriaSource::learnMateria(AMateria* m)
 
 AMateria* MateriaSource::createMateria(std::string const & type)
 {
-	std::cout << "Trying to create new materia of type " << type << "\n";
+	std::cout << "Trying to create new materia of type <" << type << ">\n";
 	for (int i = 0; i != MEM_SPACE; ++i) {
 		if (m_memory[i] && m_memory[i]->getType() == type) {
-			std::cout << "Found match in slot " << i << "\n";
+			std::cout << "Found match in slot <" << i << ">\n";
 			return m_memory[i]->clone();
 
 		}

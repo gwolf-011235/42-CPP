@@ -80,6 +80,7 @@ void Character::equip(AMateria* m)
 	if (m == NULL)
 		return;
 	if (m->hasPlace()) {
+		std::cout << getName() << " cannot equip the materia, it is already somewhere\n";
 		m->printPlace();
 		return;
 	}
@@ -87,7 +88,7 @@ void Character::equip(AMateria* m)
 		if (m_inventory[i] == NULL) {
 			m_inventory[i] = m;
 			m->setPlace(CHARACTER, m_name, i);
-			std::cout << getName() << " equipped " << m->getType() << " in slot: " << i << "\n";
+			std::cout << getName() << " equipped <" << m->getType() << "> in slot <" << i << ">\n";
 			return;
 		}
 	}
@@ -98,15 +99,15 @@ void Character::equip(AMateria* m)
 void Character::unequip(int idx)
 {
 	if (idx < 0 || idx > 3) {
-		std::cout << getName() << " cannot unequip: " << idx << " is not a valid slot\n";
+		std::cout << getName() << " cannot unequip: <" << idx << "> is not a valid slot\n";
 		return;
 	}
 	if (m_inventory[idx] == NULL) {
-		std::cout << getName() << " cannot unequip: The slot " << idx << " is empty\n";
+		std::cout << getName() << " cannot unequip: The slot <" << idx << "> is empty\n";
 		return;
 	}
 	m_inventory[idx]->setPlace(NONE, "", -1);
-	std::cout << getName() << " unequipped " << m_inventory[idx]->getType() << " of slot: " << idx << " and dropped it on the floor\n";
+	std::cout << getName() << " unequipped <" << m_inventory[idx]->getType() << "> of slot <" << idx << "> and dropped it on the floor\n";
 	s_floor.dropOnFloor(m_inventory[idx]);
 	m_inventory[idx] = NULL;
 }
@@ -114,11 +115,11 @@ void Character::unequip(int idx)
 void Character::use(int idx, ICharacter& target)
 {
 	if (idx < 0 || idx > 3) {
-		std::cout << getName() << " cannot use: " << idx << " is not a valid slot\n";
+		std::cout << getName() << " cannot use: <" << idx << "> is not a valid slot\n";
 		return;
 	}
 	if (m_inventory[idx] == NULL) {
-		std::cout << getName() << " cannot use: The slot " << idx << " is empty\n";
+		std::cout << getName() << " cannot use: The slot <" << idx << "> is empty\n";
 		return;
 	}
 	m_inventory[idx]->use(target);

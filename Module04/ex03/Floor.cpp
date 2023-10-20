@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 22:00:38 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/20 10:47:21 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/20 10:58:48 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	Floor::dropOnFloor(AMateria* m)
 		if (m_storage[i] == NULL) {
 			m_storage[i] = m;
 			m->setPlace(FLOOR, m_name, i);
-			std::cout << "The Materia " << m->getType() << " lies on the floor on tile: " << i << "\n";
+			std::cout << "The Materia <" << m->getType() << "> lies on the floor on tile <" << i << ">\n";
 			return;
 		}
 	}

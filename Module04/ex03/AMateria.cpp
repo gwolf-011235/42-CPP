@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:08:10 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/20 10:41:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/20 11:03:50 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ void AMateria::printPlace() const
 {
 	switch (m_place) {
 		case CHARACTER:
-			std::cout << "The materia " << getType() << " is in the inventory of " << m_place_name << " in slot " << m_idx << "\n";
+			std::cout << "The Materia <" << getType() << "> is in the inventory of " << m_place_name << " in slot <" << m_idx << ">\n";
 			break;
 		case MATERIASOURCE:
-			std::cout << "The materia " << getType() << " is stored in the memory of " << m_place_name << " in slot " << m_idx << "\n";
+			std::cout << "The Materia <" << getType() << "> is stored in the memory of " << m_place_name << " in slot <" << m_idx << ">\n";
 			break;
 		case FLOOR:
-			std::cout << "The materia " << getType() << " lies on the floor on tile " << m_idx << "\n";
+			std::cout << "The Materia <" << getType() << "> lies on the floor on tile <" << m_idx << ">\n";
 			break;
 		default:
-			std::cout << "The materia " << getType() << " is floating in space!\n";
+			std::cout << "The Materia <" << getType() << "> is floating in space!\n";
 	}
 }
