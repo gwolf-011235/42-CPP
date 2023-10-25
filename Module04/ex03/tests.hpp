@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   tests.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 21:33:53 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/18 19:26:26by gwolf            ###   ########.fr       */
+/*   Created: 2023/10/25 11:07:55 by gwolf             #+#    #+#             */
+/*   Updated: 2023/10/25 11:17:07 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.hpp"
+#pragma once
 
-int	main(void)
-{
-	runTests();
-	return 0;
-}
+#include "Character.hpp"
+#include "Cure.hpp"
+#include "Ice.hpp"
+#include "MateriaSource.hpp"
+
+// Driver function
+void	runTests(void);
+// Subject
+void	testFromSubject(void);
+// Class Character
+void	testCharacterCtor(void);
+void	testCharacterMethods(void);
+// Class MateriaSource
+void	testMateriaSourceCtor(void);
+void	testMateriaSourceMethods(void);
+// Exceed limits
+void	testOverfill(void);

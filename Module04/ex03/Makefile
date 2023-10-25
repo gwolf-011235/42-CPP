@@ -6,7 +6,7 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2023/10/16 22:15:06 by gwolf            ###   ########.fr        #
+#    Updated: 2023/10/25 11:10:31 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRC = 	main.cpp \
 		Cure.cpp \
 		Ice.cpp \
 		MateriaSource.cpp \
-		Floor.cpp
+		Floor.cpp \
+		tests.cpp
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
 
