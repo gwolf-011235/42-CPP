@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 11:08:05 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/25 11:22:04 by gwolf            ###   ########.fr       */
+/*   Updated: 2023/10/25 11:43:17 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	runTests(void)
 
 void	testFromSubject(void)
 {
-	std::cout << "TEST from subject\n";
+	std::cout << "--- TEST from subject ---\n";
 	IMateriaSource* src = new MateriaSource();
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
@@ -56,6 +56,7 @@ void	testFromSubject(void)
 
 void	testCharacterCtor(void)
 {
+	std::cout << "--- TEST Character Ctor/Dtor ---\n";
 	ICharacter* me;
 
 	std::cout << "TEST Character Default\n";
@@ -86,13 +87,14 @@ void	testCharacterCtor(void)
 
 void	testCharacterMethods(void)
 {
-	std::cout << "TEST Character Methods\n";
+	std::cout << "--- TEST Character Methods ---\n";
 	Character me("Iceking");
 	AMateria* array[6];
 	for (int i = 0; i != 6; i += 2) {
 		array[i] = new Ice();
 		array[i + 1] = new Cure();
 	}
+	std::cout << "\n";
 
 	std::cout << "TEST equip()\n";
 	for (int i = 0; i != 6; ++i) {
@@ -117,6 +119,7 @@ void	testCharacterMethods(void)
 
 void	testMateriaSourceCtor(void)
 {
+	std::cout << "--- TEST MateriaSource Ctor/Dtor ---\n";
 	IMateriaSource* src;
 
 	std::cout << "TEST MateriaSource Default\n";
@@ -145,7 +148,7 @@ void	testMateriaSourceCtor(void)
 
 void	testMateriaSourceMethods(void)
 {
-	std::cout << "TEST MateriaSource Methods\n";
+	std::cout << "--- TEST MateriaSource Methods ---\n";
 	Character me("Bubblegum");
 	MateriaSource src("Candy Kingdom");
 	AMateria* array[6];
@@ -153,6 +156,7 @@ void	testMateriaSourceMethods(void)
 		array[i] = new Ice();
 		array[i + 1] = new Cure();
 	}
+	std::cout << "\n";
 
 	std::cout << "TEST learnMateria()\n";
 	for (int i = 0; i != 6; ++i) {
@@ -169,6 +173,7 @@ void	testMateriaSourceMethods(void)
 
 void	testOverfill(void)
 {
+	std::cout << "--- TEST Overfill ---\n";
 	std::cout << "TEST Overfill MateriaSource\n";
 	IMateriaSource* src = new MateriaSource();
 	for (int i = 0; i != 5; ++i) {
