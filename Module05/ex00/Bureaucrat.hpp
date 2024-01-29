@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:54:13 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/27 16:11:32 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/29 10:22:16 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,40 @@
 # define BUREAUCRAT_CLASS_H
 
 #include <iostream>
-#include <stdint.h>
+#include <stdexcept>
 
 class Bureaucrat
 {
 public:
-
-	Bureaucrat(const std::string &name = "Small_cog", uint8_t grade = 150);
+//ctor
+	Bureaucrat(const std::string &name = "Small_cog", int grade = 150);
 	Bureaucrat(const Bureaucrat& ref);
-	~Bureaucrat(void);
+	~Bureaucrat();
+//operators
 	Bureaucrat& operator= (const Bureaucrat& ref);
-
+//getters
 	const std::string&	getName() const;
-	uint8_t				getGrade() const;
-
+	int					getGrade() const;
+//exception
+	class GradeTooHighException : public std::runtime_error
+	{
+		public:
+			GradeTooHighException();
+	};
+	class GradeTooLowException : public std::runtime_error
+	{
+		public:
+			GradeTooLowException();
+	};
+//methods
+	void	promote();
+	void	demote();
 private:
 
 	const std::string	m_name;
-	uint8_t				m_grade;
+	int					m_grade;
 };
 
+std::ostream &operator<<(std::ostream &o, const Bureaucrat &c);
 
 #endif
