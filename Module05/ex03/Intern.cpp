@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 16:49:24 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/29 16:52:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/31 00:58:32 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ Intern::Intern(void)
 Intern::Intern(const Intern& ref)
 {
 	std::cout << "Copy constructor called: Intern \n";
+	(void)ref;
 }
 
 Intern::~Intern(void)
@@ -34,22 +35,47 @@ Intern::~Intern(void)
 Intern& Intern::operator=(const Intern& ref)
 {
 	std::cout << "Copy assignment operator called: Intern \n";
+	(void)ref;
 	return (*this);
 }
 
 // methods
 
+AForm*	Intern::createShrubberyCreationForm(const std::string& target) const
+{
+	std::cout << "Creating shrubbery creation form with target: " << target << "\n";
+	return (new ShrubberyCreationForm(target));
+}
+
+AForm*	Intern::createRobotomyRequestForm(const std::string& target) const
+{
+	std::cout << "Creating robotomy request form with target: " << target << "\n";
+	return (new RobotomyRequestForm(target));
+}
+
+AForm*	Intern::createPresidentialPardonForm(const std::string& target) const
+{
+	std::cout << "Creating presidential pardon form with target: " << target << "\n";
+	return (new PresidentialPardonForm(target));
+}
+
 AForm*	Intern::makeForm(const std::string& formName, const std::string& target) const
 {
-	AForm*	form = NULL;
+	static const std::string formNames[3] = {
+		"shrubbery creation",
+		"robotomy request",
+		"presidential pardon"
+	};
+	static const FormCreationFunc formCreators[3] = {
+		&Intern::createShrubberyCreationForm,
+		&Intern::createRobotomyRequestForm,
+		&Intern::createPresidentialPardonForm
+	};
 
-	if (formName == "shrubbery creation")
-		form = new ShrubberyCreationForm(target);
-	else if (formName == "robotomy request")
-		form = new RobotomyRequestForm(target);
-	else if (formName == "presidential pardon")
-		form = new PresidentialPardonForm(target);
-	else
-		std::cout << "Form " << formName << " does not exist\n";
-	return (form);
+	for (int i = 0; i < 3; ++i) {
+		if (formNames[i] == formName)
+			return ((this->*formCreators[i])(target));
+	}
+	std::cout << "Form " << formName << " does not exist\n";
+	return (NULL);
 }
