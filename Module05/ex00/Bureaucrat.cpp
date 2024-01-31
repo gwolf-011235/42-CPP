@@ -6,11 +6,13 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:55:07 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/29 10:25:29 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/31 10:46:40 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+
+// ctor
 
 Bureaucrat::Bureaucrat(const std::string &name, int grade) :
 	m_name(name), m_grade(grade)
@@ -33,12 +35,16 @@ Bureaucrat::~Bureaucrat()
 	std::cout << "Destructor called: Bureaucrat \n";
 }
 
+// operators
+
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& ref)
 {
 	std::cout << "Copy assignment operator called: Bureaucrat \n";
 	m_grade = ref.getGrade();
 	return (*this);
 }
+
+// exception
 
 Bureaucrat::GradeTooHighException::GradeTooHighException() :
 	std::runtime_error("Grade is too high")
@@ -52,6 +58,8 @@ Bureaucrat::GradeTooLowException::GradeTooLowException() :
 	std::cout << "Constructor called: GradeTooLowException\n";
 }
 
+// getters
+
 const std::string&	Bureaucrat::getName() const
 {
 	return (this->m_name);
@@ -61,6 +69,8 @@ int	Bureaucrat::getGrade() const
 {
 	return (this->m_grade);
 }
+
+// methods
 
 void	Bureaucrat::promote()
 {
@@ -79,6 +89,8 @@ void	Bureaucrat::demote()
 		m_grade++;
 	std::cout << "Bureaucrat " << getName() << " was demoted to grade " << getGrade() << "\n";
 }
+
+// stream operator
 
 std::ostream &operator<<(std::ostream &o, const Bureaucrat &c)
 {
