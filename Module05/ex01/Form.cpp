@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:38:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/29 15:05:49 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/31 11:02:26 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,20 @@ Form& Form::operator=(const Form& ref)
 	return (*this);
 }
 
+// exception
+
+Form::GradeTooHighException::GradeTooHighException(const std::string &msg) :
+	std::runtime_error(msg)
+{
+	std::cout << "Constructor called: Form::GradeTooHighException \n";
+}
+
+Form::GradeTooLowException::GradeTooLowException(const std::string &msg) :
+	std::runtime_error(msg)
+{
+	std::cout << "Constructor called: Form::GradeTooLowException\n";
+}
+
 // getters
 
 const std::string&	Form::getName() const
@@ -73,20 +87,6 @@ int	Form::getGradeToExecute() const
 	return (m_gradeToExecute);
 }
 
-// exception
-
-Form::GradeTooHighException::GradeTooHighException(const std::string &msg) :
-	std::runtime_error(msg)
-{
-	std::cout << "Constructor called: Form::GradeTooHighException \n";
-}
-
-Form::GradeTooLowException::GradeTooLowException(const std::string &msg) :
-	std::runtime_error(msg)
-{
-	std::cout << "Constructor called: Form::GradeTooLowException\n";
-}
-
 // methods
 
 void	Form::beSigned(const Bureaucrat& ref)
@@ -96,6 +96,8 @@ void	Form::beSigned(const Bureaucrat& ref)
 	else
 		m_isSigned = true;
 }
+
+// stream operators
 
 std::ostream &operator<<(std::ostream &o, const Form &c)
 {

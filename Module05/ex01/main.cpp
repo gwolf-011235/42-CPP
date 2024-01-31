@@ -6,87 +6,37 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:50:44 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/29 15:06:35 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/31 11:05:27 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
-#include <iosfwd>
-
-void	test_bureaucrat_ctor()
-{
-	std::cout << "*** Test Bureaucrat constructor ***\n";
-
-	try {
-		Bureaucrat	tooHigh("tooHigh", 0);
-	}
-	catch(const std::exception& e) {
-		std::cerr << e.what() << '\n';
-	}
-	try {
-		Bureaucrat	tooLow("tooLow", 151);
-	}
-	catch(const std::exception& e) {
-		std::cerr << e.what() << '\n';
-	}
-	Bureaucrat	MrHigh("MrHigh", 1);
-	Bureaucrat	MrLow("MrLow", 150);
-	Bureaucrat	MrCopy(MrHigh);
-	Bureaucrat	MrAssign;
-
-	MrAssign = MrLow;
-	std::cout << MrHigh;
-	std::cout << MrLow;
-	std::cout << MrCopy;
-	std::cout << MrAssign;
-}
-
-void	test_bureaucrat_method()
-{
-	std::cout << "*** Test Bureaucrat method ***\n";
-
-	Bureaucrat	stanley("stanley", 10);
-	std::cout << stanley;
-	while (1)
-	{
-		try {
-			stanley.promote();
-		}
-		catch(const std::exception& e) {
-			std::cerr << e.what() << '\n';
-			break ;
-		}
-	}
-	std::cout << stanley;
-
-	Bureaucrat	steven("steven", 140);
-	std::cout << steven;
-	while (1)
-	{
-		try {
-			steven.demote();
-		}
-		catch(const std::exception& e) {
-			std::cerr << e.what() << '\n';
-			break ;
-		}
-	}
-	std::cout << steven;
-}
 
 void	test_form_ctor()
 {
 	std::cout << "*** Test Form constructor ***\n";
 
 	try {
-		Form	tooHigh("tooHigh", 0, 12);
+		Form	signTooHigh("signTooHigh", 0, 12);
 	}
 	catch(const std::exception& e) {
 		std::cerr << e.what() << '\n';
 	}
 	try {
-		Form	tooLow("tooLow", 150, 151);
+		Form	signTooLow("signTooLow", 170, 12);
+	}
+	catch(const std::exception& e) {
+		std::cerr << e.what() << '\n';
+	}
+	try {
+		Form	execTooHigh("execTooHigh", 12, -1);
+	}
+	catch(const std::exception& e) {
+		std::cerr << e.what() << '\n';
+	}
+	try {
+		Form	execTooLow("execTooLow", 150, 161);
 	}
 	catch(const std::exception& e) {
 		std::cerr << e.what() << '\n';
@@ -134,9 +84,7 @@ void	test_sign_form()
 
 int	main(void)
 {
-	//test_bureaucrat_ctor();
-	//test_bureaucrat_method();
-	//test_form_ctor();
+	test_form_ctor();
 	test_sign_form();
 	return (0);
 }

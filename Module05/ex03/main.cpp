@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:50:44 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/30 08:30:52 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/31 11:28:28 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,23 @@
 
 void	sign_and_execute_form(Bureaucrat &bureaucrat, AForm &form)
 {
+	std::cout << "\n** Attempting to sign and exectue form \n\n";
+	std::cout << "* Info about bureaucrat and form \n";
 	std::cout << bureaucrat;
 	std::cout << form;
-	std::cout << "---------------------\n";
+	std::cout << "\n";
 
-	std::cout << "** Execute not signed form \n";
-	bureaucrat.executeForm(form);
-
-	std::cout << "** Signing form \n";
-	bureaucrat.signForm(form);
+	std::cout << "* Signing form \n";
 	while (bureaucrat.getGrade() > form.getGradeToSign())
 		bureaucrat.promote();
 	bureaucrat.signForm(form);
-	std::cout << "---------------------\n";
+	std::cout << "\n";
 
 	std::cout << "** Executing form \n";
-	bureaucrat.executeForm(form);
 	while (bureaucrat.getGrade() > form.getGradeToExecute())
 		bureaucrat.promote();
 	bureaucrat.executeForm(form);
-	std::cout << "---------------------\n";
+	std::cout << "\n";
 }
 
 int	main(void)

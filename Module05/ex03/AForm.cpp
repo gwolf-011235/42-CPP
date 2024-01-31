@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:38:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/29 16:38:17 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/31 11:12:36 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,6 @@ AForm& AForm::operator=(const AForm& ref)
 	return (*this);
 }
 
-// getters
-
-const std::string&	AForm::getName() const
-{
-	return (m_name);
-}
-
-bool	AForm::getIsSigned() const
-{
-	return (m_isSigned);
-}
-
-int	AForm::getGradeToSign() const
-{
-	return (m_gradeToSign);
-}
-
-int	AForm::getGradeToExecute() const
-{
-	return (m_gradeToExecute);
-}
-
 // exception
 
 AForm::GradeTooHighException::GradeTooHighException(const std::string &msg) :
@@ -98,6 +76,28 @@ AForm::FormAlreadySigned::FormAlreadySigned(const std::string &msg) :
 {
 	std::cout << "Constructor called: AForm::FormAlreadySigned\n";
 };
+
+// getters
+
+const std::string&	AForm::getName() const
+{
+	return (m_name);
+}
+
+bool	AForm::getIsSigned() const
+{
+	return (m_isSigned);
+}
+
+int	AForm::getGradeToSign() const
+{
+	return (m_gradeToSign);
+}
+
+int	AForm::getGradeToExecute() const
+{
+	return (m_gradeToExecute);
+}
 
 // methods
 

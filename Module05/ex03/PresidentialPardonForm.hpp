@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:48:26 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/29 15:49:10 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/31 11:16:57 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ public:
 	void	execute(const Bureaucrat& executor) const;
 
 private:
+// attributes
 	const std::string	m_target;
 };
 

@@ -6,12 +6,14 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:55:07 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/29 15:44:39 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/31 11:13:37 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
+
+// ctor
 
 Bureaucrat::Bureaucrat(const std::string &name, int grade) :
 	m_name(name), m_grade(grade)
@@ -34,6 +36,8 @@ Bureaucrat::~Bureaucrat()
 	std::cout << "Destructor called: Bureaucrat \n";
 }
 
+// operators
+
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& ref)
 {
 	std::cout << "Copy assignment operator called: Bureaucrat \n";
@@ -42,6 +46,8 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& ref)
 	}
 	return (*this);
 }
+
+// exception
 
 Bureaucrat::GradeTooHighException::GradeTooHighException(const std::string &msg) :
 	std::runtime_error(msg)
@@ -54,6 +60,8 @@ Bureaucrat::GradeTooLowException::GradeTooLowException(const std::string &msg) :
 {
 	std::cout << "Constructor called: Bureaucrat::GradeTooLowException\n";
 }
+
+// getters
 
 const std::string&	Bureaucrat::getName() const
 {

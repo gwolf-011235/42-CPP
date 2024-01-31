@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:54:13 by gwolf             #+#    #+#             */
-/*   Updated: 2024/01/31 10:46:49 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/01/31 11:01:41 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ public:
 	~Bureaucrat();
 // operators
 	Bureaucrat& operator= (const Bureaucrat& ref);
-// getters
-	const std::string&	getName() const;
-	int					getGrade() const;
 // exception
 	class GradeTooHighException : public std::runtime_error
 	{
@@ -39,12 +36,15 @@ public:
 		public:
 			GradeTooLowException();
 	};
+// getters
+	const std::string&	getName() const;
+	int					getGrade() const;
 // methods
 	void	promote();
 	void	demote();
 
 private:
-// variables
+// attributes
 	const std::string	m_name;
 	int					m_grade;
 };
