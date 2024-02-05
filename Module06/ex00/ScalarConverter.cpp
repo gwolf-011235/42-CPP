@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 13:35:53 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/05 14:46:08 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/05 14:50:45 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,12 @@ static void	printInt(T input)
 template <typename T>
 static void	printFloat(T input)
 {
-	if (input > std::numeric_limits<float>::max() || input < nextafterf(-std::numeric_limits<float>::infinity(), 0.0f))
+	if (isinf(input) || isnan(input))
+		std::cout << "float:\t" << static_cast<float>(input) << "f\n";
+	else if (input > std::numeric_limits<float>::max() || input < nextafterf(-std::numeric_limits<float>::infinity(), 0.0f))
 		std::cout << "float:\timpossible\n";
 	else
-	std::cout << "float:\t" << std::fixed << static_cast<float>(input) << "f\n";
+		std::cout << "float:\t" << std::fixed << static_cast<float>(input) << "f\n";
 }
 
 template <typename T>
