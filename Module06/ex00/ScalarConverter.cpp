@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 13:35:53 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/05 14:50:45 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/05 16:01:31 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ static e_type	getType(const std::string &str)
 	if (str.length() == 1 && !std::isdigit(static_cast<unsigned char>(str[0])))
 		return (TYPE_CHAR);
 
-	char	*endptr;
-	double	converted_num = strtod(str.c_str(), &endptr);
+	char		*endptr;
+	double		converted_num = strtod(str.c_str(), &endptr);
+	size_t		endlen = std::strlen(endptr);
 
-	if (str.empty() || (*endptr != '\0' && (*endptr != 'f' && str != "-inff" && str != "+inff" && str != "nanf")))
+	if (str.empty() || (*endptr != '\0' && (*endptr != 'f' || endlen != 1)))
 		return (TYPE_INVALID);
 	if (str.find('.') == std::string::npos && converted_num <= std::numeric_limits<int>::max() && converted_num >= std::numeric_limits<int>::min())
 		return (TYPE_INT);
