@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 13:35:53 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/05 14:33:39 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/05 14:46:08 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ static const std::string&	enumToString(e_type type)
 template <typename T>
 static void	printChar(T input)
 {
-	if (input > std::numeric_limits<unsigned char>::max() || input < std::numeric_limits<unsigned char>::min())
-		std::cout << "char:\tImpossible\n";
+	if (input > std::numeric_limits<unsigned char>::max() || input < std::numeric_limits<unsigned char>::min() || isnan(input))
+		std::cout << "char:\timpossible\n";
 	else if (input < 32 || input > 126)
 		std::cout << "char:\tNon displayable\n";
 	else
@@ -95,8 +95,8 @@ static void	printChar(T input)
 template <typename T>
 static void	printInt(T input)
 {
-	if (input > std::numeric_limits<int>::max() || input < std::numeric_limits<int>::min())
-		std::cout << "int:\tImpossible\n";
+	if (input > std::numeric_limits<int>::max() || input < std::numeric_limits<int>::min() || isnan(input))
+		std::cout << "int:\timpossible\n";
 	else
 		std::cout << "int:\t" << static_cast<int>(input) << "\n";
 }
@@ -105,7 +105,7 @@ template <typename T>
 static void	printFloat(T input)
 {
 	if (input > std::numeric_limits<float>::max() || input < nextafterf(-std::numeric_limits<float>::infinity(), 0.0f))
-		std::cout << "float:\tImpossible\n";
+		std::cout << "float:\timpossible\n";
 	else
 	std::cout << "float:\t" << std::fixed << static_cast<float>(input) << "f\n";
 }
