@@ -6,9 +6,12 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:06:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/07 14:13:37 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/07 17:00:00 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef SERIALIZER_HPP
+# define SERIALIZER_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -28,3 +31,4 @@ private:
 
 };
 
+#endif
