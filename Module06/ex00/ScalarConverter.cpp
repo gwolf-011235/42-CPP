@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 13:35:53 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/05 16:01:31 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/07 17:05:23 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static e_type	getType(const std::string &str)
 
 	if (str.empty() || (*endptr != '\0' && (*endptr != 'f' || endlen != 1)))
 		return (TYPE_INVALID);
-	if (str.find('.') == std::string::npos && converted_num <= std::numeric_limits<int>::max() && converted_num >= std::numeric_limits<int>::min())
+	if (str.find('.') == std::string::npos && *endptr != 'f' && converted_num <= std::numeric_limits<int>::max() && converted_num >= std::numeric_limits<int>::min())
 		return (TYPE_INT);
 	if (*endptr == 'f' || str == "-inff" || str == "+inff" || str == "nanf")
 		return (TYPE_FLOAT);
