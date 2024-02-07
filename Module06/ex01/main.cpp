@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:04:31 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/07 14:12:02 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/07 14:18:54 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int		main(void)
 {
-	Data		data(42, "rice", "The best sweetener in town", 3);
+	Data		data(42, "g_sugar", "The best sweetener in town", 3);
 	uintptr_t	serialized;
 	Data*		deserialized;
 
