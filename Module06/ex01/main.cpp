@@ -6,16 +6,27 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:04:31 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/05 16:04:46 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/07 14:12:02 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Serializer.hpp"
+#include "Data.hpp"
 
 int		main(void)
 {
-	Serializer		serializer;
+	Data		data(42, "rice", "The best sweetener in town", 3);
+	uintptr_t	serialized;
+	Data*		deserialized;
 
-	serializer.serialize();
+	std::cout << "Address of data: " << &data << "\n";
+	serialized = Serializer::serialize(&data);
+	std::cout << "Serialized: " << serialized << "\n";
+	deserialized = Serializer::deserialize(serialized);
+	std::cout << "Deserialized: " << deserialized << "\n";
+
+	data.printData();
+
+
 	return (0);
 }

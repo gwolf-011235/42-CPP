@@ -6,7 +6,7 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2024/02/05 16:04:21 by gwolf            ###   ########.fr        #
+#    Updated: 2024/02/07 14:13:55 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ OBJ_DIR := obj
 DEP_DIR := $(OBJ_DIR)/dep
 
 SRC = 	main.cpp \
-		Serializer.cpp
+		Serializer.cpp \
+		Data.cpp
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
 

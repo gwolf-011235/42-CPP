@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Serializer.hpp                                     :+:      :+:    :+:   */
+/*   Data.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 16:06:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/07 14:13:37 by gwolf            ###   ########.fr       */
+/*   Created: 2024/02/07 14:08:31 by gwolf             #+#    #+#             */
+/*   Updated: 2024/02/07 14:12:23 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <stdint.h>
+#include "Data.hpp"
 
-struct Data;
-
-class Serializer
+Data::Data(int id, std::string name, std::string description, int count) :
+	id(id), name(name), description(description), count(count)
 {
-public:
-	static uintptr_t serialize(Data* ptr);
-	static Data* deserialize(uintptr_t raw);
-private:
-	Serializer(void);
-	Serializer(const Serializer& ref);
-	~Serializer(void);
-	Serializer& operator= (const Serializer& ref);
+	return ;
+}
 
-};
-
+void	Data::printData(void)
+{
+	std::cout << "id:\t\t" << id << "\n";
+	std::cout << "name:\t\t" << name << "\n";
+	std::cout << "description:\t" << description << "\n";
+	std::cout << "count:\t\t" << count << "\n";
+}

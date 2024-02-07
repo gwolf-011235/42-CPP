@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Serializer.hpp                                     :+:      :+:    :+:   */
+/*   Data.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 16:06:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/07 14:13:37 by gwolf            ###   ########.fr       */
+/*   Created: 2024/02/07 13:44:13 by gwolf             #+#    #+#             */
+/*   Updated: 2024/02/07 14:11:01 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef DATA_HPP
+# define DATA_HPP
+
 #include <iostream>
-#include <stdint.h>
+#include <string>
 
-struct Data;
-
-class Serializer
+struct Data
 {
-public:
-	static uintptr_t serialize(Data* ptr);
-	static Data* deserialize(uintptr_t raw);
-private:
-	Serializer(void);
-	Serializer(const Serializer& ref);
-	~Serializer(void);
-	Serializer& operator= (const Serializer& ref);
-
+	Data(int id = 0, std::string name = "", std::string description = "", int count = 0);
+	void	printData(void);
+	int 		id;
+	std::string name;
+	std::string	description;
+	int 		count;
 };
 
+#endif
