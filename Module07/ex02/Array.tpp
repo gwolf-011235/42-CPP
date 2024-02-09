@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 18:56:29 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/09 19:13:55 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/09 19:32:52 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,12 @@ unsigned int	Array<T>::size() const
 	return m_size;
 }
 
+template <typename T>
+void			Array<T>::printArray() const
+{
+	std::cout << "Array: ";
+	for (unsigned int i = 0; i < m_size; ++i)
+		std::cout << m_array[i] << " ";
+	std::cout << std::endl;
+}
 #endif
