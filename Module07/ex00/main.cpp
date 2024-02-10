@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:19:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/10 13:38:23 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/10 13:59:54 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	test_subject(void)
 void	test_custom(void)
 {
 	std::cout << "Custom test\n";
-	Data a(123, "Rice", "White rice", 100);
-	Data b(456, "Beans", "Black beans", 200);
+	Data a = {123, "Rice", "White rice", 100};
+	Data b = {456, "Beans", "Black beans", 200};
 
 	std::cout << "--- Before swap ---\n";
 	std::cout << "Data a\n";

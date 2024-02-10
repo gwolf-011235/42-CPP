@@ -6,29 +6,11 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:08:31 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/10 13:31:38 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/10 13:59:29 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Data.hpp"
-
-//ctor
-
-Data::Data(int id, std::string name, std::string description, int count) :
-	id(id), name(name), description(description), count(count)
-{
-	return ;
-}
-
-Data::Data(const Data& ref)
-{
-	*this = ref;
-}
-
-Data::~Data()
-{
-	return ;
-}
 
 //operator
 
