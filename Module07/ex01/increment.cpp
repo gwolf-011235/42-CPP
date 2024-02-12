@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter.hpp                                           :+:      :+:    :+:   */
+/*   increment.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 17:23:43 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/12 16:18:42 by gwolf            ###   ########.fr       */
+/*   Created: 2024/02/12 16:00:44 by gwolf             #+#    #+#             */
+/*   Updated: 2024/02/12 16:08:21 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITER_HPP
-# define ITER_HPP
+#include <string>
+#include "Data.hpp"
 
-# include <cstddef>
-
-template< typename T >
-void	iter(T *array, const size_t length, void (* const f)(const T &))
+void	increment(int &x)
 {
-	for (size_t i = 0; i < length; i++)
-		f(array[i]);
+	x++;
 }
 
-template< typename T >
-void	iter(T *array, const size_t length, void (* const f)(T &))
+void	increment(float &x)
 {
-	for (size_t i = 0; i < length; i++)
-		f(array[i]);
+	x += 0.5;
 }
 
-#endif
+void	increment(double &x)
+{
+	x += 0.3;
+}
+
+void	increment(std::string &x)
+{
+	x += "!";
+}
+
+void	increment(Data &x)
+{
+	x.count += 100;
+}
