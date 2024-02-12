@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:19:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/10 13:59:54 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/12 15:58:17 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,46 @@
 
 void	test_subject(void)
 {
-	std::cout << "Subject test\n";
+	std::cout << "*** Subject test (enhanced) ***\n\n";
+
 	int a = 2;
 	int b = 3;
+	std::cout << "a = " << a << ", b = " << b << std::endl;
+	std::cout << "* Showcasing swap, min and max *\n";
 	::swap( a, b );
 	std::cout << "a = " << a << ", b = " << b << std::endl;
 	std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
 	std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
+	std::cout << "\n";
+
 	std::string c = "chaine1";
 	std::string d = "chaine2";
+	std::cout << "c = " << c << ", d = " << d << std::endl;
+	std::cout << "* Showcasing swap, min and max *\n";
 	::swap(c, d);
 	std::cout << "c = " << c << ", d = " << d << std::endl;
 	std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
 	std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
-	std::cout << "\n\n";
+	std::cout << "\n";
+
+	std::cout << "*** End of subject test ***\n\n";
 }
 
 void	test_custom(void)
 {
-	std::cout << "Custom test\n";
+	std::cout << "*** Custom test ***\n\n";
+
 	Data a = {123, "Rice", "White rice", 100};
 	Data b = {456, "Beans", "Black beans", 200};
-
-	std::cout << "--- Before swap ---\n";
-	std::cout << "Data a\n";
-	a.printData();
-	std::cout << "Data b\n";
-	b.printData();
+	std::cout << "Data a\n" << a << "Data b\n" << b;
+	std::cout << "* Showcasing swap, min and max *\n";
 	::swap(a, b);
-	std::cout << "--- After swap--- \n";
-	std::cout << "Data a\n";
-	a.printData();
-	std::cout << "Data b\n";
-	b.printData();
-	std::cout << "--- Check for min id ---\n";
+	std::cout << "Data a\n" << a << "Data b\n" << b;
 	std::cout << "min( a, b ) = " << ::min(a, b).id << "\n";
-	std::cout << "--- Check for max id ---\n";
 	std::cout << "max( a, b ) = " << ::max(a, b).id << "\n";
+	std::cout << "\n";
+
+	std::cout << "*** End of custom test ***\n\n";
 }
 
 int main( void )

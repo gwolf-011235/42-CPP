@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:08:31 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/10 13:59:29 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/12 15:57:35 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ bool	Data::operator> (const Data& ref) const
 	return ref < *this;
 }
 
-void	Data::printData(void)
+std::ostream& operator<< (std::ostream& os, const Data& ref)
 {
-	std::cout << "id:\t\t" << id << "\n";
-	std::cout << "name:\t\t" << name << "\n";
-	std::cout << "description:\t" << description << "\n";
-	std::cout << "count:\t\t" << count << "\n";
+	os << "id:\t\t" << ref.id << "\n";
+	os << "name:\t\t" << ref.name << "\n";
+	os << "description:\t" << ref.description << "\n";
+	os << "count:\t\t" << ref.count << "\n\n";
+	return os;
 }
