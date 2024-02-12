@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 18:49:30 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/09 19:32:32 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/12 16:47:46 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ class Array
 {
 	public:
 		Array();
-		Array(unsigned int size);
-		Array(Array const &src);
+		Array(const unsigned int size);
+		Array(const Array& src);
 		~Array();
-		Array	&operator=(Array const &src);
-		T		&operator[](unsigned int size);
+		Array&	operator=(const Array& src);
+		T&		operator[](const unsigned int size);
+		T&		operator[](const unsigned int size) const;
 		unsigned int	size() const;
-		void			printArray() const;
 	private:
 		T				*m_array;
 		unsigned int	m_size;
