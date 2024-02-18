@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 18:49:30 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/18 18:32:43 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/18 19:25:05 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class Span
 		~Span();
 		Span&	operator=(const Span& src);
 		void	addNumber(const int number);
-		void	addNumber(const int* numbers, const unsigned int size);
+		template <typename InputIt> void addNumber(InputIt first, InputIt last);
 		int		shortestSpan() const;
 		int		longestSpan() const;
 		void	print() const;
@@ -37,5 +37,7 @@ class Span
 		unsigned int		m_size;
 		unsigned int		m_count;
 };
+
+# include "Span.tpp"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 08:10:09 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/18 19:06:26 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/18 19:26:10 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,6 @@ void	Span::addNumber(const int number)
 	m_count++;
 }
 
-// TEMP. Doesn't seem to be correct: range of iterators is needed
-void	Span::addNumber(const int* numbers, const unsigned int size)
-{
-	if (m_count + size > m_size)
-		throw std::out_of_range("Span is full");
-	for (unsigned int i = 0; i < size; ++i)
-		addNumber(numbers[i]);
-}
-
 int	Span::shortestSpan() const
 {
 	if (m_count < 2)
@@ -86,4 +77,3 @@ void	Span::print() const
 	std::copy(m_numbers.begin(), m_numbers.begin() + m_count, std::ostream_iterator<int>(std::cout, " "));
 	std::cout << std::endl;
 }
-

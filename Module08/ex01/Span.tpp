@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Span.tpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 18:30:30 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/18 19:16:35 by gwolf            ###   ########.fr       */
+/*   Created: 2024/02/18 19:22:39 by gwolf             #+#    #+#             */
+/*   Updated: 2024/02/18 19:26:16 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Span.hpp"
-#include <list>
+#ifndef SPAN_TPP
+# define SPAN_TPP
 
-int		main()
+# ifndef SPAN_HPP
+#  error "This file should only be included by Span.hpp"
+# endif
+
+template <typename InputIt>
+void	Span::addNumber(InputIt first, InputIt last)
 {
-	Span	sp(5);
-	std::list<int>	lst;
-	lst.push_back(5);
-	lst.push_back(3);
-	lst.push_back(17);
-
-	sp.addNumber(lst.begin(), lst.end());
-	sp.addNumber(9);
-	sp.addNumber(11);
-	sp.print();
-	std::cout << "Shortest span: " << sp.shortestSpan() << "\n";
-	std::cout << "Longest span: " << sp.longestSpan() << "\n";
-	return 0;
+	unsigned int size = std::distance(first, last);
+	if (m_count + size > m_size)
+		throw std::out_of_range("Span is full");
+	for (InputIt it = first; it != last; ++it)
+		addNumber(*it);
 }
+
+#endif
