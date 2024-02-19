@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:34:23 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/12 17:12:52 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/19 10:35:04 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ArrayTest(std::string type, size_t max_val)
 
 		std::cout << "* Filling array and mirror with random numbers\n";
 		for (size_t i = 0; i < max_val; ++i) {
-			const T value = rand();
+			const T value = std::rand();
 			numbers[i] = value;
 			mirror[i] = value;
 		}
@@ -82,7 +82,7 @@ void	ArrayTest(std::string type, size_t max_val)
 
 		std::cout << "* Fill Array with other values using access operator\n";
 		for (size_t i = 0; i < max_val; i++) {
-			const T value = rand();
+			const T value = std::rand();
 			numbers[i] = value;
 		}
 		for (size_t i = 0; i < max_val; i++) {
