@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/26 14:21:36 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/26 14:28:55 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,14 @@ bool isValidHeader(const std::string& header, std::string& delim)
 	if (header.compare(0, 4, "date") != 0) {
 		std::cerr << "ERROR\n";
 		std::cerr << "Invalid header: '" << header << "'\n";
-		std::cerr << "Expected 'date'\n";
+		std::cerr << "Did not find 'date'\n";
 		return false;
 	}
 	std::string::size_type pos = header.find("exchange_rate");
 	if (header.find("exchange_rate") == std::string::npos) {
 		std::cerr << "ERROR\n";
 		std::cerr << "Invalid header: '" << header << "'\n";
-		std::cerr << "Expected 'exchange_rate'\n";
+		std::cerr << "Did not find 'exchange_rate'\n";
 		return false;
 	}
 	delim = header.substr(4, pos - 4);
@@ -206,7 +206,7 @@ BitcoinExchange::BitcoinExchange(const char* filename)
 			continue;
 		}
 		dateStr = line.substr(0, pos);
-		valueStr = line.substr(pos + 1);
+		valueStr = line.substr(pos + delim.length());
 
 		// Datum parsen
 		time_t date;
