@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:15:11 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/26 10:51:39 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/26 12:19:01 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,24 @@
 # define BITCOINEXCHANGE_HPP
 
 # include <iostream>
+# include <string>
+# include <fstream>
+# include <sstream>
+# include <ctime>
+# include <map>
+# include <cstdlib>
 
 class BitcoinExchange
 {
 public:
-	BitcoinExchange(void);
+	BitcoinExchange(const char* filename = "data.csv");
 	BitcoinExchange(const BitcoinExchange& ref);
 	~BitcoinExchange(void);
 	BitcoinExchange& operator= (const BitcoinExchange& ref);
+
+	void		printData(void) const;
 private:
-	/* data */
+	std::map<time_t, double>	m_database;
 };
 
 #endif
