@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/26 14:28:55 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/28 17:14:07 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,47 +137,34 @@ bool isValidHeader(const std::string& header, std::string& delim)
 
 bool isValidValue(const std::string& valueStr, double& value)
 {
+	// check for empty string
 	if (valueStr.length() == 0) {
 		std::cerr << "ERROR\n";
 		std::cerr << "Invalid value: '" << valueStr << "'\n";
 		return false;
 	}
 
-	if (valueStr[0] == '-') {
-		std::cerr << "ERROR\n";
-		std::cerr << "Invalid value: '" << valueStr << "'\n";
-		std::cerr << "Expected positive value\n";
-		return false;
-	}
-	//do we not do this?
-	if (valueStr[0] == '+') {
-		std::cerr << "ERROR\n";
-		std::cerr << "Invalid value: '" << valueStr << "'\n";
-		std::cerr << "Expected positive value\n";
-		return false;
-	}
-	// doesn't seem to work.
-	if (valueStr[0] == '0' && valueStr.length() > 1 && valueStr[1] != '.') {
-		std::cerr << "ERROR\n";
-		std::cerr << "Invalid value: '" << valueStr << "'\n";
-		std::cerr << "Expected positive value\n";
-		return false;
-	}
-
-	if (valueStr[valueStr.length() - 1] == '.') {
-		std::cerr << "ERROR\n";
-		std::cerr << "Invalid value: '" << valueStr << "'\n";
-		std::cerr << "Expected digit after decimal point\n";
-		return false;
-	}
-
+	// values can only contain digits and one decimal point
+	bool hasDecimalPoint = false;
 	for (size_t i = 0; i < valueStr.length(); ++i) {
-		if (!std::isdigit(valueStr[i]) && valueStr[i] != '.') {
-			std::cerr << "ERROR\n";
-			std::cerr << "Invalid value: '" << valueStr << "'\n";
-			std::cerr << "Expected only digits or decimal point\n";
-			return false;
+		if (!std::isdigit(valueStr[i])) {
+			if (valueStr[i] == '.' && !hasDecimalPoint) {
+				hasDecimalPoint = true;
+			} else {
+				std::cerr << "ERROR\n";
+				std::cerr << "Invalid value: '" << valueStr << "'\n";
+				std::cerr << "Expected only digits or one decimal point\n";
+				return false;
+			}
 		}
+	}
+
+	// decimal point cannot be the first or last character
+	if (valueStr[0] == '.' || valueStr[valueStr.length() - 1] == '.') {
+		std::cerr << "ERROR\n";
+		std::cerr << "Invalid value: '" << valueStr << "'\n";
+		std::cerr << "Decimal point cannot be the first or last character\n";
+		return false;
 	}
 
 	value = std::strtod(valueStr.c_str(), NULL);
