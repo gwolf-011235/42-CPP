@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/29 23:13:10 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/29 23:22:58 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,13 +182,11 @@ BitcoinExchange::BitcoinExchange(const char* filename)
 	std::ifstream infile(filename);
 	if (!infile.is_open()) {
 		std::cerr << "ERROR: Failed to open file: " << filename << "\n";
-		std::cerr << "CRITICAL: Giving up\n";
 		throw std::runtime_error("Failed to open file");
 	}
 	std::string line, delim;
 	std::getline(infile, line);
 	if (!isValidHeader(line, "date", "exchange_rate", delim)) {
-		std::cerr << "CRITICAL: Giving up\n";
 		infile.close();
 		throw std::runtime_error("Bad database header format");
 	}
@@ -249,7 +247,7 @@ BitcoinExchange::~BitcoinExchange(void)
 {
 }
 
-std::string	BitcoinExchange::convertDate(time_t& date) const
+std::string	BitcoinExchange::convertDate(const time_t& date) const
 {
 	std::tm* date_tm = std::localtime(&date);
 	std::stringstream ss;
@@ -263,7 +261,7 @@ std::string	BitcoinExchange::convertDate(time_t& date) const
 	return ss.str();
 }
 
-double	BitcoinExchange::getExchangeRate(time_t& date) const
+double	BitcoinExchange::getExchangeRate(const time_t& date) const
 {
 	std::map<time_t, double>::const_iterator it = m_database.lower_bound(date);
 	if (it->first != date && it != m_database.begin()) {
@@ -281,13 +279,13 @@ void	BitcoinExchange::readInputFile(const char* input_file) const
 	std::ifstream infile(input_file);
 	if (!infile.is_open()) {
 		std::cerr << "ERROR: Failed to open file <" << input_file << ">\n";
-		return;
+		throw std::runtime_error("Failed to open file");
 	}
 	std::string line, delim;
 	std::getline(infile, line);
 	if (!isValidHeader(line, "date", "value", delim)) {
-
-		return;
+		infile.close();
+		throw std::runtime_error("Bad input file header format");
 	}
 
 	size_t line_count = 1;
@@ -340,7 +338,6 @@ void	BitcoinExchange::readInputFile(const char* input_file) const
 void	BitcoinExchange::printData(void) const
 {
 	for (std::map<time_t, double>::const_iterator it = m_database.begin(); it != m_database.end(); ++it) {
-		std::tm* date = std::localtime(&it->first);
-		std::cout << date->tm_year << "-" << date->tm_mon << "-" << date->tm_mday << ": " << it->second << "\n";
+		std::cout << convertDate(it->first) << ": " << it->second << "\n";
 	}
 }

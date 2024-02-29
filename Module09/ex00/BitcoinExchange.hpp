@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:15:11 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/29 23:11:16 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/29 23:22:35 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ public:
 	BitcoinExchange& operator= (const BitcoinExchange& ref);
 
 	void		readInputFile(const char* input_file) const;
-	double		getExchangeRate(time_t& date) const;
-	std::string	convertDate(time_t& date) const;
+	double		getExchangeRate(const time_t& date) const;
+	std::string	convertDate(const time_t& date) const;
 	void		printData(void) const;
 private:
 	std::map<time_t, double>	m_database;

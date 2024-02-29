@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:14:53 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/29 23:00:51 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/29 23:19:47 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,14 @@ int		main(int argc, char **argv)
 	if (argc == 3)
 		database_filename = argv[2];
 
-	BitcoinExchange	btc(database_filename.c_str());
-	btc.readInputFile(argv[1]);
+	try {
+		BitcoinExchange	btc(database_filename.c_str());
+		btc.readInputFile(argv[1]);
+	}
+	catch (const std::exception& e) {
+		std::cerr << "CRITICAL: " << e.what() << "\n";
+		return (1);
+	}
 
 	return (0);
 }
