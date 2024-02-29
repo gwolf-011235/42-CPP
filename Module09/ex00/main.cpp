@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:14:53 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/26 13:20:24 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/29 23:00:51 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ int		main(int argc, char **argv)
 {
 	(void)argv;
 	if (argc != 2 && argc != 3) {
-		std::cerr << "Usage: " << argv[0] << " <filename>\n";
+		std::cerr << "Usage: " << argv[0] << " <input_filename>\n";
 		return (1);
 	}
 
-	std::string filename = "data.csv";
+	std::string database_filename = "database/data.csv";
 	if (argc == 3)
-		filename = argv[2];
+		database_filename = argv[2];
 
-	BitcoinExchange	btc(filename.c_str());
-	btc.printData();
+	BitcoinExchange	btc(database_filename.c_str());
+	btc.readInputFile(argv[1]);
 
 	return (0);
 }
