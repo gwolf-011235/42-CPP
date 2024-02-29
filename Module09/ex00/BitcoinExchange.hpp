@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:15:11 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/29 22:37:54 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/29 23:11:16 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <ctime>
 # include <map>
 # include <cstdlib>
+# include <stdexcept>
 
 class BitcoinExchange
 {
