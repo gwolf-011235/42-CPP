@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/28 17:14:07 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/02/29 21:24:09 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,14 @@ bool isValidHeader(const std::string& header, std::string& delim)
 	if (header.compare(0, 4, "date") != 0) {
 		std::cerr << "ERROR\n";
 		std::cerr << "Invalid header: '" << header << "'\n";
-		std::cerr << "Did not find 'date'\n";
+		std::cerr << "Needs to start with 'date'\n";
 		return false;
 	}
 	std::string::size_type pos = header.find("exchange_rate");
-	if (header.find("exchange_rate") == std::string::npos) {
+	if (pos == std::string::npos) {
 		std::cerr << "ERROR\n";
 		std::cerr << "Invalid header: '" << header << "'\n";
-		std::cerr << "Did not find 'exchange_rate'\n";
+		std::cerr << "Needs to end with 'exchange_rate'\n";
 		return false;
 	}
 	delim = header.substr(4, pos - 4);
@@ -174,6 +174,11 @@ bool isValidValue(const std::string& valueStr, double& value)
 BitcoinExchange::BitcoinExchange(const char* filename)
 {
 	std::ifstream infile(filename);
+	if (!infile.is_open()) {
+		std::cerr << "ERROR\n";
+		std::cerr << "Failed to open file: " << filename << "\n";
+		return;
+	}
 	std::string line, delim;
 	std::getline(infile, line);
 	if (!isValidHeader(line, delim)) {
@@ -181,15 +186,17 @@ BitcoinExchange::BitcoinExchange(const char* filename)
 		return;
 	}
 
+	size_t line_count = 1, valid_count = 0;
 	while (std::getline(infile, line)) {
 		std::string dateStr, valueStr;
+		line_count++;
 
 		// Spalten extrahieren
 		std::string::size_type pos = line.find(delim);
 		if (pos == std::string::npos) {
 			std::cerr << "ERROR\n";
 			std::cerr << "Delimiter not found\n";
-			std::cerr << "Invalid line: " << line << "\n\n";
+			std::cerr << "Invalid line [" << line_count << "]: " << line << "\n\n";
 			continue;
 		}
 		dateStr = line.substr(0, pos);
@@ -198,19 +205,27 @@ BitcoinExchange::BitcoinExchange(const char* filename)
 		// Datum parsen
 		time_t date;
 		if (!isValidDate(dateStr, date)) {
-			std::cerr << "Invalid line: " << line << "\n\n";
+			std::cerr << "Invalid line [" << line_count << "]: " << line << "\n\n";
 			continue;
 		}
 
 		// Wert parsen
 		double value;
 		if (!isValidValue(valueStr, value)) {
-			std::cerr << "Invalid line: " << line << "\n\n";
+			std::cerr << "Invalid line [" << line_count << "]: " << line << "\n\n";
 			continue;
 		}
 
 		m_database[date] = value;
+		valid_count++;
 	}
+	if (valid_count == 0) {
+		std::cerr << "ERROR\n";
+		std::cerr << "No valid data found\n";
+		return;
+	}
+	std::cout << "Successfully read " << valid_count << " valid lines\n";
+
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& ref)
