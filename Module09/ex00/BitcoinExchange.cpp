@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/29 23:22:58 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/02 12:59:37 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,9 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange& ref)
 
 BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& ref)
 {
-	(void)ref;
+	if (this == &ref)
+		return *this;
+	m_database = ref.m_database;
 	return *this;
 }
 
