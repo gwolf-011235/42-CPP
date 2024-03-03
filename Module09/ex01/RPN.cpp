@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:28:51 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/02 14:39:59 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/03 09:01:29 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,21 @@ void	RPN::evaluate(const std::string input)
 	{
 		if (*it == ' ')
 			continue;
-
-		if (*(it + 1) != ' ' && *(it + 1) != '\0')
-			throw std::invalid_argument("Invalid input: Numbers below 10");
-
-		if (std::isdigit(*it))
+		else if (std::isdigit(*it))
 		{
+			if (*(it + 1) != ' ' && *(it + 1) != '\0')
+				throw std::invalid_argument("Invalid input: Only numbers below 10");
 			m_stack.push(*it - '0');
 		}
 		else if (*it == '+' || *it == '-' || *it == '*' || *it == '/')
 		{
 			if (m_stack.size() < 2)
-				throw std::invalid_argument("Invalid input");
-			double a = m_stack.top();
-			m_stack.pop();
+				throw std::invalid_argument("Invalid input: Not enough numbers to compute");
+			if (*(it + 1) != ' ' && *(it + 1) != '\0')
+				throw std::invalid_argument("Invalid input: Only operators: + - / *");
 			double b = m_stack.top();
+			m_stack.pop();
+			double a = m_stack.top();
 			m_stack.pop();
 			switch (*it)
 			{
@@ -76,6 +76,15 @@ void	RPN::evaluate(const std::string input)
 		}
 	}
 	if (m_stack.size() != 1)
-		throw std::invalid_argument("Invalid input");
-	std::cout << m_stack.top() << "\n";
+		throw std::invalid_argument("Invalid input: Not enough operators to compute");
+}
+
+double	RPN::getResult(void)
+{
+	if (m_stack.size() != 1)
+		throw std::invalid_argument("Invalid input: No computed value on stack");
+
+	double result = m_stack.top();
+	m_stack.pop();
+	return (result);
 }

@@ -6,14 +6,13 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:28:30 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/02 13:59:43 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/03 08:34:58 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RPN_HPP
 # define RPN_HPP
 
-# include <iostream>
 # include <stack>
 # include <stdexcept>
 
@@ -26,6 +25,7 @@ public:
 	RPN& operator= (const RPN& ref);
 
 	void	evaluate(const std::string input);
+	double	getResult(void);
 
 private:
 	std::stack<double>	m_stack;
