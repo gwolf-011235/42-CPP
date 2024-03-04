@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:28:51 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/04 10:03:18 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/04 15:53:49 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ RPN::~RPN(void)
 {
 }
 
-void	RPN::evaluate(const std::string input)
+int	RPN::evaluate(const std::string input)
 {
+	if (input.empty())
+		throw std::runtime_error(ERR_EMPTY_INPUT);
 	if (input.find_first_not_of("0123456789+-*/ ") != std::string::npos)
 		throw std::runtime_error(ERR_INVALID_CHARS);
 
@@ -54,37 +56,33 @@ void	RPN::evaluate(const std::string input)
 				throw std::runtime_error(ERR_NOT_ENOUGH_NUM);
 			if (*(it + 1) != ' ' && *(it + 1) != '\0')
 				throw std::runtime_error(ERR_INVALID_OP);
-			double b = m_stack.top();
-			m_stack.pop();
-			double a = m_stack.top();
+			int num = m_stack.top();
 			m_stack.pop();
 			switch (*it)
 			{
 				case '+':
-					m_stack.push(a + b);
+					m_stack.top() += num;
 					break;
 				case '-':
-					m_stack.push(a - b);
+					m_stack.top() -= num;
 					break;
 				case '*':
-					m_stack.push(a * b);
+					m_stack.top() *= num;
 					break;
 				case '/':
-					m_stack.push(a / b);
+					if (num == 0)
+						throw std::runtime_error(ERR_DIV_BY_ZERO);
+					m_stack.top() /= num;
 					break;
 			}
+			if (m_stack.top() > std::numeric_limits<int>::max() || m_stack.top() < std::numeric_limits<int>::min())
+				throw std::runtime_error(ERR_OVERFLOW);
 		}
 	}
 	if (m_stack.size() != 1)
 		throw std::runtime_error(ERR_NOT_ENOUGH_OP);
-}
-
-double	RPN::getResult(void)
-{
-	if (m_stack.size() != 1)
-		throw std::invalid_argument(ERR_STACK_SIZE);
-
-	double result = m_stack.top();
+	int result = m_stack.top();
 	m_stack.pop();
 	return (result);
 }
+

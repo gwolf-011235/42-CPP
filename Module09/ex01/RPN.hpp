@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:28:30 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/04 10:03:12 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/04 15:40:11 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stack>
 # include <stdexcept>
+# include <limits>
 
 # define ERR_INVALID_CHARS "Invalid input: Only numbers 0 to 9 and operators + - * / are allowed"
 # define ERR_INVALID_NUM "Invalid number: Only single digit numbers, no signs are allowed"
@@ -22,6 +23,11 @@
 # define ERR_INVALID_OP "Invalid operator: Only + - / * separated by space"
 # define ERR_NOT_ENOUGH_OP "Not enough operators to compute"
 # define ERR_STACK_SIZE "No computed value on stack"
+# define ERR_DIV_BY_ZERO "Division by zero not possible"
+# define ERR_OVERFLOW "Overflow: Result is too big to be stored"
+# define ERR_EMPTY_INPUT "Invalid input: Empty string"
+
+// handle overflow
 
 class RPN
 {
@@ -31,11 +37,10 @@ public:
 	~RPN(void);
 	RPN& operator= (const RPN& ref);
 
-	void	evaluate(const std::string input);
-	double	getResult(void);
+	int	evaluate(const std::string input);
 
 private:
-	std::stack<double>	m_stack;
+	std::stack<long>	m_stack;
 };
 
 #endif
