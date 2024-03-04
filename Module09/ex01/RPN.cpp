@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:28:51 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/03 09:10:53 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/04 10:03:18 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ RPN::~RPN(void)
 void	RPN::evaluate(const std::string input)
 {
 	if (input.find_first_not_of("0123456789+-*/ ") != std::string::npos)
-		throw std::invalid_argument("Invalid input: Only numbers and + - * / are allowed");
+		throw std::runtime_error(ERR_INVALID_CHARS);
 
 	for (std::string::const_iterator it = input.begin(); it != input.end(); it++)
 	{
@@ -45,15 +45,15 @@ void	RPN::evaluate(const std::string input)
 		else if (std::isdigit(*it))
 		{
 			if (*(it + 1) != ' ' && *(it + 1) != '\0')
-				throw std::invalid_argument("Invalid input: Only numbers below 10");
+				throw std::runtime_error(ERR_INVALID_NUM);
 			m_stack.push(*it - '0');
 		}
 		else if (*it == '+' || *it == '-' || *it == '*' || *it == '/')
 		{
 			if (m_stack.size() < 2)
-				throw std::invalid_argument("Invalid input: Not enough numbers to compute");
+				throw std::runtime_error(ERR_NOT_ENOUGH_NUM);
 			if (*(it + 1) != ' ' && *(it + 1) != '\0')
-				throw std::invalid_argument("Invalid input: Operators need to be separated : + - / *");
+				throw std::runtime_error(ERR_INVALID_OP);
 			double b = m_stack.top();
 			m_stack.pop();
 			double a = m_stack.top();
@@ -76,13 +76,13 @@ void	RPN::evaluate(const std::string input)
 		}
 	}
 	if (m_stack.size() != 1)
-		throw std::invalid_argument("Invalid input: Not enough operators to compute");
+		throw std::runtime_error(ERR_NOT_ENOUGH_OP);
 }
 
 double	RPN::getResult(void)
 {
 	if (m_stack.size() != 1)
-		throw std::invalid_argument("Invalid input: No computed value on stack");
+		throw std::invalid_argument(ERR_STACK_SIZE);
 
 	double result = m_stack.top();
 	m_stack.pop();

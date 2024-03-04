@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:56:35 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/04 09:21:31 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/04 09:32:39 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void	test(void)
 		std::make_pair("7 8 /", 7.0 / 8.0),
 		std::make_pair("5 3 + 2 *", 16),
 		std::make_pair("3 4 * 5 6 * +", 42),
-		std::make_pair("5 2 2 * * 9 + 7 6 * -", -13)
+		std::make_pair("5 2 2 * * 9 + 7 6 * -", -13),
+		std::make_pair("      2      5     +   ", 7),
+		std::make_pair("  3 4 *", 11)
 	};
 
 	RPN	rpn;
