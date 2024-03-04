@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:28:51 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/03 09:01:29 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/03 09:10:53 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	RPN::evaluate(const std::string input)
 			if (m_stack.size() < 2)
 				throw std::invalid_argument("Invalid input: Not enough numbers to compute");
 			if (*(it + 1) != ' ' && *(it + 1) != '\0')
-				throw std::invalid_argument("Invalid input: Only operators: + - / *");
+				throw std::invalid_argument("Invalid input: Operators need to be separated : + - / *");
 			double b = m_stack.top();
 			m_stack.pop();
 			double a = m_stack.top();

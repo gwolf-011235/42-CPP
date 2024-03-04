@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:56:35 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/03 09:06:40 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/04 09:21:31 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 void	test(void)
 {
+	std::cout << "TEST Correct Input\n";
+
 	std::pair<std::string, double> tests[] = {
 		std::make_pair("1 2 +", 3),
 		std::make_pair("5 3 -", 2),
@@ -31,19 +33,48 @@ void	test(void)
 
 	for (size_t i = 0; i < sizeof(tests) / sizeof(tests[0]); ++i)
 	{
+		std::cout << "Test [" << i + 1 << "]: ";
 		try {
 			rpn.evaluate(tests[i].first);
 			double result = rpn.getResult();
 			if (result != tests[i].second) {
-				std::cerr << "Test [" << i + 1 << "] failed: '" << tests[i].first << "' = " << tests[i].second << " != " << result << "\n";
+				std::cerr << "failed! Expected: " << tests[i].second << " but got: " << result;
 			} else {
-				std::cout << "Test [" << i + 1 << "] passed\n";
+				std::cout << "passed";
 			}
 		}
 		catch (std::exception& e) {
-			std::cerr << "Test [" << i + 1 << "] failed: " << e.what() << "\n";
+			std::cerr << "Test [" << i + 1 << "] threw exception: " << e.what() << "\n";
+		}
+		std::cout << "\t'" << tests[i].first << "' = " << tests[i].second << "\n";
+	}
+	std::cout << "END\n\n";
+}
+
+void	test_invalid(void)
+{
+	std::cout << "TEST Invalid input\n";
+
+	std::string tests[] = {
+		"1 2 H",
+		"12 3 +",
+		"9 /",
+		"2 2 2 **",
+		"1 2 3 +"
+	};
+
+	RPN rpn;
+
+	for (size_t i = 0; i < sizeof(tests) / sizeof(tests[0]); ++i)
+	{
+		try {
+			rpn.evaluate(tests[i]);
+		}
+		catch (std::exception& e) {
+			std::cerr << "Test [" << i + 1 << "] threw exception: " << e.what() << "\n";
 		}
 	}
+	std::cout << "END\n\n";
 }
 
 int	main(int argc, char **argv)
@@ -57,6 +88,7 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 	{
 		test();
+		test_invalid();
 		return 0;
 	}
 
