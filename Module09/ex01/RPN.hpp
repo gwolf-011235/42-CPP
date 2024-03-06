@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:28:30 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/04 15:40:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/06 11:30:03 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # define ERR_DIV_BY_ZERO "Division by zero not possible"
 # define ERR_OVERFLOW "Overflow: Result is too big to be stored"
 # define ERR_EMPTY_INPUT "Invalid input: Empty string"
-
-// handle overflow
 
 class RPN
 {

@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/02 13:25:44 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/06 11:34:15 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,14 +145,12 @@ bool isValidHeader(const std::string& header, const std::string& begin, const st
 
 bool isValidValue(const std::string& valueStr, double& value)
 {
-	// check for empty string
 	if (valueStr.length() == 0) {
 		std::cerr << "\tERROR: Invalid value: '" << valueStr << "'\n";
 		std::cerr << "Expected a non-empty string\n";
 		return false;
 	}
 
-	// values can only contain digits and one decimal point
 	bool hasDecimalPoint = false;
 	for (size_t i = 0; i < valueStr.length(); ++i) {
 		if (!std::isdigit(valueStr[i])) {
@@ -166,7 +164,6 @@ bool isValidValue(const std::string& valueStr, double& value)
 		}
 	}
 
-	// decimal point cannot be the first or last character
 	if (valueStr[0] == '.' || valueStr[valueStr.length() - 1] == '.') {
 		std::cerr << "\tERROR: Invalid value: '" << valueStr << "'\n";
 		std::cerr << "Expected decimal point to not be first or last character\n";
