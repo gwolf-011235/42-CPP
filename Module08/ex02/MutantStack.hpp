@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:55:40 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/21 14:29:35 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/06 11:05:49 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ public:
 
 	MutantStack &operator=(MutantStack const &copy)
 	{
+		if (this == &copy)
+			return *this;
 		std::stack<T>::operator=(copy);
 		return *this;
 	}

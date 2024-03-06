@@ -6,11 +6,12 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:57:23 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/21 14:38:32 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/06 11:17:18 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MutantStack.hpp"
+#include <list>
 
 void	test_from_subject(void)
 {
@@ -25,7 +26,9 @@ void	test_from_subject(void)
 	mstack.push(3);
 	mstack.push(5);
 	mstack.push(737);
-	//[...]
+	mstack.push(25);
+	mstack.push(42);
+	mstack.push(100);
 	mstack.push(0);
 	MutantStack<int>::iterator it = mstack.begin();
 	MutantStack<int>::iterator ite = mstack.end();
@@ -37,7 +40,21 @@ void	test_from_subject(void)
 		++it;
 	}
 	std::stack<int> s(mstack);
-	std::cout << "* End of test\n";
+
+	std::cout << "* Same test with list\n";
+	std::list<int> lst(mstack.begin(), mstack.end());
+	std::cout << "Elements of list: \n";
+	std::list<int>::iterator itl = lst.begin();
+	std::list<int>::iterator itle = lst.end();
+	++itl;
+	--itl;
+	while (itl != itle)
+	{
+		std::cout << *itl << std::endl;
+		++itl;
+	}
+
+	std::cout << "* End of test\n\n";
 }
 
 void	test_const_iterator(void)
@@ -58,7 +75,7 @@ void	test_const_iterator(void)
 		++it;
 	}
 	std::cout << "END\n";
-	std::cout << "* End of test\n";
+	std::cout << "* End of test\n\n";
 }
 
 void	test_use_iterator(void)
@@ -95,7 +112,7 @@ void	test_use_iterator(void)
 		++it;
 	}
 	std::cout << "END\n";
-	std::cout << "* End of test\n";
+	std::cout << "* End of test\n\n";
 }
 
 int main()
