@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 18:30:30 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/19 11:07:24 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/06 11:02:17 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,24 @@ void	test_not_enough(void)
 void	test_add_range(void)
 {
 	std::cout << "** Test add range\n";
-	std::cout << "Creating Span with size 5 and add 3 numbers from a list\n";
+	std::cout << "Creating Span with size 6 and add 3 numbers from a list\n";
 
-	Span	span(5);
+	Span	span(6);
 	std::list<int>	lst;
 	lst.push_back(5);
 	lst.push_back(3);
 	lst.push_back(17);
 
 	span.addNumber(lst.begin(), lst.end());
+	span.print();
+
+	std::cout << "Add 3 more numbers from a vector\n";
+	std::vector<int>	vec;
+	vec.push_back(9);
+	vec.push_back(11);
+	vec.push_back(13);
+
+	span.addNumber(vec.begin(), vec.end());
 	span.print();
 	std::cout << "** End of test\n\n";
 }
@@ -138,6 +147,6 @@ int		main()
 	std::srand(std::time(0));
 	test_spans_with_random(5, 100);
 	test_spans_with_random(10000, 100000, false);
-	
+
 	return 0;
 }
