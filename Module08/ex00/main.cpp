@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 17:27:14 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/12 18:12:29 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/06 10:53:48 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ int main(void)
 		test_easyfind(lst, 6);
 		lst.push_back(6);
 		test_easyfind(lst, 6);
+		std::cout << "Testing with const list\n";
+		const std::list<int> clst (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+		test_easyfind(clst, 3);
+		test_easyfind(clst, 6);
+		std::cout << "Testing with empty list\n";
+		std::list<int> empty;
+		test_easyfind(empty, 3);
 		std::cout << "*** Finished ***\n\n";
 	}
 	std::cout << "*** Testing with set ***\n";
@@ -53,6 +60,13 @@ int main(void)
 		test_easyfind(set, 6);
 		set.insert(6);
 		test_easyfind(set, 6);
+		std::cout << "Testing with const set\n";
+		const std::set<int> cset (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+		test_easyfind(cset, 3);
+		test_easyfind(cset, 6);
+		std::cout << "Testing with empty set\n";
+		std::set<int> empty;
+		test_easyfind(empty, 3);
 		std::cout << "*** Finished ***\n\n";
 	}
 	return 0;

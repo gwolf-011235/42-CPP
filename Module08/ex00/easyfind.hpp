@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 17:25:19 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/12 17:45:12 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/06 10:52:04 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typename T::const_iterator easyfind(const T& container, const int value)
 template <typename T>
 void test_easyfind(const T& container, const int value)
 {
+	std::cout << "Testing easyfind with value: " << value << "\n";
 	try {
 		typename T::const_iterator it = easyfind(container, value);
 		std::cout << "Found: " << *it << "\n";
