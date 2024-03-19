@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:03:50 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/11 12:52:27 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/19 02:51:42 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,6 @@ int	main(int argc, char **argv)
 		vec.push_back(std::atoi(argv[i]));
 		argc--;
 	}
-	std::cout << "Before: ";
-	for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); it++) {
-		std::cout << *it << " ";
-	}
-	std::cout << std::endl;
-	ft_FordJohnsonVector(vec);
-	ft_mergeSort(vec, 0, vec.size() - 1);
-	std::cout << "After: ";
-	for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); it++) {
-		std::cout << *it << " ";
-	}
-	std::cout << std::endl;
+	ft_FordJohnsonVector(vec.begin(), vec.end());
 	return (0);
 }
