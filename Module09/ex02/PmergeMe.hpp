@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/19 02:51:13 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/20 17:40:22 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define PMERGEME_HPP
 
 # include <vector>
+# include <list>
 # include <iostream>
+# include <utility>
 
 void	ft_merge(std::vector<int>::iterator begin, std::vector<int>::iterator mid, std::vector<int>::iterator end)
 {
@@ -93,6 +95,59 @@ void	ft_printVector(std::string str, std::vector<int>::iterator begin, std::vect
 		std::cout << *begin << " ";
 	}
 	std::cout << std::endl;
+}
+
+size_t	ft_jacobsthal(size_t n)
+{
+	// base case
+	if (n == 0)
+		return 0;
+
+	// base case
+	if (n == 1)
+		return 1;
+
+	// recursive step.
+	return ft_jacobsthal(n - 1) + 2 * ft_jacobsthal(n - 2);
+}
+
+size_t	ft_calc_jacobsthal_diff(size_t n)
+{
+	return ft_jacobsthal(n + 1) - ft_jacobsthal(n);
+}
+
+void	ft_sortMainPendChain(std::vector<int>::iterator begin, std::vector<int>::iterator end, const bool has_stray)
+{
+	std::list<std::vector<int>::iterator> main;
+	std::list<std::pair<std::vector<int>::iterator, std::list<std::vector<int>::iterator>::iterator> > pend;
+
+	main.insert(main.begin(), begin + 1);
+	main.insert(main.begin(), begin);
+
+	for (std::vector<int>::iterator it = begin + 2; it != end; ++it) {
+		std::list<std::vector<int>::iterator>::iterator tmp = main.insert(main.end(), it);
+		++it;
+		pend.push_back(std::make_pair(it, tmp));
+	}
+
+	if (has_stray) {
+		pend.push_back(std::make_pair(end, main.end()));
+	}
+
+	for (size_t insertion_step = 1; ; ++insertion_step) {
+		size_t dist = ft_calc_jacobsthal_diff(insertion_step);
+		if (dist > pend.size()) {
+			break;
+		}
+		std::list<std::pair<std::vector<int>::iterator, std::list<std::vector<int>::iterator>::iterator> >::iterator it = pend.begin();
+		std::advance(it, dist);
+
+
+
+	}
+
+
+
 }
 
 void	ft_FordJohnsonVector(std::vector<int>::iterator begin, std::vector<int>::iterator end)
