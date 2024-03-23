@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/20 17:40:22 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/23 21:56:42 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <list>
 # include <iostream>
 # include <utility>
+# include <algorithm>
 
 void	ft_merge(std::vector<int>::iterator begin, std::vector<int>::iterator mid, std::vector<int>::iterator end)
 {
@@ -116,13 +117,18 @@ size_t	ft_calc_jacobsthal_diff(size_t n)
 	return ft_jacobsthal(n + 1) - ft_jacobsthal(n);
 }
 
+bool	compare_iters(const std::vector<int>::iterator value, const std::vector<int>::iterator iter)
+{
+	return (*value < *iter);
+}
+
 void	ft_sortMainPendChain(std::vector<int>::iterator begin, std::vector<int>::iterator end, const bool has_stray)
 {
 	std::list<std::vector<int>::iterator> main;
 	std::list<std::pair<std::vector<int>::iterator, std::list<std::vector<int>::iterator>::iterator> > pend;
 
-	main.insert(main.begin(), begin + 1);
-	main.insert(main.begin(), begin);
+	main.insert(main.end(), begin + 1);
+	main.insert(main.end(), begin);
 
 	for (std::vector<int>::iterator it = begin + 2; it != end; ++it) {
 		std::list<std::vector<int>::iterator>::iterator tmp = main.insert(main.end(), it);
@@ -142,6 +148,33 @@ void	ft_sortMainPendChain(std::vector<int>::iterator begin, std::vector<int>::it
 		std::list<std::pair<std::vector<int>::iterator, std::list<std::vector<int>::iterator>::iterator> >::iterator it = pend.begin();
 		std::advance(it, dist);
 
+		while (true) {
+			std::list<std::vector<int>::iterator>::iterator insertion_point = std::upper_bound(main.begin(), it->second, it->first, compare_iters);
+
+			main.insert(insertion_point, it->first);
+
+			it = pend.erase(it);
+			if (it == pend.begin())
+				break;
+			--it;
+		}
+
+		while (!pend.empty()) {
+			std::list<std::pair<std::vector<int>::iterator, std::list<std::vector<int>::iterator>::iterator> >::iterator it = pend.end();
+			--it;
+
+			std::list<std::vector<int>::iterator>::iterator insertion_point = std::upper_bound(main.begin(), it->second, it->first, compare_iters);
+			main.insert(insertion_point, it->first);
+			pend.pop_back();
+		}
+
+		std::list<std::vector<int>::iterator>::iterator start = main.begin();
+		std::list<std::vector<int>::iterator>::iterator end = main.end();
+
+		for (; start != end; ++start) {
+			std::cout << **start << "-";
+		}
+		std::cout << "\n";
 
 
 	}
@@ -162,6 +195,7 @@ void	ft_FordJohnsonVector(std::vector<int>::iterator begin, std::vector<int>::it
 	ft_printVector("After pair sort: ", begin, end);
 	ft_mergeSort(begin, end);
 	ft_printVector("After merge sort: ", begin, end);
+	ft_sortMainPendChain(begin, end, has_stray);
 
 
 }
