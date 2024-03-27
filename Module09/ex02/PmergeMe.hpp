@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/27 16:18:27 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/27 18:07:35 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,6 @@ size_t	ft_calc_jacobsthal_diff(size_t n)
 	return ft_jacobsthal(n + 1) - ft_jacobsthal(n);
 }
 
-void	ft_FordJohnsonVector(std::vector<int>::iterator begin, std::vector<int>::iterator end)
-{
-	ft_printVector("Starting point: ", begin, end);
-	size_t size = std::distance(begin, end);
-	bool has_stray = size % 2;
-	if (has_stray) {
-		end--;
-	}
-
-	ft_printVector("After insertion sort: ", begin, end);
-
-}
-
 
 #include <algorithm>
 #include <cstddef>
@@ -91,8 +78,11 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 
 	group_iterator end = has_stray ? iter_prev(last) : last;
 	for (group_iterator it = first ; it != end ; ++it) {
-		if (*it > *iter_next(it)) {
+		if (*it < *iter_next(it)) {
 			iter_swap(it, iter_next(it));
+		}
+		if (it != end) {
+			++it;
 		}
 	}
 
@@ -137,7 +127,7 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 	group_iterator current_it = iter_next(first, 2);
 	std::vector<std::list<group_iterator>::iterator>::iterator current_pend = pend.begin();
 
-	for (int k = 0 ; ; ++k)
+	for (int k = 2 ; ; ++k)
 	{
 		// Find next index
 		std::size_t dist = ft_calc_jacobsthal_diff(k);
@@ -176,16 +166,26 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 
 	////////////////////////////////////////////////////////////
 	// Copy values in order to a cache then back to origin
-	std::vector<int> cache(std::distance(first, last));
-	std::vector<int>::iterator cache_it = cache.begin();
+	std::vector<int> cache;
 	for (std::list<group_iterator>::iterator it = chain.begin(); it != chain.end(); ++it) {
-		*cache_it = **it;
-		++cache_it;
+		std::vector<int>::iterator begin = (*it).base();
+		std::vector<int>::iterator end = begin + (*it).size();
+		std::copy(begin, end, std::back_inserter(cache));
 	}
 	std::copy(cache.begin(), cache.end(), first);
 
 
 }
 
+void	ft_FordJohnsonVector(std::vector<int>::iterator begin, std::vector<int>::iterator end)
+{
+	ft_printVector("Starting point: ", begin, end);
+	group_iterator first = make_group_iterator(begin, 1);
+	group_iterator last = make_group_iterator(end, 1);
+	merge_insertion_sort(first, last);
+
+	ft_printVector("After insertion sort: ", begin, end);
+
+}
 
 #endif
