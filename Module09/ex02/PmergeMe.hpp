@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/27 18:07:35 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/29 13:01:59 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ size_t	ft_calc_jacobsthal_diff(size_t n)
 
 #include "GroupIterator.hpp"
 
+// Small node struct for pend elements
+struct node
+{
+	group_iterator it;
+	std::list<group_iterator>::iterator next;
+};
+
 bool	compare_iters(const group_iterator lhs, const group_iterator rhs)
 {
 	return (*lhs < *rhs);
@@ -94,6 +101,8 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 	////////////////////////////////////////////////////////////
 	// Separate main chain and pend elements
 
+
+
 	// The first pend element is always part of the main chain,
 	// so we can safely initialize the list with the first two
 	// elements of the sequence
@@ -103,76 +112,69 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 	chain.insert(chain.end(), first);
 
 	// Upper bounds for the insertion of pend elements
-	std::vector<std::list<group_iterator>::iterator> pend;
-	pend.reserve((size + 1) / 2 - 1);
+	std::list<node> pend;
 
 	for (group_iterator it = iter_next(first, 2) ; it != end ; ++it) {
 		std::list<group_iterator>::iterator tmp = chain.insert(chain.end(), it);
-		pend.push_back(tmp);
 		if (it != end) {
 			++it;
 		}
+		pend.push_back((node){it, tmp});
 	}
 
 	// Add the last element to pend if it exists, when it
 	// exists, it always has to be inserted in the full chain,
 	// so giving it chain.end() as end insertion point is ok
 	if (has_stray) {
-		pend.push_back(chain.end());
+		pend.push_back((node){end, chain.end()});
 	}
 
 	////////////////////////////////////////////////////////////
 	// Binary insertion into the main chain
 
-	group_iterator current_it = iter_next(first, 2);
-	std::vector<std::list<group_iterator>::iterator>::iterator current_pend = pend.begin();
-
 	for (int k = 2 ; ; ++k)
 	{
 		// Find next index
 		std::size_t dist = ft_calc_jacobsthal_diff(k);
-		if (dist > static_cast<std::size_t>(std::distance(current_pend, pend.end()))) {
+		if (dist >= pend.size()) {
 			break;
 		}
 
-		group_iterator it = iter_next(current_it, dist * 2);
-		std::vector<std::list<group_iterator>::iterator>::iterator pe = current_pend;
-		std::advance(pe, dist);
+		std::list<node>::iterator it = pend.begin();
+		std::advance(it, dist);
 
-		do
-		{
-			--pe;
-			it = iter_prev(it, 2);
+		while (true) {
+			std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), it->next, it->it, compare_iters);
+			chain.insert(insertion_point, it->it);
 
-			std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), *pe, it, compare_iters);
-			chain.insert(insertion_point, it);
-
-		} while (pe != current_pend);
-
-		std::advance(current_it, dist * 2);
-		std::advance(current_pend, dist);
+			it = pend.erase(it);
+			if (it == pend.end()) {
+				break;
+			}
+			--it;
+		}
 	}
 
-	// If there are pend elements left, insert them into
-	// the main chain, the order of insertion does not
-	// matter so forward traversal is ok
-	while (current_pend != pend.end())
+	// If there are pend elements left, insert them too
+	while (not pend.empty())
 	{
-		std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), *current_pend, current_it, compare_iters);
-		chain.insert(insertion_point, current_it);
-		std::advance(current_it, 2);
-		++current_pend;
+		std::list<node>::iterator it = pend.begin();
+		std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), it->next, it->it, compare_iters);
+		chain.insert(insertion_point, it->it);
+		pend.pop_front();
 	}
 
 	////////////////////////////////////////////////////////////
 	// Copy values in order to a cache then back to origin
 	std::vector<int> cache;
 	for (std::list<group_iterator>::iterator it = chain.begin(); it != chain.end(); ++it) {
-		std::vector<int>::iterator begin = (*it).base();
-		std::vector<int>::iterator end = begin + (*it).size();
-		std::copy(begin, end, std::back_inserter(cache));
+		std::vector<int>::iterator g_begin = (*it).base();
+		std::vector<int>::iterator g_end = g_begin + (*it).size();
+		for (; g_begin != g_end; ++g_begin) {
+			cache.push_back(*g_begin);
+		}
 	}
-	std::copy(cache.begin(), cache.end(), first);
+	std::copy(cache.begin(), cache.end(), first.base());
 
 
 }
