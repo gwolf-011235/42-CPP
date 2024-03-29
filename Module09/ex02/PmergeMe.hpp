@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/29 13:01:59 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/29 16:59:11 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <iostream>
 # include <utility>
 # include <algorithm>
+
+int num_comp = 0;
 
 void	ft_printVector(std::string str, std::vector<int>::iterator begin, std::vector<int>::iterator end)
 {
@@ -65,6 +67,7 @@ struct node
 
 bool	compare_iters(const group_iterator lhs, const group_iterator rhs)
 {
+	num_comp++;
 	return (*lhs < *rhs);
 }
 
@@ -85,6 +88,7 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 
 	group_iterator end = has_stray ? iter_prev(last) : last;
 	for (group_iterator it = first ; it != end ; ++it) {
+		num_comp++;
 		if (*it < *iter_next(it)) {
 			iter_swap(it, iter_next(it));
 		}
@@ -96,7 +100,9 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 	////////////////////////////////////////////////////////////
 	// Recursively sort the pairs by max
 
+	std::cout << "Inter Comparisons: " << num_comp << "\n";
 	merge_insertion_sort(make_group_iterator(first, 2), make_group_iterator(end, 2));
+	std::cout << "Inter After Comparisons: " << num_comp << "\n";
 
 	////////////////////////////////////////////////////////////
 	// Separate main chain and pend elements
@@ -141,14 +147,14 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 		}
 
 		std::list<node>::iterator it = pend.begin();
-		std::advance(it, dist);
+		std::advance(it, dist - 1);
 
 		while (true) {
 			std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), it->next, it->it, compare_iters);
 			chain.insert(insertion_point, it->it);
 
 			it = pend.erase(it);
-			if (it == pend.end()) {
+			if (it == pend.begin()) {
 				break;
 			}
 			--it;
@@ -158,10 +164,11 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 	// If there are pend elements left, insert them too
 	while (not pend.empty())
 	{
-		std::list<node>::iterator it = pend.begin();
+		std::list<node>::iterator it = pend.end();
+		--it;
 		std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), it->next, it->it, compare_iters);
 		chain.insert(insertion_point, it->it);
-		pend.pop_front();
+		pend.pop_back();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -175,18 +182,19 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 		}
 	}
 	std::copy(cache.begin(), cache.end(), first.base());
-
-
 }
 
 void	ft_FordJohnsonVector(std::vector<int>::iterator begin, std::vector<int>::iterator end)
 {
-	ft_printVector("Starting point: ", begin, end);
+	ft_printVector("Before:\t", begin, end);
+	std::cout << "Comparisons: " << num_comp << "\n";
 	group_iterator first = make_group_iterator(begin, 1);
 	group_iterator last = make_group_iterator(end, 1);
 	merge_insertion_sort(first, last);
 
-	ft_printVector("After insertion sort: ", begin, end);
+	ft_printVector("After:\t", begin, end);
+	std::cout << "Comparisons: " << num_comp << "\n";
+
 
 }
 
