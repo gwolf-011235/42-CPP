@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/29 16:59:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/30 11:36:12 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <iostream>
 # include <utility>
 # include <algorithm>
+
+#include "GroupIterator.hpp"
 
 int num_comp = 0;
 
@@ -50,14 +52,6 @@ size_t	ft_calc_jacobsthal_diff(size_t n)
 }
 
 
-#include <algorithm>
-#include <cstddef>
-#include <functional>
-#include <list>
-#include <iterator>
-
-#include "GroupIterator.hpp"
-
 // Small node struct for pend elements
 struct node
 {
@@ -77,7 +71,9 @@ bool	compare_iters(const group_iterator lhs, const group_iterator rhs)
 void merge_insertion_sort(group_iterator first, group_iterator last)
 {
 	std::size_t size = std::distance(first, last);
-	if (size < 2) return;
+	if (size < 2) {
+		return;
+	}
 
 	// Whether there is a stray element not in a pair
 	// at the end of the chain
@@ -100,14 +96,10 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 	////////////////////////////////////////////////////////////
 	// Recursively sort the pairs by max
 
-	std::cout << "Inter Comparisons: " << num_comp << "\n";
 	merge_insertion_sort(make_group_iterator(first, 2), make_group_iterator(end, 2));
-	std::cout << "Inter After Comparisons: " << num_comp << "\n";
 
 	////////////////////////////////////////////////////////////
 	// Separate main chain and pend elements
-
-
 
 	// The first pend element is always part of the main chain,
 	// so we can safely initialize the list with the first two

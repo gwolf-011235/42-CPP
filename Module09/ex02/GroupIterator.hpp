@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 15:07:39 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/27 15:31:18 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/03/30 11:48:01 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,29 @@ class group_iterator
 		////////////////////////////////////////////////////////////
 		// Constructors
 
-		group_iterator()
-		{
+		group_iterator();
 
-		};
+		group_iterator(std::vector<int>::iterator it, std::size_t size);
 
-		group_iterator(std::vector<int>::iterator it, std::size_t size): m_it(it), m_size(size)
-		{
+		group_iterator(const group_iterator& other);
 
-		}
+		// Destructor
+		~group_iterator();
 
-		////////////////////////////////////////////////////////////
+		// Assignment operator
+
+		group_iterator& operator=(const group_iterator& other);
+
 		// Members access
 
-		std::vector<int>::iterator base() const
-		{
-			return m_it;
-		}
+		std::vector<int>::iterator base() const;
 
-		std::size_t size() const
-		{
-			return m_size;
-		}
+		std::size_t size() const;
 
 		////////////////////////////////////////////////////////////
 		// Element access
 
-		reference operator*() const
-		{
-			return *m_it;
-		}
+		reference operator*() const;
 
 		////////////////////////////////////////////////////////////
 		// Increment/decrement operators
@@ -144,6 +137,10 @@ group_iterator make_group_iterator(group_iterator it, std::size_t size)
 {
 	return group_iterator(it.base(), size * it.size());
 }
+
+
+////////////////////////////////////////////////////////////
+// Utility functions
 
 group_iterator iter_prev(group_iterator it, std::size_t n = 1)
 {
