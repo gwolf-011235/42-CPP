@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/30 11:36:12 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/03 16:41:00 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,22 @@
 
 int num_comp = 0;
 
-void	ft_printVector(std::string str, std::vector<int>::iterator begin, std::vector<int>::iterator end)
+void	print_vector(std::string str, std::vector<int>::iterator begin, std::vector<int>::iterator end)
 {
 	std::cout << str;
 	for (; begin != end; begin++) {
 		std::cout << *begin << " ";
 	}
 	std::cout << std::endl;
+}
+
+void	print_list(std::string str, std::list<int>::iterator begin, std::list<int>::iterator end)
+{
+	std::cout << str;
+	for (; begin != end; begin++) {
+		std::cout << *begin << " ";
+	}
+	std::cout << '\n';
 }
 
 size_t	ft_jacobsthal(size_t n)
@@ -53,11 +62,8 @@ size_t	ft_calc_jacobsthal_diff(size_t n)
 
 
 // Small node struct for pend elements
-struct node
-{
-	group_iterator it;
-	std::list<group_iterator>::iterator next;
-};
+typedef std::pair<group_iterator, std::list<group_iterator>::iterator> node;
+
 
 bool	compare_iters(const group_iterator lhs, const group_iterator rhs)
 {
@@ -117,14 +123,14 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 		if (it != end) {
 			++it;
 		}
-		pend.push_back((node){it, tmp});
+		pend.push_back(std::make_pair(it, tmp));
 	}
 
 	// Add the last element to pend if it exists, when it
 	// exists, it always has to be inserted in the full chain,
 	// so giving it chain.end() as end insertion point is ok
 	if (has_stray) {
-		pend.push_back((node){end, chain.end()});
+		pend.push_back(std::make_pair(end, chain.end()));
 	}
 
 	////////////////////////////////////////////////////////////
@@ -142,8 +148,8 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 		std::advance(it, dist - 1);
 
 		while (true) {
-			std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), it->next, it->it, compare_iters);
-			chain.insert(insertion_point, it->it);
+			std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), it->second, it->first, compare_iters);
+			chain.insert(insertion_point, it->first);
 
 			it = pend.erase(it);
 			if (it == pend.begin()) {
@@ -158,8 +164,8 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 	{
 		std::list<node>::iterator it = pend.end();
 		--it;
-		std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), it->next, it->it, compare_iters);
-		chain.insert(insertion_point, it->it);
+		std::list<group_iterator>::iterator insertion_point = std::upper_bound(chain.begin(), it->second, it->first, compare_iters);
+		chain.insert(insertion_point, it->first);
 		pend.pop_back();
 	}
 
@@ -178,16 +184,65 @@ void merge_insertion_sort(group_iterator first, group_iterator last)
 
 void	ft_FordJohnsonVector(std::vector<int>::iterator begin, std::vector<int>::iterator end)
 {
-	ft_printVector("Before:\t", begin, end);
+	print_vector("Before:\t", begin, end);
 	std::cout << "Comparisons: " << num_comp << "\n";
 	group_iterator first = make_group_iterator(begin, 1);
 	group_iterator last = make_group_iterator(end, 1);
 	merge_insertion_sort(first, last);
 
-	ft_printVector("After:\t", begin, end);
+	print_vector("After:\t", begin, end);
 	std::cout << "Comparisons: " << num_comp << "\n";
 
 
 }
 
+void	swap_list_iter(std::list<int>::iterator& lhs, std::list<int>::iterator& rhs)
+{
+	std::list<int>::iterator tmp = lhs;
+	lhs = rhs;
+	rhs = tmp;
+}
+
+void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t step)
+{
+	std::size_t block_half = 1 << step;
+	std::size_t block_size = block_half * 2;
+	std::size_t block_count = size / (block_size);
+	if (block_count % 2 != 0) {
+		block_count--;
+	}
+	if (block_count < 2) {
+		return;
+	}
+
+	std::list<int>::iterator lhs_begin = list.begin();
+	std::list<int>::iterator lhs_end = lhs_begin;
+	std::advance(lhs_end, block_half);
+	std::list<int>::iterator rhs_begin = lhs_end;
+	std::list<int>::iterator rhs_end = rhs_begin;
+	std::advance(rhs_end, block_half);
+
+	for (size_t i = 0; i != block_count; ++i) {
+		if (*lhs_begin < *rhs_begin) {
+			list.splice(lhs_begin, list, rhs_begin, rhs_end);
+			swap_list_iter(lhs_begin, rhs_begin);
+			lhs_end = rhs_begin;
+		}
+		std::advance(lhs_begin, block_size);
+		std::advance(lhs_end, block_size);
+		std::advance(rhs_begin, block_size);
+		std::advance(rhs_end, block_size);
+	}
+	print_list("Step", list.begin(), list.end());
+	ford_johnson_list_impl(list, size, step + 1);
+}
+
+
+
+void	ford_johnson_list(std::list<int>& list)
+{
+	print_list("Before:\t", list.begin(), list.end());
+	ford_johnson_list_impl(list, list.size(), 0);
+	print_list("After:\t", list.begin(), list.end());
+}
 #endif
