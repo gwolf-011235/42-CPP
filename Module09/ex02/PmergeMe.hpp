@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/03 16:41:00 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/03 17:52:39 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,11 @@ void	ft_FordJohnsonVector(std::vector<int>::iterator begin, std::vector<int>::it
 
 }
 
+///////////////////////////////////////
+// List version
+
+typedef std::pair<std::list<int>, std::list<int>::iterator> list_node;
+
 void	swap_list_iter(std::list<int>::iterator& lhs, std::list<int>::iterator& rhs)
 {
 	std::list<int>::iterator tmp = lhs;
@@ -203,26 +208,35 @@ void	swap_list_iter(std::list<int>::iterator& lhs, std::list<int>::iterator& rhs
 	rhs = tmp;
 }
 
+std::list<int>::iterator list_iter_next(std::list<int>::iterator it, std::size_t n)
+{
+	std::advance(it, n);
+	return it;
+}
+
 void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t step)
 {
 	std::size_t block_half = 1 << step;
 	std::size_t block_size = block_half * 2;
 	std::size_t block_count = size / (block_size);
+	bool has_stray = false;
+// not right: 1 block = 2 elements
 	if (block_count % 2 != 0) {
 		block_count--;
+		has_stray = true;
 	}
+
+// not right: 1 block = 2 elements
 	if (block_count < 2) {
 		return;
 	}
 
 	std::list<int>::iterator lhs_begin = list.begin();
-	std::list<int>::iterator lhs_end = lhs_begin;
-	std::advance(lhs_end, block_half);
+	std::list<int>::iterator lhs_end = list_iter_next(lhs_begin, block_half);
 	std::list<int>::iterator rhs_begin = lhs_end;
-	std::list<int>::iterator rhs_end = rhs_begin;
-	std::advance(rhs_end, block_half);
+	std::list<int>::iterator rhs_end = list_iter_next(rhs_begin, block_half);
 
-	for (size_t i = 0; i != block_count; ++i) {
+	for (std::size_t i = 0; i != block_count; ++i) {
 		if (*lhs_begin < *rhs_begin) {
 			list.splice(lhs_begin, list, rhs_begin, rhs_end);
 			swap_list_iter(lhs_begin, rhs_begin);
@@ -233,8 +247,40 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 		std::advance(rhs_begin, block_size);
 		std::advance(rhs_end, block_size);
 	}
-	print_list("Step", list.begin(), list.end());
+
+	// Recursion
 	ford_johnson_list_impl(list, size, step + 1);
+
+	// Main and pend elements
+	std::list<std::list<int>::iterator> main;
+	std::list<list_node> pend;
+
+	lhs_begin = list.begin();
+	lhs_end = list_iter_next(lhs_begin, block_half);
+	rhs_begin = lhs_end;
+	rhs_end = list_iter_next(rhs_begin, block_half);
+
+	for (std::size_t i = 0; i != block_count; ++i) {
+		main.push_back(lhs_begin);
+		pend.push_back(std::make_pair(std::list<int>(rhs_begin, rhs_end), lhs_begin));
+
+		std::advance(lhs_begin, block_size);
+		std::advance(lhs_end, block_size);
+		std::advance(rhs_begin, block_size);
+		std::advance(rhs_end, block_size);
+	}
+	if (has_stray) {
+		std::advance(lhs_begin, block_size);
+		std::advance(lhs_end, block_size);
+		pend.push_back(std::make_pair(std::list<int>(lhs_begin, lhs_end), list.end()));
+	}
+
+	list.splice(*main.begin(), pend.begin()->first);
+
+	print_list("Insert:\t", list.begin(), list.end());
+
+
+
 }
 
 
