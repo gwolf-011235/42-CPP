@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 15:07:39 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/30 11:48:01 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/03 15:24:28 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,51 +107,24 @@ class group_iterator
 
 };
 
-void iter_swap(group_iterator lhs, group_iterator rhs)
-{
-	std::swap_ranges(lhs.base(), lhs.base() + lhs.size(), rhs.base());
-}
 
 ////////////////////////////////////////////////////////////
 // Comparison operators
 
-bool operator==(const group_iterator& lhs, const group_iterator& rhs)
-{
-	return lhs.base() == rhs.base();
-}
+bool operator==(const group_iterator& lhs, const group_iterator& rhs);
 
-bool operator!=(const group_iterator& lhs, const group_iterator& rhs)
-{
-	return lhs.base() != rhs.base();
-}
+bool operator!=(const group_iterator& lhs, const group_iterator& rhs);
 
-////////////////////////////////////////////////////////////
-// Construction function
-
-group_iterator make_group_iterator(std::vector<int>::iterator it, std::size_t size)
-{
-	return group_iterator(it, size);
-}
-
-group_iterator make_group_iterator(group_iterator it, std::size_t size)
-{
-	return group_iterator(it.base(), size * it.size());
-}
-
+group_iterator make_group_iterator(std::vector<int>::iterator it, std::size_t size);
+group_iterator make_group_iterator(group_iterator it, std::size_t size);
 
 ////////////////////////////////////////////////////////////
 // Utility functions
 
-group_iterator iter_prev(group_iterator it, std::size_t n = 1)
-{
-	std::advance(it, -n);
-	return it;
-}
+group_iterator iter_prev(group_iterator it, std::size_t n = 1);
 
-group_iterator iter_next(group_iterator it, std::size_t n = 1)
-{
-	std::advance(it, n);
-	return it;
-}
+group_iterator iter_next(group_iterator it, std::size_t n = 1);
+
+void iter_swap(group_iterator lhs, group_iterator rhs);
 
 #endif

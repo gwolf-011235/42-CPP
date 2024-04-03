@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   GroupdIterator.cpp                                 :+:      :+:    :+:   */
+/*   GroupIterator.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 11:38:18 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/30 11:48:40 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/03 15:23:49 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,48 @@ group_iterator::reference group_iterator::operator*() const
 	return *m_it;
 }
 
+////////////////////////////////////////////////////////////
+// Construction function
+
+group_iterator make_group_iterator(std::vector<int>::iterator it, std::size_t size)
+{
+	return group_iterator(it, size);
+}
+
+group_iterator make_group_iterator(group_iterator it, std::size_t size)
+{
+	return group_iterator(it.base(), size * it.size());
+}
+
+////////////////////////////////////////////////////////////
+// Utility functions
+
+group_iterator iter_prev(group_iterator it, std::size_t n)
+{
+	std::advance(it, -n);
+	return it;
+}
+
+group_iterator iter_next(group_iterator it, std::size_t n)
+{
+	std::advance(it, n);
+	return it;
+}
+
+void iter_swap(group_iterator lhs, group_iterator rhs)
+{
+	std::swap_ranges(lhs.base(), lhs.base() + lhs.size(), rhs.base());
+}
+
+////////////////////////////////////////////////////////////
+// Comparison operators
+
+bool operator==(const group_iterator& lhs, const group_iterator& rhs)
+{
+	return lhs.base() == rhs.base();
+}
+
+bool operator!=(const group_iterator& lhs, const group_iterator& rhs)
+{
+	return lhs.base() != rhs.base();
+}
