@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/08 16:11:03 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/08 16:28:56 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,8 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 			std::list<std::list<int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin);
 			if (it->pair_head != main.end()) {
 				main.insert(insertion_point, it->begin);
+			}
+			if (insertion_point != main.end()) {
 				list.splice(*insertion_point, list, it->begin, ++(it->end));
 			}
 			else {
@@ -353,6 +355,8 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 		std::list<std::list<int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin);
 		if (it->pair_head != main.end()) {
 			main.insert(insertion_point, it->begin);
+		}
+		if (insertion_point != main.end()) {
 			list.splice(*insertion_point, list, it->begin, ++(it->end));
 		}
 		else {
