@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:04:36 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/03 17:52:39 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/08 16:11:03 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,17 @@ void	ft_FordJohnsonVector(std::vector<int>::iterator begin, std::vector<int>::it
 ///////////////////////////////////////
 // List version
 
-typedef std::pair<std::list<int>, std::list<int>::iterator> list_node;
+typedef struct list_node {
+	std::list<std::list<int>::iterator>::iterator pair_head;
+	std::list<int>::iterator begin;
+	std::list<int>::iterator end;
+} list_node;
+
+bool	compare_list_iters(std::list<int>::iterator value, std::list<std::list<int>::iterator>::iterator iter)
+{
+	num_comp++;
+	return (*value < **iter);
+}
 
 void	swap_list_iter(std::list<int>::iterator& lhs, std::list<int>::iterator& rhs)
 {
@@ -214,29 +224,57 @@ std::list<int>::iterator list_iter_next(std::list<int>::iterator it, std::size_t
 	return it;
 }
 
+std::list<std::list<int>::iterator>::iterator	binary_insert(std::list<std::list<int>::iterator>::iterator begin, std::list<std::list<int>::iterator>::iterator end, std::list<int>::iterator value)
+{
+	std::ptrdiff_t len = std::distance(begin, end);
+
+	while (len > 0) {
+		std::ptrdiff_t half = len >> 1;
+		std::list<std::list<int>::iterator>::iterator mid = begin;
+		std::advance(mid, half);
+		if (compare_list_iters(value, mid)) {
+			len = half;
+		}
+		else {
+			begin = mid;
+			++begin;
+			len = len - half - 1;
+		}
+	}
+	return begin;
+}
+
+list_node make_list_node(std::list<std::list<int>::iterator>::iterator pair_head, std::list<int>::iterator begin, std::list<int>::iterator end)
+{
+	list_node temp = {pair_head, begin, end};
+	return temp;
+}
+
 void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t step)
 {
-	std::size_t block_half = 1 << step;
-	std::size_t block_size = block_half * 2;
-	std::size_t block_count = size / (block_size);
+// Pairwise comparison
+// One element is the lhs or rhs of a pairwise comparison
+	std::size_t elem_size = 1 << step;
+	std::size_t block_size = elem_size * 2;
+	std::size_t elem_count = size / (elem_size);
 	bool has_stray = false;
-// not right: 1 block = 2 elements
-	if (block_count % 2 != 0) {
-		block_count--;
+	if (elem_count % 2 != 0) {
+		elem_count--;
 		has_stray = true;
 	}
 
-// not right: 1 block = 2 elements
-	if (block_count < 2) {
+// exit out of recursion
+	if (elem_count < 2) {
 		return;
 	}
 
 	std::list<int>::iterator lhs_begin = list.begin();
-	std::list<int>::iterator lhs_end = list_iter_next(lhs_begin, block_half);
+	std::list<int>::iterator lhs_end = list_iter_next(lhs_begin, elem_size);
 	std::list<int>::iterator rhs_begin = lhs_end;
-	std::list<int>::iterator rhs_end = list_iter_next(rhs_begin, block_half);
+	std::list<int>::iterator rhs_end = list_iter_next(rhs_begin, elem_size);
 
-	for (std::size_t i = 0; i != block_count; ++i) {
+	for (std::size_t i = 0; i != elem_count; i += 2) {
+		num_comp++;
 		if (*lhs_begin < *rhs_begin) {
 			list.splice(lhs_begin, list, rhs_begin, rhs_end);
 			swap_list_iter(lhs_begin, rhs_begin);
@@ -256,13 +294,14 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 	std::list<list_node> pend;
 
 	lhs_begin = list.begin();
-	lhs_end = list_iter_next(lhs_begin, block_half);
+	lhs_end = list_iter_next(lhs_begin, elem_size);
 	rhs_begin = lhs_end;
-	rhs_end = list_iter_next(rhs_begin, block_half);
+	//remember end - 1 because actual end can shift around
+	rhs_end = list_iter_next(rhs_begin, elem_size - 1);
 
-	for (std::size_t i = 0; i != block_count; ++i) {
+	for (std::size_t i = 0; i != elem_count; i += 2) {
 		main.push_back(lhs_begin);
-		pend.push_back(std::make_pair(std::list<int>(rhs_begin, rhs_end), lhs_begin));
+		pend.push_back(make_list_node(--(main.end()), rhs_begin, rhs_end));
 
 		std::advance(lhs_begin, block_size);
 		std::advance(lhs_end, block_size);
@@ -270,16 +309,57 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 		std::advance(rhs_end, block_size);
 	}
 	if (has_stray) {
-		std::advance(lhs_begin, block_size);
-		std::advance(lhs_end, block_size);
-		pend.push_back(std::make_pair(std::list<int>(lhs_begin, lhs_end), list.end()));
+		--lhs_end;
+		list_node temp = {main.end(), lhs_begin, lhs_end};
+		pend.push_back(temp);
 	}
 
-	list.splice(*main.begin(), pend.begin()->first);
+	list.splice(*pend.begin()->pair_head, list, pend.begin()->begin, ++(pend.begin()->end));
+	main.insert(main.begin(), pend.begin()->begin);
+	pend.pop_front();
 
-	print_list("Insert:\t", list.begin(), list.end());
+	for (int k = 2 ; ; ++k)
+	{
+		// Find next index
+		std::size_t dist = ft_calc_jacobsthal_diff(k);
+		if (dist >= pend.size()) {
+			break;
+		}
 
+		std::list<list_node>::iterator it = pend.begin();
+		std::advance(it, dist - 1);
 
+		while (true) {
+			std::list<std::list<int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin);
+			if (it->pair_head != main.end()) {
+				main.insert(insertion_point, it->begin);
+				list.splice(*insertion_point, list, it->begin, ++(it->end));
+			}
+			else {
+				list.splice(list.end(), list, it->begin, ++(it->end));
+			}
+			it = pend.erase(it);
+			if (it == pend.begin()) {
+				break;
+			}
+			--it;
+		}
+	}
+
+	// If there are pend elements left, insert them too
+	while (!pend.empty())
+	{
+		std::list<list_node>::iterator it = --(pend.end());
+		std::list<std::list<int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin);
+		if (it->pair_head != main.end()) {
+			main.insert(insertion_point, it->begin);
+			list.splice(*insertion_point, list, it->begin, ++(it->end));
+		}
+		else {
+			list.splice(list.end(), list, it->begin, ++(it->end));
+		}
+		pend.pop_back();
+	}
 
 }
 
@@ -290,5 +370,6 @@ void	ford_johnson_list(std::list<int>& list)
 	print_list("Before:\t", list.begin(), list.end());
 	ford_johnson_list_impl(list, list.size(), 0);
 	print_list("After:\t", list.begin(), list.end());
+	std::cout << "Comparisons: " << num_comp << "\n";
 }
 #endif
