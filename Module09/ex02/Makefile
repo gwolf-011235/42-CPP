@@ -6,7 +6,7 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2024/04/03 16:38:16 by gwolf            ###   ########.fr        #
+#    Updated: 2024/04/09 08:35:30 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,10 @@ OBJ_DIR := obj
 DEP_DIR := $(OBJ_DIR)/dep
 
 SRC = 	main.cpp \
-		GroupIterator.cpp
+		GroupIterator.cpp \
+		ford_johnson_list.cpp \
+		ford_johnson_vec.cpp \
+		PmergeMe.cpp
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
 

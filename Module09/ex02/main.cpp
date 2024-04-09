@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:03:50 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/03 15:13:58 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/09 08:28:32 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 		vec.push_back(std::atoi(argv[i]));
 		argc--;
 	}
-	ft_FordJohnsonVector(vec.begin(), vec.end());
+	ford_johnson_vec(vec.begin(), vec.end());
 	*/
 	std::list<int> list;
 	for (int i = 1; argc > 1; ++i) {
