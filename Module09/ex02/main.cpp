@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:03:50 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/10 15:14:42 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/10 16:35:29 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	test(void);
 
 int	main(int argc, char **argv)
 {
-	return (test());
+	if (argc == 1)
+		return (test());
 
 	try {
 		utils::check_args(argc, argv);
