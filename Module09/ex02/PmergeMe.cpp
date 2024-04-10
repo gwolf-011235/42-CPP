@@ -6,24 +6,14 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:13:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/09 17:56:34 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:44:58 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe(const int argc, const char **argv) : m_argc(argc)
+PmergeMe::PmergeMe(int argc, char** argv) : m_argc(argc), m_argv(argv)
 {
-	if (argc < 2) {
-		std::cerr << "Usage: " << argv[0] << " [number] [number] ... \n";
-		exit(1);
-	}
-	for (int i = 0; i < argc; ++i) {
-		m_argv_as_string[i] = argv[i];
-		if (m_argv_as_string[i].find_first_not_of("0123456789") != std::string::npos) {
-			std::cerr << "Only numbers [0123456789] are allowed as input: " << m_argv_as_string[i] << '\n';
-		}
-	}
 }
 
 //private
@@ -49,43 +39,68 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& ref)
 
 PmergeMe::~PmergeMe(void)
 {
-	std::cout << "Destructor called: PmergeMe \n";
 }
 
-
-void	print_vector(std::string str, std::vector<int>::iterator begin, std::vector<int>::iterator end)
+void	PmergeMe::time_for_vector(void)
 {
-	std::cout << str;
-	for (; begin != end; begin++) {
-		std::cout << *begin << " ";
+	std::vector<unsigned int>	vec;
+	double						time_for_convert, time_for_sort;
+	clock_t						time_required;
+	std::size_t					num_comp;
+
+	std::cout << "VECTOR\n";
+	time_required = clock();
+	for (int i = 1; i < m_argc; ++i) {
+		vec.push_back(std::atoi(m_argv[i]));
 	}
-	std::cout << std::endl;
+	time_required = clock() - time_required;
+	time_for_convert = (double)time_required/CLOCKS_PER_SEC;
+
+	std::cout << "Before sorting\n";
+	utils::print_container(vec);
+
+	time_required = clock();
+	num_comp = ford_johnson_vec(vec.begin(), vec.end());
+	time_required = clock() - time_required;
+	time_for_sort = (double)time_required/CLOCKS_PER_SEC;
+
+	std::cout << "After sorting\n";
+	utils::print_container(vec);
+
+	std::cout << std::fixed << "Time for converting:\t" << time_for_convert << " seconds\n";
+	std::cout << "Time for sorting:\t" << time_for_sort << " seconds\n";
+	std::cout << "Total time:\t\t" << time_for_convert + time_for_sort << " seconds\n";
+	std::cout << "Number of comparisons: " << num_comp << "\n\n";
 }
 
-void	print_list(std::string str, std::list<int>::iterator begin, std::list<int>::iterator end)
+void	PmergeMe::time_for_list(void)
 {
-	std::cout << str;
-	for (; begin != end; begin++) {
-		std::cout << *begin << " ";
+	std::list<unsigned int>	list;
+	double					time_for_convert, time_for_sort;
+	clock_t					time_required;
+	std::size_t				num_comp;
+
+	std::cout << "LIST\n";
+	time_required = clock();
+	for (int i = 1; i < m_argc; ++i) {
+		list.push_back(std::atoi(m_argv[i]));
 	}
-	std::cout << '\n';
-}
+	time_required = clock() - time_required;
+	time_for_convert = (double)time_required/CLOCKS_PER_SEC;
 
-size_t	ft_jacobsthal(size_t n)
-{
-	// base case
-	if (n == 0)
-		return 0;
+	std::cout << "Before sorting\n";
+	utils::print_container(list);
 
-	// base case
-	if (n == 1)
-		return 1;
+	time_required = clock();
+	num_comp = ford_johnson_list(list);
+	time_required = clock() - time_required;
+	time_for_sort = (double)time_required/CLOCKS_PER_SEC;
 
-	// recursive step.
-	return ft_jacobsthal(n - 1) + 2 * ft_jacobsthal(n - 2);
-}
+	std::cout << "After sorting\n";
+	utils::print_container(list);
 
-size_t	ft_calc_jacobsthal_diff(size_t n)
-{
-	return ft_jacobsthal(n + 1) - ft_jacobsthal(n);
+	std::cout << std::fixed << "Time for converting:\t" << time_for_convert << " seconds\n";
+	std::cout << "Time for sorting:\t" << time_for_sort << " seconds\n";
+	std::cout << "Total time:\t\t" << time_for_convert + time_for_sort << " seconds\n";
+	std::cout << "Number of comparisons: " << num_comp << "\n\n";
 }

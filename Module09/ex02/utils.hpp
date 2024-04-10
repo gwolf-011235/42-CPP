@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:12:29 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/10 13:22:54 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:45:30 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <stdexcept>
 #include <iostream>
+#include <sys/time.h>
 
 namespace utils {
 
