@@ -6,29 +6,26 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:03:50 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/09 08:28:32 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:46:38 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
-
-#include <cstdlib>
+#include "utils.hpp"
 
 int	main(int argc, char **argv)
 {
-	/*
-	std::vector<int>	vec;
-	for (int i = 1; argc > 1; ++i) {
-		vec.push_back(std::atoi(argv[i]));
-		argc--;
+	try {
+		utils::check_args(argc, argv);
+	} catch (std::exception &e) {
+		std::cerr << e.what() << '\n';
+		return (1);
 	}
-	ford_johnson_vec(vec.begin(), vec.end());
-	*/
-	std::list<int> list;
-	for (int i = 1; argc > 1; ++i) {
-		list.push_back(std::atoi(argv[i]));
-		argc--;
-	}
-	ford_johnson_list(list);
+
+	PmergeMe pmergeMe(argc, argv);
+
+	pmergeMe.time_for_vector();
+	pmergeMe.time_for_list();
+
 	return (0);
 }
