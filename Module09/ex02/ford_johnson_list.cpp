@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:17:17 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/10 13:41:40 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/10 17:04:47 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,14 @@ void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std
 	std::list<std::list<unsigned int>::iterator> main;
 	std::list<list_node> pend;
 
+	// Store a tail of the list in a temp list
+	std::size_t tail_size = size % elem_size;
+	std::list<unsigned int> tail;
+	if (tail_size != 0) {
+		std::list<unsigned int>::iterator tail_begin = next_list_iter(list.end(), -tail_size);
+		tail.splice(tail.begin(), list, tail_begin, list.end());
+	}
+
 	lhs_begin = list.begin();
 	lhs_end = next_list_iter(lhs_begin, elem_size);
 	rhs_begin = lhs_end;
@@ -145,13 +153,12 @@ void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std
 
 		while (true) {
 			std::list<std::list<unsigned int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin, num_comp);
-			if (it->pair_head != main.end()) {
-				main.insert(insertion_point, it->begin);
-			}
 			if (insertion_point != main.end()) {
+				main.insert(insertion_point, it->begin);
 				list.splice(*insertion_point, list, it->begin, ++(it->end));
 			}
 			else {
+				main.push_back(it->begin);
 				list.splice(list.end(), list, it->begin, ++(it->end));
 			}
 			it = pend.erase(it);
@@ -167,18 +174,21 @@ void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std
 	{
 		std::list<list_node>::iterator it = --(pend.end());
 		std::list<std::list<unsigned int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin, num_comp);
-		if (it->pair_head != main.end()) {
-			main.insert(insertion_point, it->begin);
-		}
 		if (insertion_point != main.end()) {
+			main.insert(insertion_point, it->begin);
 			list.splice(*insertion_point, list, it->begin, ++(it->end));
 		}
 		else {
+			main.push_back(it->begin);
 			list.splice(list.end(), list, it->begin, ++(it->end));
 		}
 		pend.pop_back();
 	}
 
+	// If there is a tail, append it
+	if (tail_size != 0) {
+		list.splice(list.end(), tail);
+	}
 }
 
 std::size_t	ford_johnson_list(std::list<unsigned int>& list)
