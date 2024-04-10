@@ -1,3 +1,5 @@
 For testing:
 
 `shuf -i 1-100 -n 10 | tr "\n" " "`
+
+GroupIterator should be RandomAccess

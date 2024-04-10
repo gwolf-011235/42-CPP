@@ -6,11 +6,52 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:13:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/09 08:37:50 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/09 17:56:34 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+
+PmergeMe::PmergeMe(const int argc, const char **argv) : m_argc(argc)
+{
+	if (argc < 2) {
+		std::cerr << "Usage: " << argv[0] << " [number] [number] ... \n";
+		exit(1);
+	}
+	for (int i = 0; i < argc; ++i) {
+		m_argv_as_string[i] = argv[i];
+		if (m_argv_as_string[i].find_first_not_of("0123456789") != std::string::npos) {
+			std::cerr << "Only numbers [0123456789] are allowed as input: " << m_argv_as_string[i] << '\n';
+		}
+	}
+}
+
+//private
+PmergeMe::PmergeMe(void) : m_argc(1)
+{
+	std::cout << "This should not be called\n";
+}
+
+//private
+PmergeMe::PmergeMe(const PmergeMe& ref) : m_argc(1)
+{
+	std::cout << "This should not be called\n";
+	(void) ref;
+}
+
+//private
+PmergeMe& PmergeMe::operator=(const PmergeMe& ref)
+{
+	std::cout << "This should not be called\n";
+	(void)ref;
+	return (*this);
+}
+
+PmergeMe::~PmergeMe(void)
+{
+	std::cout << "Destructor called: PmergeMe \n";
+}
+
 
 void	print_vector(std::string str, std::vector<int>::iterator begin, std::vector<int>::iterator end)
 {

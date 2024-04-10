@@ -6,11 +6,12 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:26:40 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/09 08:36:41 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/09 17:33:40 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+#include "GroupIterator.hpp"
 
 // Small node struct for pend elements
 typedef std::pair<group_iterator, std::list<group_iterator>::iterator> node;
