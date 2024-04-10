@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 11:38:18 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/03 16:41:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:40:54 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ group_iterator::group_iterator()
 
 }
 
-group_iterator::group_iterator(std::vector<int>::iterator it, std::size_t size): m_it(it), m_size(size)
+group_iterator::group_iterator(std::vector<unsigned int>::iterator it, std::size_t size): m_it(it), m_size(size)
 {
 
 }
@@ -47,7 +47,7 @@ group_iterator& group_iterator::operator=(const group_iterator& other)
 
 // Members access
 
-std::vector<int>::iterator group_iterator::base() const
+std::vector<unsigned int>::iterator group_iterator::base() const
 {
 	return m_it;
 }
@@ -67,7 +67,7 @@ group_iterator::reference group_iterator::operator*() const
 ////////////////////////////////////////////////////////////
 // Construction function
 
-group_iterator make_group_iterator(std::vector<int>::iterator it, std::size_t size)
+group_iterator make_group_iterator(std::vector<unsigned int>::iterator it, std::size_t size)
 {
 	return group_iterator(it, size);
 }

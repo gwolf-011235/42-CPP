@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:17:17 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/09 08:36:27 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:41:40 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,37 @@
 
 typedef struct list_node
 {
-	std::list<std::list<int>::iterator>::iterator pair_head;
-	std::list<int>::iterator begin;
-	std::list<int>::iterator end;
+	std::list<std::list<unsigned int>::iterator>::iterator pair_head;
+	std::list<unsigned int>::iterator begin;
+	std::list<unsigned int>::iterator end;
 }	list_node;
 
-bool	compare_list_iter(std::list<int>::iterator value, std::list<std::list<int>::iterator>::iterator iter, std::size_t& num_comp)
+bool	compare_list_iter(std::list<unsigned int>::iterator value, std::list<std::list<unsigned int>::iterator>::iterator iter, std::size_t& num_comp)
 {
 	num_comp++;
 	return (*value < **iter);
 }
 
-void	swap_list_iter(std::list<int>::iterator& lhs, std::list<int>::iterator& rhs)
+void	swap_list_iter(std::list<unsigned int>::iterator& lhs, std::list<unsigned int>::iterator& rhs)
 {
-	std::list<int>::iterator tmp = lhs;
+	std::list<unsigned int>::iterator tmp = lhs;
 	lhs = rhs;
 	rhs = tmp;
 }
 
-std::list<int>::iterator next_list_iter(std::list<int>::iterator it, std::size_t n)
+std::list<unsigned int>::iterator next_list_iter(std::list<unsigned int>::iterator it, std::size_t n)
 {
 	std::advance(it, n);
 	return it;
 }
 
-std::list<std::list<int>::iterator>::iterator	binary_insert(std::list<std::list<int>::iterator>::iterator begin, std::list<std::list<int>::iterator>::iterator end, std::list<int>::iterator value, std::size_t& num_comp)
+std::list<std::list<unsigned int>::iterator>::iterator	binary_insert(std::list<std::list<unsigned int>::iterator>::iterator begin, std::list<std::list<unsigned int>::iterator>::iterator end, std::list<unsigned int>::iterator value, std::size_t& num_comp)
 {
 	std::ptrdiff_t len = std::distance(begin, end);
 
 	while (len > 0) {
 		std::ptrdiff_t half = len >> 1;
-		std::list<std::list<int>::iterator>::iterator mid = begin;
+		std::list<std::list<unsigned int>::iterator>::iterator mid = begin;
 		std::advance(mid, half);
 		if (compare_list_iter(value, mid, num_comp)) {
 			len = half;
@@ -58,13 +58,13 @@ std::list<std::list<int>::iterator>::iterator	binary_insert(std::list<std::list<
 	return begin;
 }
 
-list_node make_list_node(std::list<std::list<int>::iterator>::iterator pair_head, std::list<int>::iterator begin, std::list<int>::iterator end)
+list_node make_list_node(std::list<std::list<unsigned int>::iterator>::iterator pair_head, std::list<unsigned int>::iterator begin, std::list<unsigned int>::iterator end)
 {
 	list_node temp = {pair_head, begin, end};
 	return temp;
 }
 
-void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t step, std::size_t& num_comp)
+void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std::size_t step, std::size_t& num_comp)
 {
 // Pairwise comparison
 // One element is the lhs or rhs of a pairwise comparison
@@ -82,10 +82,10 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 		return;
 	}
 
-	std::list<int>::iterator lhs_begin = list.begin();
-	std::list<int>::iterator lhs_end = next_list_iter(lhs_begin, elem_size);
-	std::list<int>::iterator rhs_begin = lhs_end;
-	std::list<int>::iterator rhs_end = next_list_iter(rhs_begin, elem_size);
+	std::list<unsigned int>::iterator lhs_begin = list.begin();
+	std::list<unsigned int>::iterator lhs_end = next_list_iter(lhs_begin, elem_size);
+	std::list<unsigned int>::iterator rhs_begin = lhs_end;
+	std::list<unsigned int>::iterator rhs_end = next_list_iter(rhs_begin, elem_size);
 
 	for (std::size_t i = 0; i != elem_count; i += 2) {
 		num_comp++;
@@ -104,7 +104,7 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 	ford_johnson_list_impl(list, size, step + 1, num_comp);
 
 	// Main and pend elements
-	std::list<std::list<int>::iterator> main;
+	std::list<std::list<unsigned int>::iterator> main;
 	std::list<list_node> pend;
 
 	lhs_begin = list.begin();
@@ -135,7 +135,7 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 	for (int k = 2 ; ; ++k)
 	{
 		// Find next index
-		std::size_t dist = ft_calc_jacobsthal_diff(k);
+		std::size_t dist = utils::ft_calc_jacobsthal_diff(k);
 		if (dist >= pend.size()) {
 			break;
 		}
@@ -144,7 +144,7 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 		std::advance(it, dist - 1);
 
 		while (true) {
-			std::list<std::list<int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin, num_comp);
+			std::list<std::list<unsigned int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin, num_comp);
 			if (it->pair_head != main.end()) {
 				main.insert(insertion_point, it->begin);
 			}
@@ -166,7 +166,7 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 	while (!pend.empty())
 	{
 		std::list<list_node>::iterator it = --(pend.end());
-		std::list<std::list<int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin, num_comp);
+		std::list<std::list<unsigned int>::iterator>::iterator insertion_point = binary_insert(main.begin(), it->pair_head, it->begin, num_comp);
 		if (it->pair_head != main.end()) {
 			main.insert(insertion_point, it->begin);
 		}
@@ -181,7 +181,7 @@ void	ford_johnson_list_impl(std::list<int>& list, std::size_t size, std::size_t 
 
 }
 
-std::size_t	ford_johnson_list(std::list<int>& list)
+std::size_t	ford_johnson_list(std::list<unsigned int>& list)
 {
 	std::size_t num_comp = 0;
 	ford_johnson_list_impl(list, list.size(), 0, num_comp);

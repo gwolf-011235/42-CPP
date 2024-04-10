@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 15:07:39 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/03 15:24:28 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:40:36 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class group_iterator
 {
 	private:
 
-		std::vector<int>::iterator m_it;
+		std::vector<unsigned int>::iterator m_it;
 		std::size_t m_size;
 
 	public:
@@ -31,10 +31,10 @@ class group_iterator
 		////////////////////////////////////////////////////////////
 		// Iterator traits
 
-		typedef int 							value_type;
+		typedef unsigned int 					value_type;
 		typedef std::ptrdiff_t					difference_type;
-		typedef int*							pointer;
-		typedef int&							reference;
+		typedef unsigned int*					pointer;
+		typedef unsigned int&					reference;
 		typedef std::bidirectional_iterator_tag	iterator_category;
 
 		////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ class group_iterator
 
 		group_iterator();
 
-		group_iterator(std::vector<int>::iterator it, std::size_t size);
+		group_iterator(std::vector<unsigned int>::iterator it, std::size_t size);
 
 		group_iterator(const group_iterator& other);
 
@@ -55,7 +55,7 @@ class group_iterator
 
 		// Members access
 
-		std::vector<int>::iterator base() const;
+		std::vector<unsigned int>::iterator base() const;
 
 		std::size_t size() const;
 
@@ -115,7 +115,7 @@ bool operator==(const group_iterator& lhs, const group_iterator& rhs);
 
 bool operator!=(const group_iterator& lhs, const group_iterator& rhs);
 
-group_iterator make_group_iterator(std::vector<int>::iterator it, std::size_t size);
+group_iterator make_group_iterator(std::vector<unsigned int>::iterator it, std::size_t size);
 group_iterator make_group_iterator(group_iterator it, std::size_t size);
 
 ////////////////////////////////////////////////////////////

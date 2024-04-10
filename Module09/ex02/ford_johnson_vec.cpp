@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:26:40 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/09 17:33:40 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:41:47 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void ford_johnson_vec_impl(group_iterator first, group_iterator last, std::size_
 	for (int k = 2 ; ; ++k)
 	{
 		// Find next index
-		std::size_t dist = ft_calc_jacobsthal_diff(k);
+		std::size_t dist = utils::ft_calc_jacobsthal_diff(k);
 		if (dist >= pend.size()) {
 			break;
 		}
@@ -144,10 +144,10 @@ void ford_johnson_vec_impl(group_iterator first, group_iterator last, std::size_
 
 	////////////////////////////////////////////////////////////
 	// Copy values in order to a cache then back to origin
-	std::vector<int> cache;
+	std::vector<unsigned int> cache;
 	for (std::list<group_iterator>::iterator it = chain.begin(); it != chain.end(); ++it) {
-		std::vector<int>::iterator g_begin = (*it).base();
-		std::vector<int>::iterator g_end = g_begin + (*it).size();
+		std::vector<unsigned int>::iterator g_begin = (*it).base();
+		std::vector<unsigned int>::iterator g_end = g_begin + (*it).size();
 		for (; g_begin != g_end; ++g_begin) {
 			cache.push_back(*g_begin);
 		}
@@ -155,7 +155,7 @@ void ford_johnson_vec_impl(group_iterator first, group_iterator last, std::size_
 	std::copy(cache.begin(), cache.end(), first.base());
 }
 
-std::size_t	ford_johnson_vec(std::vector<int>::iterator begin, std::vector<int>::iterator end)
+std::size_t	ford_johnson_vec(std::vector<unsigned int>::iterator begin, std::vector<unsigned int>::iterator end)
 {
 	std::size_t num_comp = 0;
 	group_iterator first = make_group_iterator(begin, 1);
