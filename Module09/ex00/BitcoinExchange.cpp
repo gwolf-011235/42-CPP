@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/12 12:00:28 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/12 12:14:16 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ static bool isValidDate(const std::string& dateStr, time_t& date)
 
 	if (month < 1 || month > 12) {
 		std::cerr << "ERROR: Invalid month: " << month << "\n";
-		std::cerr << "* Expected positive number\n";
+		std::cerr << "* Expected a number in range 01 to 12\n";
 		return false;
 	}
 
