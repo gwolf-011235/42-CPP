@@ -6,18 +6,180 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/03/06 11:34:15 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/12 12:00:28 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-bool isLeapYear(int year)
+// ctor
+
+BitcoinExchange::BitcoinExchange(const char* filename)
+{
+	std::ifstream infile(filename);
+	if (!infile.is_open()) {
+		std::cerr << "ERROR: Failed to open file: " << filename << "\n";
+		throw std::runtime_error("Failed to open database file");
+	}
+	std::string line, delim;
+	std::getline(infile, line);
+	if (!parseHeader(line, "date", "exchange_rate", delim)) {
+		throw std::runtime_error("Bad database header format");
+	}
+
+	size_t line_count = 1, valid_count = 0;
+	time_t date;
+	double value;
+	while (std::getline(infile, line))
+	{
+		line_count++;
+		if (!parseLine(line, delim, date, value)) {
+			std::cerr << "* Invalid line [" << line_count << "]: " << line << "\n";
+			continue;
+		}
+
+		m_database[date] = value;
+		valid_count++;
+	}
+	if (valid_count == 0) {
+		std::cerr << "ERROR: No valid data found\n";
+		throw std::runtime_error("No valid data found in database file");
+	}
+	std::cout << "Successfully read " << valid_count << " valid lines in database\n";
+}
+
+// private
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange& ref)
+{
+	*this = ref;
+}
+
+// private
+
+BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& ref)
+{
+	if (this == &ref)
+		return *this;
+	m_database = ref.m_database;
+	return *this;
+}
+
+// dtor
+
+BitcoinExchange::~BitcoinExchange(void)
+{
+}
+
+void	BitcoinExchange::readInputFile(const char* input_file) const
+{
+	std::ifstream infile(input_file);
+
+	if (!infile.is_open()) {
+		std::cerr << "ERROR: Failed to open file <" << input_file << ">\n";
+		throw std::runtime_error("Failed to open input file");
+	}
+
+	std::string line, delim;
+
+	std::getline(infile, line);
+	if (!parseHeader(line, "date", "value", delim)) {
+		throw std::runtime_error("Bad input file header format");
+	}
+
+	size_t line_count = 1; // first line is header
+	time_t date;
+	double value;
+
+	while (std::getline(infile, line))
+	{
+		line_count++;
+		if (!parseLine(line, delim, date, value)) {
+			std::cerr << "* Invalid line [" << line_count << "]: " << line << "\n";
+			continue;
+		}
+
+		if (value < 0 || value > 1000) {
+			std::cerr << "ERROR: ";
+			if (value < 0) {
+				std::cerr << "Value to low\n";
+				std::cerr << "* Expected value >= 0\n";
+			}
+			else {
+				std::cerr << "Value to high\n";
+				std::cerr << "* Expected value <= 1000\n";
+			}
+			std::cerr << "* Invalid line [" << line_count << "]: " << line << "\n";
+			continue;
+		}
+
+		double rate = getExchangeRate(date);
+
+		if (rate < 0) {
+			std::cerr << "* Invalid line [" << line_count << "]: " << line << "\n";
+			continue;
+		}
+
+		std::cout << "[" << line_count << "]: " << convertDateToString(date) << "=> " << value << " (" << rate << ") = " << (value * rate) << "\n";
+	}
+}
+
+double	BitcoinExchange::getExchangeRate(const time_t& date) const
+{
+	std::map<time_t, double>::const_iterator it = m_database.lower_bound(date);
+	if (it->first != date && it != m_database.begin()) {
+		--it;
+	}
+	if (it == m_database.end()) {
+		std::cerr << "ERROR: No suitable exchange rate found for date: " << convertDateToString(date) << "\n";
+		return -1;
+	}
+	return it->second;
+}
+
+void	BitcoinExchange::printData(void) const
+{
+	for (std::map<time_t, double>::const_iterator it = m_database.begin(); it != m_database.end(); ++it) {
+		std::cout << convertDateToString(it->first) << ": " << it->second << "\n";
+	}
+}
+
+bool BitcoinExchange::parseHeader(const std::string& header, const std::string& begin, const std::string& end, std::string& delim) const
+{
+	if (header.compare(0, begin.length(), begin.c_str()) != 0) {
+		std::cerr << "ERROR: Invalid header: '" << header << "'\n";
+		std::cerr << "* Expected to start with '" << begin << "'\n";
+		return false;
+	}
+
+	std::string::size_type pos = header.find(end);
+	if (pos == std::string::npos) {
+		std::cerr << "ERROR: Invalid header: '" << header << "'\n";
+		std::cerr << "* Expected to end with '" << end << "'\n";
+		return false;
+	}
+
+	delim = header.substr(4, pos - 4);
+	if (delim.length() == 0) {
+		std::cerr << "ERROR: Invalid delimiter: '" << delim << "'\n";
+		std::cerr << "* Expected a non-empty string\n";
+		return false;
+	}
+
+	if (header.length() != begin.length() + delim.length() + end.length()) {
+		std::cerr << "ERROR: Invalid header: '" << header << "'\n";
+		std::cerr << "* Expected format: '" << begin << "<delimiter>" << end << "'\n";
+		return false;
+	}
+	return true;
+}
+
+static bool isLeapYear(int year)
 {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
 
-bool isOnlyDigits(const std::string& str)
+static bool isOnlyDigits(const std::string& str)
 {
 	for (size_t i = 0; i < str.length(); ++i) {
 		if (!std::isdigit(str[i])) {
@@ -27,23 +189,23 @@ bool isOnlyDigits(const std::string& str)
 	return true;
 }
 
-bool isValidDate(const std::string& dateStr, time_t& date)
+static bool isValidDate(const std::string& dateStr, time_t& date)
 {
 	if (dateStr.length() != 10) {
-		std::cerr << "\tERROR: Invalid date length of <"<< dateStr.length() << ">\n";
-		std::cerr << "Expected 10 characters\n";
+		std::cerr << "ERROR: Invalid date length of <"<< dateStr.length() << ">\n";
+		std::cerr << "* Expected 10 characters\n";
 		return false;
 	}
 
 	if (dateStr[4] != '-' || dateStr[7] != '-') {
-		std::cerr << "\tERROR: Invalid date format: '" << dateStr << "'\n";
-		std::cerr << "Expected 'YYYY-MM-DD'\n";
+		std::cerr << "ERROR: Invalid date format: '" << dateStr << "'\n";
+		std::cerr << "* Expected format 'YYYY-MM-DD'\n";
 		return false;
 	}
 
 	if (!isOnlyDigits(dateStr.substr(0, 4)) || !isOnlyDigits(dateStr.substr(5, 2)) || !isOnlyDigits(dateStr.substr(8, 2))) {
-		std::cerr << "\tERROR: Invalid date format: '" << dateStr << "'\n";
-		std::cerr << "Expected 'YYYY-MM-DD'\n";
+		std::cerr << "ERROR: Invalid date format: '" << dateStr << "'\n";
+		std::cerr << "* Expected format 'YYYY-MM-DD'\n";
 		return false;
 	}
 
@@ -52,14 +214,14 @@ bool isValidDate(const std::string& dateStr, time_t& date)
 	int day = std::strtol(dateStr.substr(8, 2).c_str(), NULL, 10);
 
 	if (month < 1 || month > 12) {
-		std::cerr << "\tERROR: Invalid month: " << month << "\n";
-		std::cerr << "Expected positive number\n";
+		std::cerr << "ERROR: Invalid month: " << month << "\n";
+		std::cerr << "* Expected positive number\n";
 		return false;
 	}
 
 	if (day < 1) {
-		std::cerr << "\tERROR: Invalid day: " << day << "\n";
-		std::cerr << "Expected positive number\n";
+		std::cerr << "ERROR: Invalid day: " << day << "\n";
+		std::cerr << "* Expected positive number\n";
 		return false;
 	}
 
@@ -72,8 +234,8 @@ bool isValidDate(const std::string& dateStr, time_t& date)
 		case 10:
 		case 12:
 			if (day > 31) {
-				std::cerr << "\tERROR: Invalid day: " << day << "\n";
-				std::cerr << "Expected day <= 31\n";
+				std::cerr << "ERROR: Invalid day: " << day << "\n";
+				std::cerr << "* Expected day <= 31\n";
 				return false;
 			}
 			break;
@@ -82,22 +244,22 @@ bool isValidDate(const std::string& dateStr, time_t& date)
 		case 9:
 		case 11:
 			if (day > 30) {
-				std::cerr << "\tERROR: Invalid day: " << day << "\n";
-				std::cerr << "Expected day <= 30\n";
+				std::cerr << "ERROR: Invalid day: " << day << "\n";
+				std::cerr << "* Expected day <= 30\n";
 				return false;
 			}
 			break;
 		case 2:
 			if (isLeapYear(year)) {
 				if (day > 29) {
-					std::cerr << "\tERROR: Invalid day: " << day << "\n";
-					std::cerr << "Expected day <= 29\n";
+					std::cerr << "ERROR: Invalid day: " << day << "\n";
+					std::cerr << "* Expected day <= 29\n";
 					return false;
 				}
 			} else {
 				if (day > 28) {
-					std::cerr << "\tERROR: Invalid day: " << day << "\n";
-					std::cerr << "Expected day <= 28\n";
+					std::cerr << "ERROR: Invalid day: " << day << "\n";
+					std::cerr << "* Expected day <= 28\n";
 					return false;
 				}
 			}
@@ -112,42 +274,11 @@ bool isValidDate(const std::string& dateStr, time_t& date)
 	return true;
 }
 
-bool isValidHeader(const std::string& header, const std::string& begin, const std::string& end, std::string& delim)
-{
-	if (header.compare(0, begin.length(), begin.c_str()) != 0) {
-		std::cerr << "\tERROR: Invalid header: '" << header << "'\n";
-		std::cerr << "Expected to start with '" << begin << "'\n";
-		return false;
-	}
-
-	std::string::size_type pos = header.find(end);
-	if (pos == std::string::npos) {
-		std::cerr << "\tERROR: Invalid header: '" << header << "'\n";
-		std::cerr << "Expected to end with '" << end << "'\n";
-		return false;
-	}
-
-	delim = header.substr(4, pos - 4);
-	if (delim.length() == 0) {
-		std::cerr << "\tERROR: Invalid delimiter: '" << delim << "'\n";
-		std::cerr << "Expected a non-empty string\n";
-		return false;
-	}
-
-	if (header.length() != begin.length() + delim.length() + end.length()) {
-		std::cerr << "\tERROR: Invalid header: '" << header << "'\n";
-		std::cerr << "Expected format: '" << begin << "<delimiter>" << end << "'\n";
-		return false;
-	}
-	std::cout << "Delim: '" << delim << "'\n";
-	return true;
-}
-
-bool isValidValue(const std::string& valueStr, double& value)
+static bool isValidValue(const std::string& valueStr, double& value)
 {
 	if (valueStr.length() == 0) {
-		std::cerr << "\tERROR: Invalid value: '" << valueStr << "'\n";
-		std::cerr << "Expected a non-empty string\n";
+		std::cerr << "ERROR: Invalid value: '" << valueStr << "'\n";
+		std::cerr << "* Expected a non-empty string\n";
 		return false;
 	}
 
@@ -157,16 +288,16 @@ bool isValidValue(const std::string& valueStr, double& value)
 			if (valueStr[i] == '.' && !hasDecimalPoint) {
 				hasDecimalPoint = true;
 			} else {
-				std::cerr << "\tERROR: Invalid value: '" << valueStr << "'\n";
-				std::cerr << "Expected only digits or one decimal point\n";
+				std::cerr << "ERROR: Invalid value: '" << valueStr << "'\n";
+				std::cerr << "* Expected only digits or one decimal point\n";
 				return false;
 			}
 		}
 	}
 
 	if (valueStr[0] == '.' || valueStr[valueStr.length() - 1] == '.') {
-		std::cerr << "\tERROR: Invalid value: '" << valueStr << "'\n";
-		std::cerr << "Expected decimal point to not be first or last character\n";
+		std::cerr << "ERROR: Invalid value: '" << valueStr << "'\n";
+		std::cerr << "* Expected decimal point to not be first or last character\n";
 		return false;
 	}
 
@@ -174,11 +305,11 @@ bool isValidValue(const std::string& valueStr, double& value)
 	return true;
 }
 
-bool	extractColumns(const std::string& line, const std::string& delim, std::string& dateStr, std::string& valueStr)
+static bool	extractColumns(const std::string& line, const std::string& delim, std::string& dateStr, std::string& valueStr)
 {
 	std::string::size_type pos = line.find(delim);
 	if (pos == std::string::npos) {
-		std::cerr << "\tERROR: Delimiter not found\n";
+		std::cerr << "ERROR: Delimiter not found\n";
 		return false;
 	}
 	dateStr = line.substr(0, pos);
@@ -186,7 +317,7 @@ bool	extractColumns(const std::string& line, const std::string& delim, std::stri
 	return true;
 }
 
-bool	parseLine(const std::string& line, const std::string& delim, time_t& date, double& value)
+bool	BitcoinExchange::parseLine(const std::string& line, const std::string& delim, time_t& date, double& value) const
 {
 	std::string dateStr, valueStr;
 	if (!extractColumns(line, delim, dateStr, valueStr)) {
@@ -203,61 +334,7 @@ bool	parseLine(const std::string& line, const std::string& delim, time_t& date, 
 	return true;
 }
 
-BitcoinExchange::BitcoinExchange(const char* filename)
-{
-	std::ifstream infile(filename);
-	if (!infile.is_open()) {
-		std::cerr << "\tERROR: Failed to open file: " << filename << "\n";
-		throw std::runtime_error("Failed to open file");
-	}
-	std::string line, delim;
-	std::getline(infile, line);
-	if (!isValidHeader(line, "date", "exchange_rate", delim)) {
-		infile.close();
-		throw std::runtime_error("Bad database header format");
-	}
-
-	size_t line_count = 1, valid_count = 0;
-	time_t date;
-	double value;
-	while (std::getline(infile, line))
-	{
-		line_count++;
-		if (!parseLine(line, delim, date, value)) {
-			std::cerr << "Invalid line [" << line_count << "]: " << line << "\n";
-			continue;
-		}
-
-		m_database[date] = value;
-		valid_count++;
-	}
-	infile.close();
-	if (valid_count == 0) {
-		std::cerr << "\tERROR: No valid data found\n";
-		std::cerr << "CRITICAL: Giving up\n";
-		throw std::runtime_error("No valid data found");
-	}
-	std::cout << "Successfully read " << valid_count << " valid lines\n";
-}
-
-BitcoinExchange::BitcoinExchange(const BitcoinExchange& ref)
-{
-	*this = ref;
-}
-
-BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& ref)
-{
-	if (this == &ref)
-		return *this;
-	m_database = ref.m_database;
-	return *this;
-}
-
-BitcoinExchange::~BitcoinExchange(void)
-{
-}
-
-std::string	BitcoinExchange::convertDate(const time_t& date) const
+std::string	BitcoinExchange::convertDateToString(const time_t& date) const
 {
 	std::tm* date_tm = std::localtime(&date);
 	std::stringstream ss;
@@ -269,74 +346,4 @@ std::string	BitcoinExchange::convertDate(const time_t& date) const
 		ss << 0;
 	ss << date_tm->tm_mday;
 	return ss.str();
-}
-
-double	BitcoinExchange::getExchangeRate(const time_t& date) const
-{
-	std::map<time_t, double>::const_iterator it = m_database.lower_bound(date);
-	if (it->first != date && it != m_database.begin()) {
-		--it;
-	}
-	if (it == m_database.end()) {
-		std::cerr << "\tERROR: No suitable exchange rate found for date: " << convertDate(date) << "\n";
-		return -1;
-	}
-	return it->second;
-}
-
-void	BitcoinExchange::readInputFile(const char* input_file) const
-{
-	std::ifstream infile(input_file);
-	if (!infile.is_open()) {
-		std::cerr << "\tERROR: Failed to open file <" << input_file << ">\n";
-		throw std::runtime_error("Failed to open file");
-	}
-	std::string line, delim;
-	std::getline(infile, line);
-	if (!isValidHeader(line, "date", "value", delim)) {
-		infile.close();
-		throw std::runtime_error("Bad input file header format");
-	}
-
-	size_t line_count = 1;
-	time_t date;
-	double value;
-	while (std::getline(infile, line))
-	{
-		line_count++;
-		if (!parseLine(line, delim, date, value)) {
-			std::cerr << "Invalid line [" << line_count << "]: " << line << "\n";
-			continue;
-		}
-
-		if (value < 0 || value > 1000) {
-			std::cerr << "\tERROR: ";
-			if (value < 0) {
-				std::cerr << "Value to low\n";
-				std::cerr << "Expected value >= 0\n";
-			}
-			else {
-				std::cerr << "Value to high\n";
-				std::cerr << "Expected value <= 1000\n";
-			}
-			std::cerr << "Invalid line [" << line_count << "]: " << line << "\n";
-			continue;
-		}
-
-		double rate = getExchangeRate(date);
-		if (rate < 0) {
-			std::cerr << "Invalid line [" << line_count << "]: " << line << "\n";
-			continue;
-		}
-
-		std::cout << "[" << line_count << "]: " << convertDate(date) << "=> " << value << " (" << rate << ") = " << (value * rate) << "\n";
-	}
-	infile.close();
-}
-
-void	BitcoinExchange::printData(void) const
-{
-	for (std::map<time_t, double>::const_iterator it = m_database.begin(); it != m_database.end(); ++it) {
-		std::cout << convertDate(it->first) << ": " << it->second << "\n";
-	}
 }

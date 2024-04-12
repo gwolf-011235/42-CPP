@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:15:11 by gwolf             #+#    #+#             */
-/*   Updated: 2024/02/29 23:22:35 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/12 12:01:03 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,19 @@ class BitcoinExchange
 {
 public:
 	BitcoinExchange(const char* filename = "data.csv");
-	BitcoinExchange(const BitcoinExchange& ref);
 	~BitcoinExchange(void);
+
+	void	readInputFile(const char* input_file) const;
+	double	getExchangeRate(const time_t& date) const;
+	void	printData(void) const;
+private:
+	BitcoinExchange(const BitcoinExchange& ref);
 	BitcoinExchange& operator= (const BitcoinExchange& ref);
 
-	void		readInputFile(const char* input_file) const;
-	double		getExchangeRate(const time_t& date) const;
-	std::string	convertDate(const time_t& date) const;
-	void		printData(void) const;
-private:
+	bool		parseHeader(const std::string& header, const std::string& begin, const std::string& end, std::string& delim) const;
+	bool		parseLine(const std::string& line, const std::string& delim, time_t& date, double& value) const;
+	std::string	convertDateToString(const time_t& date) const;
+
 	std::map<time_t, double>	m_database;
 };
 
