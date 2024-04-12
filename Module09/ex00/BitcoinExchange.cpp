@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/12 12:14:16 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:05:13 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,14 @@ void	BitcoinExchange::readInputFile(const char* input_file) const
 double	BitcoinExchange::getExchangeRate(const time_t& date) const
 {
 	std::map<time_t, double>::const_iterator it = m_database.lower_bound(date);
-	if (it->first != date && it != m_database.begin()) {
-		--it;
+	if (it->first == date) {
+		return it->second;
 	}
-	if (it == m_database.end()) {
+	if (it == m_database.begin()) {
 		std::cerr << "ERROR: No suitable exchange rate found for date: " << convertDateToString(date) << "\n";
 		return -1;
 	}
+	--it;
 	return it->second;
 }
 
@@ -266,10 +267,10 @@ static bool isValidDate(const std::string& dateStr, time_t& date)
 			break;
 	}
 	static std::tm temp;
-	temp.tm_year = year;
-	temp.tm_mon = month;
+	temp.tm_year = year - 1900;
+	temp.tm_mon = month - 1;
 	temp.tm_mday = day;
-	date = mktime(&temp);
+	date = std::mktime(&temp);
 
 	return true;
 }
@@ -338,12 +339,6 @@ std::string	BitcoinExchange::convertDateToString(const time_t& date) const
 {
 	std::tm* date_tm = std::localtime(&date);
 	std::stringstream ss;
-	ss << date_tm->tm_year << "-";
-	if (date_tm->tm_mon < 10)
-		ss << 0;
-	ss << date_tm->tm_mon << "-";
-	if (date_tm->tm_mday < 10)
-		ss << 0;
-	ss << date_tm->tm_mday;
+	ss << date_tm->tm_year + 1900 << "-" << std::setw(2) << std::setfill('0') << date_tm->tm_mon + 1 << "-" << std::setw(2) << std::setfill('0') << date_tm->tm_mday;
 	return ss.str();
 }

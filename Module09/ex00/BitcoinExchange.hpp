@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:15:11 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/12 12:01:03 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/12 15:05:27 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BITCOINEXCHANGE_HPP
 
 # include <iostream>
+# include <iomanip>
 # include <string>
 # include <fstream>
 # include <sstream>
