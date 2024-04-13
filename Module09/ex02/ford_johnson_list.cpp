@@ -6,18 +6,13 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:17:17 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/13 10:26:04 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 11:14:07 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PmergeMe.hpp"
+#include "ford_johnson.hpp"
 
-typedef struct list_node
-{
-	std::list<std::list<unsigned int>::iterator>::iterator pair_head;
-	std::list<unsigned int>::iterator begin;
-	std::list<unsigned int>::iterator end;
-}	list_node;
+
 
 bool	compare_list_iter(std::list<unsigned int>::iterator value, std::list<std::list<unsigned int>::iterator>::iterator iter, std::size_t& num_comp)
 {
@@ -152,7 +147,7 @@ void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std
 	for (int k = 2 ; ; ++k)
 	{
 		// Find next index
-		std::size_t dist = utils::ft_calc_jacobsthal_diff(k);
+		std::size_t dist = calc_diff_jacobsthal_num(k);
 		if (dist >= pend.size()) {
 			break;
 		}

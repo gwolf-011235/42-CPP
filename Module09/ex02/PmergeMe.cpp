@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:13:20 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/10 14:44:58 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 11:12:06 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ PmergeMe::~PmergeMe(void)
 {
 }
 
-void	PmergeMe::time_for_vector(void)
+double	PmergeMe::time_for_vector(void) const
 {
 	std::vector<unsigned int>	vec;
 	double						time_for_convert, time_for_sort;
@@ -71,9 +71,11 @@ void	PmergeMe::time_for_vector(void)
 	std::cout << "Time for sorting:\t" << time_for_sort << " seconds\n";
 	std::cout << "Total time:\t\t" << time_for_convert + time_for_sort << " seconds\n";
 	std::cout << "Number of comparisons: " << num_comp << "\n\n";
+
+	return (time_for_convert + time_for_sort);
 }
 
-void	PmergeMe::time_for_list(void)
+double	PmergeMe::time_for_list(void) const
 {
 	std::list<unsigned int>	list;
 	double					time_for_convert, time_for_sort;
@@ -103,4 +105,6 @@ void	PmergeMe::time_for_list(void)
 	std::cout << "Time for sorting:\t" << time_for_sort << " seconds\n";
 	std::cout << "Total time:\t\t" << time_for_convert + time_for_sort << " seconds\n";
 	std::cout << "Number of comparisons: " << num_comp << "\n\n";
+
+	return (time_for_convert + time_for_sort);
 }

@@ -6,24 +6,19 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:26:40 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/13 10:42:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 11:14:07 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PmergeMe.hpp"
-#include "GroupIterator.hpp"
+#include "ford_johnson.hpp"
 
-// Small node struct for pend elements
-typedef std::pair<GroupIterator, std::list<GroupIterator>::iterator> node;
-
-
-bool	compare_group_iter(const GroupIterator value, const std::list<GroupIterator>::iterator iter, std::size_t& num_comp)
+static bool	compare_GroupIterator(const GroupIterator value, const std::list<GroupIterator>::iterator iter, std::size_t& num_comp)
 {
 	num_comp++;
 	return (*value < **iter);
 }
 
-std::list<GroupIterator>::iterator	binary_insert(std::list<GroupIterator>::iterator begin, std::list<GroupIterator>::iterator end, GroupIterator value, std::size_t& num_comp)
+static std::list<GroupIterator>::iterator	binary_insert(std::list<GroupIterator>::iterator begin, std::list<GroupIterator>::iterator end, GroupIterator value, std::size_t& num_comp)
 {
 	std::ptrdiff_t len = std::distance(begin, end);
 
@@ -31,7 +26,7 @@ std::list<GroupIterator>::iterator	binary_insert(std::list<GroupIterator>::itera
 		std::ptrdiff_t half = len >> 1;
 		std::list<GroupIterator>::iterator mid = begin;
 		std::advance(mid, half);
-		if (compare_group_iter(value, mid, num_comp)) {
+		if (compare_GroupIterator(value, mid, num_comp)) {
 			len = half;
 		}
 		else {
@@ -43,7 +38,7 @@ std::list<GroupIterator>::iterator	binary_insert(std::list<GroupIterator>::itera
 	return begin;
 }
 
-void ford_johnson_vec_impl(GroupIterator first, GroupIterator last, std::size_t& num_comp)
+static void ford_johnson_vec_impl(GroupIterator first, GroupIterator last, std::size_t& num_comp)
 {
 	std::size_t size = std::distance(first, last);
 
@@ -61,13 +56,13 @@ void ford_johnson_vec_impl(GroupIterator first, GroupIterator last, std::size_t&
 	// If there is a stray element, the end iterator is decremented by one
 	GroupIterator end = last;
 	if (has_stray) {
-		end = iter_prev(last);
+		end = prev_GroupIterator(last);
 	}
 
 	for (GroupIterator it = first; it != end ; ++it) {
 		num_comp++;
-		if (*it < *iter_next(it)) {
-			iter_swap(it, iter_next(it));
+		if (*it < *next_GroupdIterator(it)) {
+			swap_GroupIterator(it, next_GroupdIterator(it));
 		}
 		if (it != end) {
 			++it;
@@ -76,22 +71,22 @@ void ford_johnson_vec_impl(GroupIterator first, GroupIterator last, std::size_t&
 
 // Step 2: Recursively sort the pairs by max
 
-	ford_johnson_vec_impl(make_group_iterator(first, 2), make_group_iterator(end, 2), num_comp);
+	ford_johnson_vec_impl(make_GroupIterator(first, 2), make_GroupIterator(end, 2), num_comp);
 
 
 // Step 3: Separate main chain and pend elements
 
 	std::list<GroupIterator> main;
-	std::list<node> pend;
+	std::list<vec_node> pend;
 
 	// The first pend element is always part of the main chain,
 	// so we can safely start the list with the first two
 	// elements of the sequence
-	main.insert(main.end(), iter_next(first));
+	main.insert(main.end(), next_GroupdIterator(first));
 	main.insert(main.end(), first);
 
 	// Add the rest of the elements alternately to main chain and pend chain
-	for (GroupIterator it = iter_next(first, 2) ; it != end ; ++it) {
+	for (GroupIterator it = next_GroupdIterator(first, 2) ; it != end ; ++it) {
 		std::list<GroupIterator>::iterator tmp = main.insert(main.end(), it);
 		if (it != end) {
 			++it;
@@ -110,12 +105,12 @@ void ford_johnson_vec_impl(GroupIterator first, GroupIterator last, std::size_t&
 	for (int k = 2 ; ; ++k)
 	{
 		// Find next index
-		std::size_t dist = utils::ft_calc_jacobsthal_diff(k);
+		std::size_t dist = calc_diff_jacobsthal_num(k);
 		if (dist >= pend.size()) {
 			break;
 		}
 
-		std::list<node>::iterator it = pend.begin();
+		std::list<vec_node>::iterator it = pend.begin();
 		std::advance(it, dist - 1);
 
 		while (true) {
@@ -133,7 +128,7 @@ void ford_johnson_vec_impl(GroupIterator first, GroupIterator last, std::size_t&
 	// If there are pend elements left, insert them too
 	while (not pend.empty())
 	{
-		std::list<node>::iterator it = pend.end();
+		std::list<vec_node>::iterator it = pend.end();
 		--it;
 		std::list<GroupIterator>::iterator insertion_point = binary_insert(main.begin(), it->second, it->first, num_comp);
 		main.insert(insertion_point, it->first);
@@ -156,8 +151,8 @@ void ford_johnson_vec_impl(GroupIterator first, GroupIterator last, std::size_t&
 std::size_t	ford_johnson_vec(std::vector<unsigned int>::iterator begin, std::vector<unsigned int>::iterator end)
 {
 	std::size_t num_comp = 0;
-	GroupIterator first = make_group_iterator(begin, 1);
-	GroupIterator last = make_group_iterator(end, 1);
+	GroupIterator first = make_GroupIterator(begin, 1);
+	GroupIterator last = make_GroupIterator(end, 1);
 	ford_johnson_vec_impl(first, last, num_comp);
 	return (num_comp);
 }

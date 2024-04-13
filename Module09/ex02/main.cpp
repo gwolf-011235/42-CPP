@@ -6,11 +6,12 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:03:50 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/13 09:54:20 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 11:09:56 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+#include "utils.hpp"
 
 int	PmergeMe_tests(void);
 
@@ -34,8 +35,8 @@ int	main(int argc, char **argv)
 
 	PmergeMe pmergeMe(argc, argv);
 
-	pmergeMe.time_for_vector();
 	pmergeMe.time_for_list();
+	pmergeMe.time_for_vector();
 
 	return (0);
 }

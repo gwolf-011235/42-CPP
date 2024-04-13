@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:12:03 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/10 13:22:59 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 11:09:24 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,4 @@ void	utils::check_args(const int argc, char** argv)
 			}
 		}
 	}
-}
-
-std::size_t	utils::ft_jacobsthal(std::size_t n)
-{
-	// base case
-	if (n == 0)
-		return 0;
-
-	// base case
-	if (n == 1)
-		return 1;
-
-	// recursive step.
-	return ft_jacobsthal(n - 1) + 2 * ft_jacobsthal(n - 2);
-}
-
-std::size_t	utils::ft_calc_jacobsthal_diff(std::size_t n)
-{
-	return utils::ft_jacobsthal(n + 1) - utils::ft_jacobsthal(n);
 }

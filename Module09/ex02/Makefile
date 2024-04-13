@@ -6,14 +6,14 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2024/04/13 09:53:44 by gwolf            ###   ########.fr        #
+#    Updated: 2024/04/13 11:13:40 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := PmergeMe
 
 CXX := c++
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g -Wfatal-errors -pedantic
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.Td
 COMPILE = $(CXX) $(DEPFLAGS) $(CXXFLAGS) -c
 POSTCOMPILE = @mv -f $(DEP_DIR)/$*.Td $(DEP_DIR)/$*.d && touch $@
@@ -23,11 +23,12 @@ OBJ_DIR := obj
 DEP_DIR := $(OBJ_DIR)/dep
 
 SRC = 	main.cpp \
-		GroupIterator.cpp \
+		utils.cpp \
+		PmergeMe.cpp \
 		ford_johnson_list.cpp \
 		ford_johnson_vec.cpp \
-		PmergeMe.cpp \
-		utils.cpp \
+		GroupIterator.cpp \
+		jacobsthal.cpp \
 		PmergeMe_tests.cpp
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)

@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.hpp                                          :+:      :+:    :+:   */
+/*   jacobsthal.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 13:12:29 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/13 11:08:53 by gwolf            ###   ########.fr       */
+/*   Created: 2024/04/13 11:08:35 by gwolf             #+#    #+#             */
+/*   Updated: 2024/04/13 11:14:07 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-# define UTILS_HPP
+#include "ford_johnson.hpp"
 
-#include <stdexcept>
-#include <iostream>
-#include <sys/time.h>
+std::size_t	calc_jacobsthal_num(std::size_t n)
+{
+	// base case
+	if (n == 0)
+		return 0;
 
-namespace utils {
+	// base case
+	if (n == 1)
+		return 1;
 
-	template <typename T>
-	void	print_container(const T &t)
-	{
-		for (typename T::const_iterator it = t.begin(); it != t.end(); ++it) {
-			std::cout << *it << ' ';
-		}
-		std::cout << '\n';
-	}
-
-	void		check_args(const int argc, char** argv);
+	// recursive step.
+	return calc_jacobsthal_num(n - 1) + 2 * calc_jacobsthal_num(n - 2);
 }
 
-#endif
+std::size_t	calc_diff_jacobsthal_num(std::size_t n)
+{
+	return calc_jacobsthal_num(n + 1) - calc_jacobsthal_num(n);
+}

@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 11:38:18 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/13 10:44:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 11:04:20 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,31 +114,31 @@ bool operator!=(const GroupIterator& lhs, const GroupIterator& rhs)
 
 // Construction functions
 
-GroupIterator make_group_iterator(std::vector<unsigned int>::iterator it, std::size_t size)
+GroupIterator make_GroupIterator(std::vector<unsigned int>::iterator it, std::size_t size)
 {
 	return GroupIterator(it, size);
 }
 
-GroupIterator make_group_iterator(GroupIterator it, std::size_t size)
+GroupIterator make_GroupIterator(GroupIterator it, std::size_t size)
 {
 	return GroupIterator(it.base(), size * it.size());
 }
 
 // Utility functions
 
-GroupIterator iter_prev(GroupIterator it, std::size_t n)
+GroupIterator prev_GroupIterator(GroupIterator it, std::size_t n)
 {
 	std::advance(it, -n);
 	return it;
 }
 
-GroupIterator iter_next(GroupIterator it, std::size_t n)
+GroupIterator next_GroupdIterator(GroupIterator it, std::size_t n)
 {
 	std::advance(it, n);
 	return it;
 }
 
-void iter_swap(GroupIterator lhs, GroupIterator rhs)
+void swap_GroupIterator(GroupIterator lhs, GroupIterator rhs)
 {
 	std::swap_ranges(lhs.base(), lhs.base() + lhs.size(), rhs.base());
 }

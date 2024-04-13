@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 15:07:39 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/13 10:44:30 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 11:04:20 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class GroupIterator
 		std::size_t m_size;
 
 		// Private constructor
-		
+
 		GroupIterator();
 
 	public:
@@ -78,13 +78,13 @@ bool operator==(const GroupIterator& lhs, const GroupIterator& rhs);
 
 // Construction functions
 
-GroupIterator make_group_iterator(std::vector<unsigned int>::iterator it, std::size_t size);
-GroupIterator make_group_iterator(GroupIterator it, std::size_t size);
+GroupIterator make_GroupIterator(std::vector<unsigned int>::iterator it, std::size_t size);
+GroupIterator make_GroupIterator(GroupIterator it, std::size_t size);
 
 // Utility functions
 
-GroupIterator iter_prev(GroupIterator it, std::size_t n = 1);
-GroupIterator iter_next(GroupIterator it, std::size_t n = 1);
-void iter_swap(GroupIterator lhs, GroupIterator rhs);
+GroupIterator prev_GroupIterator(GroupIterator it, std::size_t n = 1);
+GroupIterator next_GroupdIterator(GroupIterator it, std::size_t n = 1);
+void swap_GroupIterator(GroupIterator lhs, GroupIterator rhs);
 
 #endif
