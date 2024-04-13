@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:16:15 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/12 15:05:13 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 10:50:13 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	BitcoinExchange::readInputFile(const char* input_file) const
 			continue;
 		}
 
-		std::cout << "[" << line_count << "]: " << convertDateToString(date) << "=> " << value << " (" << rate << ") = " << (value * rate) << "\n";
+		std::cout << std::fixed << "[" << line_count << "]: " << convertDateToString(date) << "=> " << value << " (" << rate << ") = " << (value * rate) << "\n";
 	}
 }
 
