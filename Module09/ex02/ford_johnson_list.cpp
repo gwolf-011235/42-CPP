@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 08:17:17 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/10 17:04:47 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 10:26:04 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,26 @@ list_node make_list_node(std::list<std::list<unsigned int>::iterator>::iterator 
 
 void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std::size_t step, std::size_t& num_comp)
 {
-// Pairwise comparison
-// One element is the lhs or rhs of a pairwise comparison
+	// Calculate block size and element count
 	std::size_t elem_size = 1 << step;
 	std::size_t block_size = elem_size * 2;
 	std::size_t elem_count = size / (elem_size);
+
+	// Exit out of recursion
+	if (elem_count < 2) {
+		return;
+	}
+
+	// Whether there is a stray element not in a pair
 	bool has_stray = false;
 	if (elem_count % 2 != 0) {
 		elem_count--;
 		has_stray = true;
 	}
 
-// exit out of recursion
-	if (elem_count < 2) {
-		return;
-	}
-
+// Step 1: Pairwise comparison
+	// The bigger element is put on the left side
+	// One element is the lhs or rhs of a pairwise comparison
 	std::list<unsigned int>::iterator lhs_begin = list.begin();
 	std::list<unsigned int>::iterator lhs_end = next_list_iter(lhs_begin, elem_size);
 	std::list<unsigned int>::iterator rhs_begin = lhs_end;
@@ -100,14 +104,17 @@ void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std
 		std::advance(rhs_end, block_size);
 	}
 
-	// Recursion
+// Step 2: Recursively sort the pairs by max
+
 	ford_johnson_list_impl(list, size, step + 1, num_comp);
 
-	// Main and pend elements
+// Step 3: Separate main chain and pend elements
+
 	std::list<std::list<unsigned int>::iterator> main;
 	std::list<list_node> pend;
 
-	// Store a tail of the list in a temp list
+	// If there are nodes not part of a element, we have a list tail.
+	// We need to store the tail in a temp list, so we can use list.end()
 	std::size_t tail_size = size % elem_size;
 	std::list<unsigned int> tail;
 	if (tail_size != 0) {
@@ -115,10 +122,11 @@ void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std
 		tail.splice(tail.begin(), list, tail_begin, list.end());
 	}
 
+
 	lhs_begin = list.begin();
 	lhs_end = next_list_iter(lhs_begin, elem_size);
 	rhs_begin = lhs_end;
-	//remember end - 1 because actual end can shift around
+	// Store (end - 1) because .end() of the list can shift around. Later we can add 1 to get the current end.
 	rhs_end = next_list_iter(rhs_begin, elem_size - 1);
 
 	for (std::size_t i = 0; i != elem_count; i += 2) {
@@ -140,6 +148,7 @@ void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std
 	main.insert(main.begin(), pend.begin()->begin);
 	pend.pop_front();
 
+	// Binary insertion into the main chain
 	for (int k = 2 ; ; ++k)
 	{
 		// Find next index
@@ -185,7 +194,7 @@ void	ford_johnson_list_impl(std::list<unsigned int>& list, std::size_t size, std
 		pend.pop_back();
 	}
 
-	// If there is a tail, append it
+	// If there was a tail, append it
 	if (tail_size != 0) {
 		list.splice(list.end(), tail);
 	}
