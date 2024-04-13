@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 11:38:18 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/10 13:40:54 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 10:42:11 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 // Constructors
 
-group_iterator::group_iterator()
+GroupIterator::GroupIterator()
 {
 
 }
 
-group_iterator::group_iterator(std::vector<unsigned int>::iterator it, std::size_t size): m_it(it), m_size(size)
+GroupIterator::GroupIterator(std::vector<unsigned int>::iterator it, std::size_t size): m_it(it), m_size(size)
 {
 
 }
 
-group_iterator::group_iterator(const group_iterator& other): m_it(other.m_it), m_size(other.m_size)
+GroupIterator::GroupIterator(const GroupIterator& other): m_it(other.m_it), m_size(other.m_size)
 {
 
 }
 
 // Destructor
 
-group_iterator::~group_iterator()
+GroupIterator::~GroupIterator()
 {
 
 }
 
-// Operators
+// Assignment operator
 
-group_iterator& group_iterator::operator=(const group_iterator& other)
+GroupIterator& GroupIterator::operator=(const GroupIterator& other)
 {
 	m_it = other.m_it;
 	m_size = other.m_size;
@@ -47,65 +47,102 @@ group_iterator& group_iterator::operator=(const group_iterator& other)
 
 // Members access
 
-std::vector<unsigned int>::iterator group_iterator::base() const
+std::vector<unsigned int>::iterator GroupIterator::base() const
 {
 	return m_it;
 }
 
-std::size_t group_iterator::size() const
+std::size_t GroupIterator::size() const
 {
 	return m_size;
 }
 
 // Element access
 
-group_iterator::reference group_iterator::operator*() const
+GroupIterator::reference GroupIterator::operator*() const
 {
 	return *m_it;
 }
 
-////////////////////////////////////////////////////////////
-// Construction function
+// Increment/decrement operators
 
-group_iterator make_group_iterator(std::vector<unsigned int>::iterator it, std::size_t size)
+GroupIterator& GroupIterator::operator++()
 {
-	return group_iterator(it, size);
+	m_it += m_size;
+	return *this;
 }
 
-group_iterator make_group_iterator(group_iterator it, std::size_t size)
+GroupIterator GroupIterator::operator++(int)
 {
-	return group_iterator(it.base(), size * it.size());
+	GroupIterator tmp = *this;
+	operator++();
+	return tmp;
 }
 
-////////////////////////////////////////////////////////////
+GroupIterator& GroupIterator::operator--()
+{
+	m_it -= m_size;
+	return *this;
+}
+
+GroupIterator GroupIterator::operator--(int)
+{
+	GroupIterator tmp = *this;
+	operator--();
+	return tmp;
+}
+
+GroupIterator& GroupIterator::operator+=(std::size_t increment)
+{
+	m_it += m_size * increment;
+	return *this;
+}
+
+GroupIterator& GroupIterator::operator-=(std::size_t increment)
+{
+	m_it -= m_size * increment;
+	return *this;
+}
+
+// Comparison operators
+
+bool operator==(const GroupIterator& lhs, const GroupIterator& rhs)
+{
+	return lhs.base() == rhs.base();
+}
+
+bool operator!=(const GroupIterator& lhs, const GroupIterator& rhs)
+{
+	return lhs.base() != rhs.base();
+}
+
+// Construction functions
+
+GroupIterator make_group_iterator(std::vector<unsigned int>::iterator it, std::size_t size)
+{
+	return GroupIterator(it, size);
+}
+
+GroupIterator make_group_iterator(GroupIterator it, std::size_t size)
+{
+	return GroupIterator(it.base(), size * it.size());
+}
+
 // Utility functions
 
-group_iterator iter_prev(group_iterator it, std::size_t n)
+GroupIterator iter_prev(GroupIterator it, std::size_t n)
 {
 	std::advance(it, -n);
 	return it;
 }
 
-group_iterator iter_next(group_iterator it, std::size_t n)
+GroupIterator iter_next(GroupIterator it, std::size_t n)
 {
 	std::advance(it, n);
 	return it;
 }
 
-void iter_swap(group_iterator lhs, group_iterator rhs)
+void iter_swap(GroupIterator lhs, GroupIterator rhs)
 {
 	std::swap_ranges(lhs.base(), lhs.base() + lhs.size(), rhs.base());
-}
-
-////////////////////////////////////////////////////////////
-// Comparison operators
-
-bool operator==(const group_iterator& lhs, const group_iterator& rhs)
-{
-	return lhs.base() == rhs.base();
-}
-
-bool operator!=(const group_iterator& lhs, const group_iterator& rhs)
-{
-	return lhs.base() != rhs.base();
 }
