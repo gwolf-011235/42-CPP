@@ -6,19 +6,24 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:03:50 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/10 16:35:29 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 09:54:20 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
-#include "utils.hpp"
 
-int	test(void);
+int	PmergeMe_tests(void);
 
 int	main(int argc, char **argv)
 {
-	if (argc == 1)
-		return (test());
+	if (argc < 2) {
+		std::cerr << "Usage: ./pmergeMe [a number of positive integers]\n";
+		return (1);
+	}
+
+	if (argc == 2 && std::string(argv[1]) == "test") {
+		return (PmergeMe_tests());
+	}
 
 	try {
 		utils::check_args(argc, argv);

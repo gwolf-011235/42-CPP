@@ -6,7 +6,7 @@
 #    By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 19:36:40 by gwolf             #+#    #+#              #
-#    Updated: 2024/04/10 15:14:53 by gwolf            ###   ########.fr        #
+#    Updated: 2024/04/13 09:53:44 by gwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC = 	main.cpp \
 		ford_johnson_vec.cpp \
 		PmergeMe.cpp \
 		utils.cpp \
-		testing.cpp
+		PmergeMe_tests.cpp
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPFILES = $(SRC:%.cpp=$(DEP_DIR)/%.d)
 
