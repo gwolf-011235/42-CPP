@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 11:38:18 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/13 10:42:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 10:44:11 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,20 @@
 
 GroupIterator::GroupIterator()
 {
-
 }
 
 GroupIterator::GroupIterator(std::vector<unsigned int>::iterator it, std::size_t size): m_it(it), m_size(size)
 {
-
 }
 
 GroupIterator::GroupIterator(const GroupIterator& other): m_it(other.m_it), m_size(other.m_size)
 {
-
 }
 
 // Destructor
 
 GroupIterator::~GroupIterator()
 {
-
 }
 
 // Assignment operator

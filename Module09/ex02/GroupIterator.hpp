@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 15:07:39 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/13 10:42:11 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 10:44:30 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ class GroupIterator
 		std::vector<unsigned int>::iterator m_it;
 		std::size_t m_size;
 
+		// Private constructor
+		
+		GroupIterator();
+
 	public:
 
 		// Iterator traits
@@ -37,7 +41,6 @@ class GroupIterator
 
 		// Constructors
 
-		GroupIterator();
 		GroupIterator(std::vector<unsigned int>::iterator it, std::size_t size);
 		GroupIterator(const GroupIterator& other);
 
