@@ -6,12 +6,14 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:03:50 by gwolf             #+#    #+#             */
-/*   Updated: 2024/04/13 11:09:56 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/04/13 11:22:39 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 #include "utils.hpp"
+
+#define AVG_NUM 3
 
 int	PmergeMe_tests(void);
 
@@ -35,8 +37,17 @@ int	main(int argc, char **argv)
 
 	PmergeMe pmergeMe(argc, argv);
 
-	pmergeMe.time_for_list();
-	pmergeMe.time_for_vector();
+	double avg_time_vector = 0;
+	double avg_time_list = 0;
+	std::cout << "Running algorithm for vector and list " << AVG_NUM << " times\n";
+	for (int i = 0; i < AVG_NUM; ++i) {
+		avg_time_vector += pmergeMe.time_for_vector();
+		avg_time_list += pmergeMe.time_for_list();
+	}
+	avg_time_vector /= AVG_NUM;
+	avg_time_list /= AVG_NUM;
+	std::cout << "Average time for vec:\t" << avg_time_vector << '\n';
+	std::cout << "Average time for list:\t" << avg_time_list << '\n';
 
 	return (0);
 }
