@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 09:41:08 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 18:42:26 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/05/01 13:15:41 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ void	testDogWithBrain(void)
 	Dog d2(d1);
 	d2.printThoughts();
 	std::cout << std::endl;
+
+	std::cout << "TEST Copy assignment operator\n";
+	Dog d3;
+	d3 = d1;
+	d3.printThoughts();
+	std::cout << std::endl;
 }
 
 void	testCatWithBrain(void)
@@ -86,6 +92,12 @@ void	testCatWithBrain(void)
 	std::cout << "TEST Copy constructor\n";
 	Cat c2(c1);
 	c2.printThoughts();
+	std::cout << std::endl;
+
+	std::cout << "TEST Copy assignment operator\n";
+	Cat c3;
+	c3 = c1;
+	c3.printThoughts();
 	std::cout << std::endl;
 }
 
@@ -120,3 +132,4 @@ void	testBaseClassPointer(void)
 	}
 	std::cout << std::endl;
 }
+

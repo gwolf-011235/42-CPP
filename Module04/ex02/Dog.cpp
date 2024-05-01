@@ -6,7 +6,7 @@
 /*   By: gwolf <gwolf@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:14:24 by gwolf             #+#    #+#             */
-/*   Updated: 2023/10/15 19:56:18 by gwolf            ###   ########.fr       */
+/*   Updated: 2024/05/01 13:19:12 by gwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ Dog::Dog(void) : A_Animal("Dog 🐶"), m_brain(new Brain())
 Dog::Dog(const Dog& ref) : A_Animal("Dog 🐶")
 {
 	std::cout << "Copy constructor called: Dog 🐶\n";
+	m_type = ref.getType();
+	m_brain = new Brain();
+	*m_brain = *(ref.m_brain);
+	std::cout << "Address hold by orig:\t" << ref.m_brain << "\n";
+	std::cout << "Address hold by copy:\t" << m_brain << "\n";
 	*this = ref;
 }
 
@@ -39,6 +44,7 @@ Dog& Dog::operator=(const Dog& ref)
 	std::cout << "Copy assignment operator called: Dog 🐶\n";
 	if (&ref != this) {
 		m_type = ref.getType();
+		delete (m_brain);
 		m_brain = new Brain();
 		*m_brain = *(ref.m_brain);
 		std::cout << "Address hold by orig:\t" << ref.m_brain << "\n";
